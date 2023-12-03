@@ -10,13 +10,13 @@ export default function Router() {
     return (
         <>
         <BrowserRouter>
-        <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route exact path="/infocenter" element={<InfoCenter />} />
-            <Route exact path="/community" element={<Community />} />
-            <Route exact path="/about" element={<About />} />
-            <Route exact path="/results" element={<Results />} />
-        </Routes>
+            <Routes>
+                <Route exact path="/" element={<Home />} />
+                <Route exact path="/infocenter" element={<InfoCenter />} />
+                <Route exact path="/community" element={<Community />} />
+                <Route exact path="/about" element={<About />} />
+                <Route exact path="/results" element={<Results />} />
+            </Routes>
         </BrowserRouter>
         </>
     );

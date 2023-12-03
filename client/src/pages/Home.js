@@ -1,17 +1,10 @@
-import React, { useState } from "react";
-import FactCheckIcon from "@mui/icons-material/FactCheck";
-import HomeIcon from "@mui/icons-material/Home";
-import FindInPageIcon from "@mui/icons-material/FindInPage";
-import InfoIcon from "@mui/icons-material/Info";
-import Person3Icon from "@mui/icons-material/Person3";
-import RestaurantIcon from "@mui/icons-material/Restaurant";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LogoutIcon from "@mui/icons-material/Logout";
+import Layout from "../components/Layout";
 
 export default function Home() {
   return (
     <>
-      <div className="flex justify-between h-screen p-4">
+      <Layout />
+      {/* <div className="flex justify-between h-screen p-4">
         <div className="flex-3 bg-[#E8EDDF] rounded-xl m-5">
           <div className="border-gray-300 rounded-lg overflow-y-auto p-4">
             <h3 className="text-3xl font-semibold font-opensans mb-6">
@@ -71,7 +64,7 @@ export default function Home() {
             <hr className="mb-4" />
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
