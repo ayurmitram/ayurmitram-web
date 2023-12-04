@@ -10,6 +10,18 @@ const ThemeWrapper = ({ children }) => {
                 light: '#F5CB5C',
                 dark: '#F5CB5C',
                 contrastText: '#000',
+            },
+            secondary: {
+                main: '#539C52',
+                light: '#539C52',
+                dark: '#539C52',
+                contrastText: '#fff',
+            },
+            lightGray: {
+                main: '#EFEEEE',
+                light: '#EFEEEE',
+                dark: '#EFEEEE',
+                contrastText: '#000',
             }
         },
         components: {
@@ -49,6 +61,20 @@ const ThemeWrapper = ({ children }) => {
                 styleOverrides: {
                     root: {
                         fontFamily: 'inherit',
+                        textTransform: 'none',
+                        padding: '0.75rem 1.25rem',
+                        borderRadius: '0.5rem',
+                        fontSize: '1rem',
+                    },
+                },
+            },
+            MuiFormControlLabel: {
+                styleOverrides: {
+                    label: {
+                        fontFamily: 'inherit',
+                        fontSize: '0.875rem',
+                        fontWeight: '400',
+                        marginLeft: '0.5rem',
                     },
                 },
             },

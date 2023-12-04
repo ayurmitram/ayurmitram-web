@@ -34,7 +34,7 @@ const Layout = ({ children }) => {
 	return (
 		<ThemeWrapper>
 			<div className="flex justify-start gap-5 h-screen p-5 font-['Inter'] bg-[#E8EDDF] overflow-hidden" >
-				<div className="flex w-3/12 flex-col gap-5  rounded-xl overflow-auto h-full">
+				<div className="flex w-3/12 flex-col gap-5 rounded-xl overflow-auto h-full">
 					<div className="flex gap-2 items-center text-2xl p-5 pb-0">
 						<img src={logo} alt="logo" className="w-10 h-10" />
 						AyurMitram
@@ -56,7 +56,7 @@ const Layout = ({ children }) => {
 					</Tabs>
 
 				</div>
-				<div className={`flex bg-white border rounded-2xl p-5 ${isMinimized ? 'w-9/12' : 'w-4/12'}`}>
+				<div className={` bg-white rounded-2xl p-5 ${isMinimized ? 'w-9/12' : 'w-4/12'}`}>
 					{children}
 				</div>
 				{isMinimized ? (
