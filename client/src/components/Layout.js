@@ -28,7 +28,7 @@ const Layout = () => {
 		<ThemeWrapper>
 			<div className="flex justify-between gap-5 h-screen p-5 font-['Inter'] bg-[#E8EDDF] overflow-hidden" >
 				<div className="flex w-3/12 flex-col gap-5  rounded-xl overflow-auto h-full">
-					<div className="flex gap-2 items-center text-2xl p-5">
+					<div className="flex gap-2 items-center text-2xl p-5 pb-0">
 						<img src={logo} alt="logo" className="w-10 h-10" />
 						AyurMitram
 					</div>
