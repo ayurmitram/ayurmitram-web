@@ -7,16 +7,19 @@ import LocalHospitalOutlinedIcon from '@mui/icons-material/LocalHospitalOutlined
 import KitchenOutlinedIcon from '@mui/icons-material/KitchenOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import logo from './../assets/logo.svg'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import ThemeWrapper from "../utils/ThemeWrapper";
 import { useSelector, useDispatch } from 'react-redux'
-import { setTabValue } from '../store/layout'
+import { setTabValue, setIsMinimized } from '../store/layout'
+import Chatbot from "./Chatbot";
 
-const Layout = () => {
+const Layout = ({ children }) => {
 
 	const tabValue = useSelector(state => state.layout.tabValue)
+	const isMinimized = useSelector(state => state.layout.isMinimized)
 
 	const dispatch = useDispatch()
 
@@ -24,9 +27,13 @@ const Layout = () => {
 		dispatch(setTabValue(newValue))
 	}
 
+	const toggleChatbot = () => {
+		dispatch(setIsMinimized(!isMinimized))
+	}
+
 	return (
 		<ThemeWrapper>
-			<div className="flex justify-between gap-5 h-screen p-5 font-['Inter'] bg-[#E8EDDF] overflow-hidden" >
+			<div className="flex justify-start gap-5 h-screen p-5 font-['Inter'] bg-[#E8EDDF] overflow-hidden" >
 				<div className="flex w-3/12 flex-col gap-5  rounded-xl overflow-auto h-full">
 					<div className="flex gap-2 items-center text-2xl p-5 pb-0">
 						<img src={logo} alt="logo" className="w-10 h-10" />
@@ -49,22 +56,24 @@ const Layout = () => {
 					</Tabs>
 
 				</div>
-				<div className="flex w-4/12 bg-white border rounded-2xl  p-5">
-					{/* <div className="bg-white border-gray-300 rounded-lg overflow-y-auto p-4">
-						<h3 className="text-2xl bg-white font-semibold  mb-6">
-							Info Center
-						</h3>
-						<hr className="mb-4" />
-					</div> */}
+				<div className={`flex bg-white border rounded-2xl p-5 ${isMinimized ? 'w-9/12' : 'w-4/12'}`}>
+					{children}
 				</div>
-				<div className="flex w-5/12 bg-white border rounded-2xl  p-5">
-					{/* <div className="bg-white border-gray-300 rounded-lg overflow-y-auto p-4">
-						<h3 className="text-2xl bg-white font-semibold  mb-6">
-							AyurMitram Chatbot
-						</h3>
-						<hr className="mb-4" />
-					</div> */}
-				</div>
+				{isMinimized ? (
+					<div className="fixed bottom-4 right-4">
+						<button
+							className="bg-ayurgreen text-white p-4 rounded-full"
+							onClick={toggleChatbot}
+						>
+							<ChatBubbleIcon />
+						</button>
+					</div>
+				) : (
+					<div className="flex w-5/12 bg-white border rounded-2xl  p-5">
+						<Chatbot />
+					</div>
+				)}
+				
 			</div>
 		</ThemeWrapper>
 	)
