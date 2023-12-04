@@ -70,11 +70,13 @@ const ThemeWrapper = ({ children }) => {
             },
             MuiFormControlLabel: {
                 styleOverrides: {
+                    root: {
+                        gap: '0rem',
+                    },
                     label: {
                         fontFamily: 'inherit',
                         fontSize: '0.875rem',
                         fontWeight: '400',
-                        marginLeft: '0.5rem',
                     },
                 },
             },
