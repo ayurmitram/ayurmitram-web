@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-        'ayurgreen': '#539C52'
+        'ayurgreen': '#539C52',
+        'yellowapp': '#F5CB5C'
       },
       fontFamily:{
         'opensans': ['Open Sans', 'sans-serif']
