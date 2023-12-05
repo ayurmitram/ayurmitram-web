@@ -4,3 +4,13 @@
 @import 'tailwindcss/utilities';
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
+* {
+    /* no scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
