@@ -22,7 +22,19 @@ const ThemeWrapper = ({ children }) => {
                 light: '#EFEEEE',
                 dark: '#EFEEEE',
                 contrastText: '#000',
-            }
+            },
+            black: {
+                main: '#000',
+                light: '#000',
+                dark: '#000',
+                contrastText: '#fff',
+            },
+            white: {
+                main: '#fff',
+                light: '#fff',
+                dark: '#fff',
+                contrastText: '#000',
+            },
         },
         components: {
             MuiTabs: {
