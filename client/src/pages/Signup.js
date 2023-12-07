@@ -20,13 +20,13 @@ const Signup = () => {
 
     return (
         <div className="w-full h-full flex flex-col gap-5">
-            <div className="text-2xl h-10 min-h-[2.5rem] flex items-center">
+            <div className="text-2xl min-h-[2rem] flex items-center">
                 Sign Up
             </div>
             <div className='w-full h-[0.5px] bg-black/50 '></div>
 
             <div className="px-10 flex flex-col overflow-y-auto">
-            <div className="text-xl mb-4">Welcome here</div>
+                <div className="text-xl mb-4">Welcome here</div>
                 <div className="text-[#9E9E9E] text-sm mb-3">please enter your email and password to sign up</div>
                 <TextField
                     label="Username"

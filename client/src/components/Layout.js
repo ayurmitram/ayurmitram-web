@@ -15,6 +15,7 @@ import ThemeWrapper from "../utils/ThemeWrapper";
 import { useSelector, useDispatch } from 'react-redux'
 import { setTabValue, setIsMinimized } from '../store/layout'
 import Chatbot from "./Chatbot";
+import { useNavigate } from "react-router-dom";
 
 const Layout = ({ children }) => {
 
@@ -22,13 +23,18 @@ const Layout = ({ children }) => {
 	const isMinimized = useSelector(state => state.layout.isMinimized)
 
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
 
-	const handleTabValue = (event, newValue) => {
+	const handleTabValue = ({ event, newValue}) => {
 		dispatch(setTabValue(newValue))
 	}
 
 	const toggleChatbot = () => {
 		dispatch(setIsMinimized(!isMinimized))
+	}
+
+	const redirectTo = (path) => {
+		navigate(path)
 	}
 
 	return (
@@ -47,19 +53,18 @@ const Layout = ({ children }) => {
 					<div className='w-full h-[0.5px] bg-black/50 '></div>
 
 					<Tabs value={tabValue} onChange={handleTabValue} orientation="vertical">
-						<Tab label="Home" icon={<HomeOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" />
-						<Tab label="Find Your Prakriti" icon={<TroubleshootOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" />
-						<Tab label="Results" icon={<AssessmentOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" />
-						<Tab label="Consultant (Doctor)" icon={<LocalHospitalOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" />
-						<Tab label="Diet Plan" icon={<KitchenOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" />
-						<Tab label="About" icon={<InfoOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" />
+						<Tab label="Home" icon={<HomeOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" onClick={() => {redirectTo('/')}} />
+						<Tab label="Find Your Prakriti" icon={<TroubleshootOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" onClick={(e) => {redirectTo('/prakriti')}} />
+						<Tab label="Results" icon={<AssessmentOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" onClick={() => {redirectTo('/results')}} />
+						<Tab label="Consultant (Doctor)" icon={<LocalHospitalOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" onClick={() => {redirectTo('/consultant')}} />
+						<Tab label="Diet Plan" icon={<KitchenOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" onClick={() => {redirectTo('/dietplan')}} />
+						<Tab label="About" icon={<InfoOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" onClick={() => {redirectTo('/about')}} />
 
 						<div className='w-full h-[0.5px] bg-black/50 mt-5 mb-1'></div>
 
-						<Tab label="Profile" icon={<AccountCircleOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" />
-						<Tab label="Login" icon={<LogoutOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" />
+						<Tab label="Profile" icon={<AccountCircleOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" onClick={() => {redirectTo('/profile')}} />
+						<Tab label="Login" icon={<LogoutOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" onClick={() => {redirectTo('/login')}} />
 					</Tabs>
-
 				</div>
 				<div className={` bg-white rounded-2xl p-5 ${isMinimized ? 'w-9/12' : 'w-4/12'}`}>
 					{children}
