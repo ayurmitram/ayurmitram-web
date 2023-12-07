@@ -62,7 +62,7 @@ const Chatbot = () => {
         setUserInput(e.target.value);
     };
 
-    const handleSendMessage = (msg = userInput) => {
+    const handleSendMessage = ({ msg = userInput }) => {
         const newUserMessage = { type: "user", text: msg };
         setChatMessages([...chatMessages, newUserMessage]);
         setUserInput("");
