@@ -7,20 +7,23 @@ import About from "../pages/About";
 import Results from "../pages/Results";
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
+import Layout from '../components/Layout';
 
 export default function Router() {
     return (
         <>
         <BrowserRouter>
-            <Routes>
-                <Route exact path="/" element={<Home />} />
-                <Route exact path="/infocenter" element={<InfoCenter />} />
-                <Route exact path="/community" element={<Community />} />
-                <Route exact path="/about" element={<About />} />
-                <Route exact path="/results" element={<Results />} />
-                <Route exact path="/login" element={<Login />} />
-                <Route exact path="/signup" element={<Signup />} />
-            </Routes>
+            <Layout>
+                <Routes>
+                    <Route exact path="/" element={<Home />} />
+                    <Route exact path="/infocenter" element={<InfoCenter />} />
+                    <Route exact path="/community" element={<Community />} />
+                    <Route exact path="/about" element={<About />} />
+                    <Route exact path="/results" element={<Results />} />
+                    <Route exact path="/login" element={<Login />} />
+                    <Route exact path="/signup" element={<Signup />} />
+                </Routes>
+            </Layout>
         </BrowserRouter>
         </>
     );

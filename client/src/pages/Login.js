@@ -20,7 +20,7 @@ const Login = () => {
 
     return (
         <div className="w-full h-full flex flex-col gap-5">
-            <div className="text-2xl h-10 min-h-[2.5rem] flex items-center">
+            <div className="text-2xl min-h-[2rem] flex items-center">
                 Sign In
             </div>
             <div className='w-full h-[0.5px] bg-black/50 '></div>
