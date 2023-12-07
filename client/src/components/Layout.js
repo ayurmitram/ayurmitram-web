@@ -54,7 +54,7 @@ const Layout = ({ children }) => {
 
 					<Tabs value={tabValue} onChange={handleTabValue} orientation="vertical">
 						<Tab label="Home" icon={<HomeOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" onClick={() => {redirectTo('/'); dispatch(setTabValue(0)); }} />
-						<Tab label="Find Your Prakriti" icon={<TroubleshootOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" onClick={(e) => {redirectTo('/prakriti'); dispatch(setTabValue(1))}} />
+						<Tab label="Find Your Prakriti" icon={<TroubleshootOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" onClick={(e) => {redirectTo('/find-your-prakruti'); dispatch(setTabValue(1))}} />
 						<Tab label="Results" icon={<AssessmentOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" onClick={() => {redirectTo('/results'); dispatch(setTabValue(2))}} />
 						<Tab label="Consultant (Doctor)" icon={<LocalHospitalOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" onClick={() => {redirectTo('/consultant'); dispatch(setTabValue(3))}} />
 						<Tab label="Diet Plan" icon={<KitchenOutlinedIcon sx={{ stroke: "#E8EDDF", strokeWidth: 1 }} />} iconPosition="start" onClick={() => {redirectTo('/dietplan'); dispatch(setTabValue(4))}} />

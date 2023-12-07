@@ -127,10 +127,10 @@ const Signup = () => {
                 </div>
                 <div className='w-full h-[0.5px] bg-black/50 '></div>
 
-                <div className={`flex ${isMinimized ? 'flex-row' : 'flex-col'} grow gap-5 overflow-y-scroll`}>
-                    <div className='bg-[#E8EDDF] h-full min-h-full w-full flex flex-col rounded-2xl p-5 justify-center'>
-                        <div className='mb-5'>
-                            <img src={smiley} alt="smiley" className="w-1/4 mx-auto" />
+                <div className={`flex ${isMinimized ? 'flex-row overflow-hidden' : 'flex-col overflow-y-scroll'} grow gap-5  items-stretch`}>
+                <div className={`bg-[#E8EDDF] ${isMinimized ? 'overflow-y-scroll' : ''} w-full flex flex-col rounded-2xl p-5 justify-center `}>
+                        <div className='mb-5 flex justify-center'>
+                            <img src={smiley} alt="smiley" className="w-[5rem] aspect-square" />
                         </div>
                         <div className='text-center text-3xl text-[#207B1F] mb-5'>For Doctors</div>
                         <div className='text-[#2A3F2E] font-normal mb-5 text-center leading-loose'>Join Ayurmitram to elevate your Ayurvedic expertise and encourage visitors to discover the ultimate in holistic health.</div>
@@ -139,11 +139,11 @@ const Signup = () => {
                                 Sign Up
                             </Button>
                         </div>
-                        <div className='text-center text-sm'>Already have a account? <span className='cursor-pointer text-[#539C52]' onClick={() => navigate('/login')}>Sign In</span></div>
+                        <div className='text-center text-sm'>Already have a account? <span className='cursor-pointer text-[#539C52]' onClick={() => navigate('/login')}>Sign In</span></div>                        
                     </div>
-                    <div className='bg-[#E8EDDF] h-full min-h-full w-full flex flex-col rounded-2xl p-5 justify-center'>
-                        <div className='mb-5'>
-                            <img src={smiley} alt="smiley" className="w-1/4 mx-auto" />
+                    <div className={`bg-[#E8EDDF] ${isMinimized ? 'overflow-y-scroll' : ''} w-full flex flex-col rounded-2xl p-5 justify-center `}>
+                        <div className='mb-5 flex justify-center'>
+                            <img src={smiley} alt="smiley" className="w-[5rem] aspect-square" />
                         </div>
                         <div className='text-center text-3xl text-[#207B1F] mb-5'>For Patients</div>
                         <div className='text-[#2A3F2E] font-normal mb-5 text-center leading-loose'>Join Ayurmitram, where you can refine your Ayurvedic skills, prepare for holistic health consultations, and embark on a journey to thrive in the world of natural well-being.</div>
