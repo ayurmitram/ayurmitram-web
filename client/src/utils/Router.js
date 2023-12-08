@@ -8,6 +8,7 @@ import Results from "../pages/Results";
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Layout from '../components/Layout';
+import FindPrakruti from '../pages/FindPrakruti';
 
 export default function Router() {
     return (
@@ -22,6 +23,7 @@ export default function Router() {
                     <Route exact path="/results" element={<Results />} />
                     <Route exact path="/login" element={<Login />} />
                     <Route exact path="/signup" element={<Signup />} />
+                    <Route exact path="/find-your-prakruti" element={<FindPrakruti />} />
                 </Routes>
             </Layout>
         </BrowserRouter>

@@ -35,6 +35,12 @@ const ThemeWrapper = ({ children }) => {
                 dark: '#fff',
                 contrastText: '#000',
             },
+            darkGreen: {
+                main: '#2A3F2E',
+                light: '#2A3F2E',
+                dark: '#2A3F2E',
+                contrastText: '#fff',
+            }
         },
         components: {
             MuiTabs: {
