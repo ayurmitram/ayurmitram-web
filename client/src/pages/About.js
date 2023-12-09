@@ -37,7 +37,8 @@ export default function About() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-      dispatch(setIsMinimized(false))
+      if (localStorage.getItem('token')) 
+        dispatch(setIsMinimized(false))
   }, [])
 
   return (
@@ -45,7 +46,7 @@ export default function About() {
       <div className="text-2xl min-h-[2rem] flex items-center">
           About
       </div>
-      <div className='w-full h-[0.5px] bg-black/50 '></div>
+      <div className='w-full h-[0px] bg-black/50 '></div>
 
       <div className="flex flex-col items-center overflow-y-auto h-full">
         <Card

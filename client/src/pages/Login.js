@@ -32,7 +32,7 @@ const Login = () => {
             <div className="text-2xl min-h-[2rem] flex items-center">
                 Sign In
             </div>
-            <div className='w-full h-[0.5px] bg-black/50 '></div>
+            <div className='w-full h-[0px] bg-black/50 '></div>
 
             <div className="px-10 flex flex-col overflow-y-auto">
                 <div className="text-xl mb-4">Welcome back</div>

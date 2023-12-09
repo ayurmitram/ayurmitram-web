@@ -10,7 +10,8 @@ export default function Home() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(setIsMinimized(false))
+    if (localStorage.getItem('token'))
+      dispatch(setIsMinimized(false))
   }, [])
   
   return (

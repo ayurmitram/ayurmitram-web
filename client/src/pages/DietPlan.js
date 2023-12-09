@@ -10,24 +10,35 @@ import HourglassTopRoundedIcon from '@mui/icons-material/HourglassTopRounded';
 import BentoRoundedIcon from '@mui/icons-material/BentoRounded';
 import WbSunnyRoundedIcon from '@mui/icons-material/WbSunnyRounded';
 import { useSelector, useDispatch } from 'react-redux'
-import { setIsMinimized } from '../store/layout';
+import { setIsMinimized, setTabValue } from '../store/layout';
+import { useNavigate } from "react-router-dom";
+
 
 const DietPlan = () => {
     const isMinimized = useSelector(state => state.layout.isMinimized)
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const openChatbox = () => {
+        if (localStorage.getItem('token')) {
+            dispatch(setIsMinimized(false))
+        } else {
+            dispatch(setTabValue(10))
+            navigate('/login')
+        }
+    }
 
     useEffect(() => {
         dispatch(setIsMinimized(true))
     }, [])
-
 
     return (
         <div className="w-full h-full flex flex-col gap-5">
             <div className="text-2xl min-h-[2rem] flex items-center">
                 Diet Plan
             </div>
-            <div className='w-full h-[0.5px] bg-black/50 '></div>
+            <div className='w-full h-[0px] bg-black/50 '></div>
     
             <div className={`grid ${isMinimized ? 'grid-cols-4' : 'grid-cols-2'} items-center justify-center gap-5 overflow-y-auto grow place-items-center`}>
                 <div className='rounded-full flex flex-col items-center text-center justify-center  gap-5 font-medium relative'>
@@ -86,15 +97,15 @@ const DietPlan = () => {
                     </div>
                 </div>
                 <div className={`col-span-2 ${isMinimized ? '' : 'order-last'} p-5 max-w-[400px] flex flex-col items-center justify-center gap-5 w-full h-full self-stretch`}>
-                    <Button variant="contained" fullWidth color='primary' disableElevation onClick={() => dispatch(setIsMinimized(false))}>
+                    <Button variant="contained" fullWidth color='primary' disableElevation onClick={openChatbox}>
                         Discover your prakruti diet
                         <BentoRoundedIcon className='ms-2' />
                     </Button>
-                    <Button variant="contained" fullWidth color='primary' disableElevation onClick={() => dispatch(setIsMinimized(false))}>
+                    <Button variant="contained" fullWidth color='primary' disableElevation onClick={openChatbox}>
                         Your day begins
                         <HourglassTopRoundedIcon className='ms-2' />
                     </Button>
-                    <Button variant="contained" fullWidth color='primary' disableElevation onClick={() => dispatch(setIsMinimized(false))}>
+                    <Button variant="contained" fullWidth color='primary' disableElevation onClick={openChatbox}>
                         Perfect weather diet
                         <WbSunnyRoundedIcon className='ms-2' />
                     </Button>

@@ -80,7 +80,7 @@ const Chatbot = () => {
                     <MinimizeIcon color="black" />
                 </Button>
             </div>
-            <div className='w-full h-[0.5px] bg-black/50 '></div>
+            <div className='w-full h-[0px] bg-black/50 '></div>
             <div className={`flex flex-col items-start gap-1 font-medium h-[calc(100%_-_2rem_-_0.5px_-_4rem_-_2.5rem)] overflow-y-auto`}>
                 {chatMessages?.map((message, index) => (
                     <MessageBox key={index} message={message} prev={index === 0 ? null : chatMessages[index-1]} next={index === chatMessages?.length -1 ? null : chatMessages[index+1]} clickHandler={handleSendMessage} />
