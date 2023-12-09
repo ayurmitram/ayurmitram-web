@@ -28,6 +28,8 @@ const Signup = () => {
     useEffect(() => {
         if (typeOfUser === '') {
             dispatch(setIsMinimized(true))
+        } else {
+            dispatch(setIsMinimized(false))
         }
     }, [typeOfUser])
 
@@ -135,7 +137,7 @@ const Signup = () => {
                         <div className='text-center text-3xl text-[#207B1F] mb-5'>For Doctors</div>
                         <div className='text-[#2A3F2E] font-normal mb-5 text-center leading-loose'>Join Ayurmitram to elevate your Ayurvedic expertise and encourage visitors to discover the ultimate in holistic health.</div>
                         <div className='text-center mt-10'>
-                            <Button variant="contained" className="w-7/12" color='secondary' sx={{ mb: 2 }} disableElevation onClick={() => {setTypeOfUser('doctor'); dispatch(setIsMinimized(!isMinimized))}}>
+                            <Button variant="contained" className="w-7/12" color='secondary' sx={{ mb: 2 }} disableElevation onClick={() => {setTypeOfUser('doctor'); }}>
                                 Sign Up
                             </Button>
                         </div>
@@ -148,7 +150,7 @@ const Signup = () => {
                         <div className='text-center text-3xl text-[#207B1F] mb-5'>For Patients</div>
                         <div className='text-[#2A3F2E] font-normal mb-5 text-center leading-loose'>Join Ayurmitram, where you can refine your Ayurvedic skills, prepare for holistic health consultations, and embark on a journey to thrive in the world of natural well-being.</div>
                         <div className='text-center mt-10'>
-                            <Button variant="contained" className="w-7/12" color='secondary' sx={{ mb: 2 }} disableElevation onClick={() => {setTypeOfUser('patient'); dispatch(setIsMinimized(!isMinimized))}}>
+                            <Button variant="contained" className="w-7/12" color='secondary' sx={{ mb: 2 }} disableElevation onClick={() => {setTypeOfUser('patient'); }}>
                                 Sign Up
                             </Button>
                         </div>

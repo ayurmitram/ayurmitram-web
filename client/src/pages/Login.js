@@ -9,12 +9,21 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import google from './../assets/google.svg'
 import facebook from './../assets/facebook.svg'
 import apple from './../assets/apple.svg'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'
+import { setIsMinimized } from '../store/layout';
+
 
 const Login = () => {
     const [credentials, setCredentails] = useState(null)
     const [passwordVisible, setPasswordVisible] = useState(false)
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setIsMinimized(false))
+    }, [])
 
     const navigate = useNavigate()
 

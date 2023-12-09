@@ -66,7 +66,7 @@ const ThemeWrapper = ({ children }) => {
                         fontFamily: 'inherit',
                         textTransform: 'none',
                         fontSize: '1rem',
-                        fontWeight: '300',
+                        fontWeight: '500',
                         textAlign: 'left',
                         color: theme.palette.primary.contrastText,
                         padding: '0.75rem 1.25rem',
