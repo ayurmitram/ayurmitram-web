@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import botlogo from "../assets/botlogo.svg"
 import BoltIcon from '@mui/icons-material/Bolt';
 import ListIcon from '@mui/icons-material/List';
 import Button from '@mui/material/Button';
+import { useDispatch } from 'react-redux'
+import { setIsMinimized } from '../store/layout';
 
 export default function Home() {  
+  const dispatch = useDispatch()
 
+  useEffect(() => {
+    if (localStorage.getItem('token'))
+      dispatch(setIsMinimized(false))
+  }, [])
+  
   return (
     <>
     <div className="text-center overflow-y-scroll h-full">

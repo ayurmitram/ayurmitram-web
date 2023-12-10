@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import about1logo from "../assets/about1logo.svg";
 import about2logo from "../assets/about2logo.svg";
 import about3logo from "../assets/about3logo.svg";
+import { useDispatch } from 'react-redux'
+import { setIsMinimized } from '../store/layout';
+
 
 const Card = ({
   title,
@@ -31,12 +34,19 @@ const Card = ({
 );
 
 export default function About() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+      if (localStorage.getItem('token')) 
+        dispatch(setIsMinimized(false))
+  }, [])
+
   return (
     <div className="w-full h-full flex flex-col gap-5">
       <div className="text-2xl min-h-[2rem] flex items-center">
           About
       </div>
-      <div className='w-full h-[0.5px] bg-black/50 '></div>
+      <div className='w-full h-[0px] bg-black/50 '></div>
 
       <div className="flex flex-col items-center overflow-y-auto h-full">
         <Card

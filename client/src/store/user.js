@@ -7,6 +7,6 @@ const userSlice = createSlice({
     }
 })
 
-export const { setTabValue, setIsMinimized } = userSlice.actions
+export const { } = userSlice.actions
 
 export default userSlice.reducer
