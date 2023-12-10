@@ -27,6 +27,10 @@ const Signup = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const handleGoToLogin = () => {
+        dispatch(setTabValue(10))
+        navigate('/login')
+    }
     const handleSignup = async () => {
         if (typeOfUser === 'patient') {
             const res = await signup_patient({
@@ -135,7 +139,7 @@ const Signup = () => {
                     <Button variant="contained" className="w-full" color='secondary' sx={{ mb: 3 }} disableElevation disabled={!credentials?.username || !credentials?.email || !credentials?.password || !credentials?.confirmationPassword || credentials?.password !== credentials?.confirmationPassword} onClick={handleSignup}>
                         Sign Up
                     </Button>
-                    <div className='text-center text-sm mb-8'>Already have a account? <span className='cursor-pointer text-[#539C52]' onClick={() => navigate('/login')}>Sign In</span></div>
+                    <div className='text-center text-sm mb-8'>Already have a account? <span className='cursor-pointer text-[#539C52]' onClick={handleGoToLogin}>Sign In</span></div>
                     <div className='flex items-center justify-center gap-2 mb-3'>
                         <div className='h-[0.5px] grow bg-[#9EAFB0]'></div>
                         <div className='text-xs text-[#9EAFB0]'>or continue with</div>
@@ -173,7 +177,7 @@ const Signup = () => {
                                 Sign Up
                             </Button>
                         </div>
-                        <div className='text-center text-sm'>Already have a account? <span className='cursor-pointer text-[#539C52]' onClick={() => navigate('/login')}>Sign In</span></div>                        
+                        <div className='text-center text-sm'>Already have a account? <span className='cursor-pointer text-[#539C52]' onClick={handleGoToLogin}>Sign In</span></div>                        
                     </div>
                     <div className={`bg-[#E8EDDF] ${isMinimized ? 'overflow-y-scroll' : ''} w-full flex flex-col rounded-2xl p-5 justify-center `}>
                         <div className='mb-5 flex justify-center'>
@@ -186,7 +190,7 @@ const Signup = () => {
                                 Sign Up
                             </Button>
                         </div>
-                        <div className='text-center text-sm'>Already have a account? <span className='cursor-pointer text-[#539C52]' onClick={() => navigate('/login')}>Sign In</span></div>
+                        <div className='text-center text-sm'>Already have a account? <span className='cursor-pointer text-[#539C52]' onClick={handleGoToLogin}>Sign In</span></div>
                     </div>
                 </div>
             </div>
