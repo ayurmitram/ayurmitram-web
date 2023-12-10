@@ -88,12 +88,18 @@ const Chatbot = () => {
         // { type: 'bot', text: 'Sure, select a mode from below', options: ['Quick', 'Comprehensive'] },
     ]);
     const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition, isMicrophoneAvailable, browserSupportsContinuousListening } = useSpeechRecognition();
-    
+
     let startListening
     if (browserSupportsContinuousListening) {
-        startListening = () => SpeechRecognition.startListening({ continuous: true });
+        startListening = () => {
+            resetTranscript()
+            SpeechRecognition.startListening({ continuous: true });
+        }
     } else {
-        startListening = () => SpeechRecognition.startListening();
+        startListening = () => {
+            resetTranscript()
+            SpeechRecognition.startListening();
+        }
     }
 
     const handleUserInput = (e) => {
