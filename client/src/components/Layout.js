@@ -18,6 +18,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setTabValue, setIsMinimized } from '../store/layout'
 import Chatbot from "./Chatbot";
 import { useNavigate } from "react-router-dom";
+import SignupCarousel from "./SignupCarousel";
 
 const Layout = ({ children }) => {
 
@@ -108,8 +109,12 @@ const Layout = ({ children }) => {
 						</button>
 					</div>
 				) : (
-					<div className="flex w-5/12 bg-white border rounded-2xl  p-5">
-						<Chatbot />
+					<div className="flex w-5/12 bg-white border rounded-2xl ">
+						{(tabValue === 10 || tabValue === 9) ? (
+							<SignupCarousel />
+						) : (
+							<Chatbot />
+						)}
 					</div>
 				)}
 				

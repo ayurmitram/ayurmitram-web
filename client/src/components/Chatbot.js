@@ -130,7 +130,8 @@ const Chatbot = () => {
     }, [transcript])
 
     return (
-        <div className="w-full h-full flex flex-col gap-5 relative">
+        <div className="w-full h-full p-5">
+                    <div className=" flex flex-col h-full gap-5 relative ">
             <div className="text-2xl min-h-[2rem] max-h-[2rem] flex items-center justify-between">
                 Ayurmitram
                 <Button variant="outlined" color="lightGray" onClick={toggleChatbot} >
@@ -185,6 +186,7 @@ const Chatbot = () => {
                     }}
                 />
             </div>
+        </div>
         </div>
     )
 }
