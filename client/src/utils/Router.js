@@ -8,6 +8,7 @@ import Signup from '../pages/Signup';
 import Layout from '../components/Layout';
 import FindPrakruti from '../pages/FindPrakruti';
 import Consultant from '../pages/Consultant';
+import SelfCare from '../pages/SelfCare';
 import DietPlan from '../pages/DietPlan';
 
 export default function Router() {
@@ -23,7 +24,8 @@ export default function Router() {
                     <Route exact path="/signup" element={<Signup />} />
                     <Route exact path="/find-your-prakruti" element={<FindPrakruti />} />
                     <Route exact path="/consultant" element={<Consultant />} />
-                    <Route exact path="/dietplan" element={<DietPlan />} />
+                    <Route exact path="/selfcare" element={<SelfCare />} />
+                    <Route exact path="/selfcare/diet" element={<DietPlan />} />
                 </Routes>
             </Layout>
         </BrowserRouter>

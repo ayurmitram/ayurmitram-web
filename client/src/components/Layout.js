@@ -4,7 +4,7 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import TroubleshootRoundedIcon from '@mui/icons-material/TroubleshootRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import LocalHospitalRoundedIcon from '@mui/icons-material/LocalHospitalRounded';
-import KitchenRoundedIcon from '@mui/icons-material/KitchenRounded';
+import SpaRoundedIcon from '@mui/icons-material/SpaRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
@@ -69,7 +69,7 @@ const Layout = ({ children }) => {
 							<div></div>
 						)}
 						<Tab label="Consultant (Doctor)" icon={<LocalHospitalRoundedIcon />} iconPosition="start" onClick={() => {redirectTo('/consultant'); dispatch(setTabValue(3))}} />
-						<Tab label="Diet Plan" icon={<KitchenRoundedIcon />} iconPosition="start" onClick={() => {redirectTo('/dietplan'); dispatch(setTabValue(4))}} />
+						<Tab label="Self care" icon={<SpaRoundedIcon />} iconPosition="start" onClick={() => {redirectTo('/selfcare'); dispatch(setTabValue(4))}} />
 						<Tab label="About" icon={<InfoRoundedIcon />} iconPosition="start" onClick={() => {redirectTo('/about'); dispatch(setTabValue(5))}} />
 
 						<div className='w-full h-[0.5px] bg-black/50 mt-5 mb-1'></div>
@@ -96,7 +96,7 @@ const Layout = ({ children }) => {
 						)}
 					</Tabs>
 				</div>
-				<div className={` bg-white rounded-2xl p-5 ${isMinimized ? 'w-10/12' : 'w-5/12'}`}>
+				<div className={` bg-white rounded-2xl ${isMinimized ? 'w-10/12' : 'w-5/12'}`}>
 					{children}
 				</div>
 				{isMinimized ? (

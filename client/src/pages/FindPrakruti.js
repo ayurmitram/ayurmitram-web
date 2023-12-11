@@ -27,7 +27,7 @@ const FindPrakruti = () => {
     }, [])
 
     return (
-        <div className="w-full h-full flex flex-col gap-5">
+        <div className="w-full h-full flex flex-col gap-5 p-5">
             <div className={`text-2xl min-h-[2rem] max-h-[2rem] flex items-center ${isMinimized && 'justify-center'}`}>
                 Find Your Prakruti
             </div>
