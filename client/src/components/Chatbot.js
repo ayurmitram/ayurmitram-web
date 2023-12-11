@@ -13,58 +13,93 @@ import SendRoundedIcon from '@mui/icons-material/SendRounded';
 
 const MessageBox = ({ message, prev, next, clickHandler }) => {
     return (
-        <>
-            <div className={`
-                px-3 py-2 rounded-2xl w-fit min-w-[10rem] max-w-[25rem]
-                ${message?.type === 'user' 
-                    ? `
-                        bg-[#539C52] self-end text-white pr-8 
-                        ${prev && prev.type === 'user' && 'rounded-tr-md'}
-                        ${next && next.type === 'user' && 'rounded-br-md'}
-                    ` 
-                    : `
-                        bg-[#F5F5F5] pl-8
-                        ${prev && prev.type === 'bot' && 'rounded-tl-md'}
-                        ${next && next.type === 'bot' && 'rounded-bl-md'}
-                    `
-                }
-
-            `}>
-                {message?.text}
-            </div>
-            {(message?.options && next === null) && (
-                <div className="flex items-center gap-2 w-full overfloe-scroll px-5 h-auto">
-                    {message?.options?.map((option, index) => (
-                        <div key={index} className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] max-w-[15rem] bg-[#EFEEEE] overflow-hidden text-ellipsis text-slate-600 text-center " onClick={() => clickHandler(option)}>
-                            {option}
-                        </div>
-                    ))}
-                </div>
-            )}
-        </>
-    )
-}
+      <>
+        <div
+          className={`
+            px-3 py-2 rounded-2xl w-fit min-w-[10rem] max-w-[25rem]
+            ${message?.type === 'user'
+              ? `
+                  bg-[#539C52] self-end text-white pr-8 
+                  ${prev && prev.type === 'user' && 'rounded-tr-md'}
+                  ${next && next.type === 'user' && 'rounded-br-md'}
+              ` 
+              : `
+                  bg-[#F5F5F5] pl-8
+                  ${prev && prev.type === 'bot' && 'rounded-tl-md'}
+                  ${next && next.type === 'bot' && 'rounded-bl-md'}
+              `
+            }
+        `}
+        style={{ whiteSpace: 'pre-line' }}
+        >
+          {message?.type === 'user' ? message.text : message.text.answer}
+        </div>
+        {(message?.options && next === null) && (
+          <div className="flex items-center gap-2 w-full overflow-scroll px-5 h-auto">
+            {message?.options?.map((option, index) => (
+              <div
+                key={index}
+                className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] max-w-[15rem] bg-[#EFEEEE] overflow-hidden text-ellipsis text-slate-600 text-center "
+                onClick={() => clickHandler(option)}
+              >
+                {option}
+              </div>
+            ))}
+          </div>
+        )}
+      </>
+    );
+  };
+  
 
 const Chatbot = () => {
     const dispatch = useDispatch()
     const isMinimized = useSelector(state => state.layout.isMinimized)
     const [userInput, setUserInput] = useState("");
 
+    const predictResponse = async (userMessage) => {
+        try {
+          const response = await fetch('http://localhost:8000/predict', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({message: userMessage}),
+          });
+
+          console.log('Response status:', response);
+
+          const data = await response.json();
+          console.log(data);
+          return data; // Assuming the response contains a 'reply' field
+        } catch (error) {
+          console.error('Error predicting response:', error);
+          return 'Sorry, an error occurred.';
+        }
+      };
+
     const [chatMessages, setChatMessages] = useState([
-        { type: "user", text: "Hello, Ayurmitram!" },
-        { type: "bot", text: "Hi there! How can I assist you today?" },
-        { type: 'user', text: 'I am not feeling well' },
-        { type: 'user', text: 'Start a prakruti analysis' },
-        { type: 'bot', text: 'Sure, select a mode from below', options: ['Quick', 'Comprehensive'] },
+        // { type: "user", text: "Hello, Ayurmitram!" },
+        // { type: "bot", text: "Hi there! How can I assist you today?" },
+        // { type: 'user', text: 'I am not feeling well' },
+        // { type: 'user', text: 'Start a prakruti analysis' },
+        // { type: 'bot', text: 'Sure, select a mode from below', options: ['Quick', 'Comprehensive'] },
     ]);
 
     const handleUserInput = (e) => {
         setUserInput(e.target.value);
     };
 
-    const handleSendMessage = ({ msg = userInput }) => {
+    const handleSendMessage = async ({ msg = userInput }) => {
         const newUserMessage = { type: "user", text: msg };
         setChatMessages([...chatMessages, newUserMessage]);
+
+        const botReply = await predictResponse(msg);
+
+        setChatMessages((prevMessages) => [
+            ...prevMessages, { type: "bot", text: botReply}
+        ]);
+
         setUserInput("");
     };
 
@@ -94,7 +129,7 @@ const Chatbot = () => {
             </div>
 
             <div className="w-full mt-auto absolute bottom-0 z-10 bg-white">
-                <TextField 
+                <TextField
                     variant="outlined"
                     fullWidth
                     type="text"
