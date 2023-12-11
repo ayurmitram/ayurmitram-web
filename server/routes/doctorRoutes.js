@@ -89,4 +89,13 @@ router.post('/auth', async (req, res) => {
     }
   });
 
+router.get('/alldoctors', async (req, res) => {
+  try {
+    const doctors = await DoctorSchema.find();
+    res.json(doctors);
+  } catch (err) {
+    console.log(err);
+  }
+})
+
 module.exports = router;

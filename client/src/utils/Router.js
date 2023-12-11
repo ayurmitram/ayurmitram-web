@@ -9,6 +9,7 @@ import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Layout from '../components/Layout';
 import FindPrakruti from '../pages/FindPrakruti';
+import Consultant from '../pages/Consultant';
 
 export default function Router() {
     return (
@@ -24,6 +25,7 @@ export default function Router() {
                     <Route exact path="/login" element={<Login />} />
                     <Route exact path="/signup" element={<Signup />} />
                     <Route exact path="/find-your-prakruti" element={<FindPrakruti />} />
+                    <Route exact path="/consultant" element={<Consultant />} />
                 </Routes>
             </Layout>
         </BrowserRouter>

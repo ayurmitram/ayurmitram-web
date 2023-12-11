@@ -38,3 +38,16 @@ export const auth_doctor = async(obj) => {
     const ans = await res.json();
     return ans;
 }
+
+export const get_all_doctors = async(obj) => {
+    const res = await fetch(`${baseUrl}/api/doctor/alldoctors`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(obj)
+    })
+
+    const ans = await res.json();
+    return ans;
+}
