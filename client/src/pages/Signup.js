@@ -12,7 +12,9 @@ import smiley from './../assets/logo-smiley.svg'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
-import { setIsMinimized } from '../store/layout';
+import { setIsMinimized, setTabValue } from '../store/layout';
+import { signup_patient } from '../controllers/patientRoutes';
+import { signup_doctor } from '../controllers/doctorRoutes';
 
 const Signup = () => {
 
@@ -25,9 +27,41 @@ const Signup = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const handleSignup = async () => {
+        if (typeOfUser === 'patient') {
+            const res = await signup_patient({
+                patient_name: credentials?.username,
+                patient_email: credentials?.email,
+                patient_password: credentials?.password
+            })
+            // console.log(res, 'signup')
+            if (res?.token) {
+                localStorage.setItem('token', res?.token)
+                localStorage.setItem('typeOfUser', 'patient')
+                navigate('/')
+                dispatch(setTabValue(0))
+            }
+        } else if (typeOfUser === 'doctor') {
+            const res = await signup_doctor({
+                doctor_name: credentials?.username,
+                doctor_email: credentials?.email,
+                doctor_password: credentials?.password
+            })
+            // console.log(res, 'signup')
+            if (res?.token) {
+                localStorage.setItem('token', res?.token)
+                localStorage.setItem('typeOfUser', 'doctor')
+                navigate('/')
+                dispatch(setTabValue(0))
+            }
+        }
+    }
+
     useEffect(() => {
         if (typeOfUser === '') {
             dispatch(setIsMinimized(true))
+        } else {
+            dispatch(setIsMinimized(false))
         }
     }, [typeOfUser])
 
@@ -40,7 +74,7 @@ const Signup = () => {
                     </Button>
                     Sign Up
                 </div>
-                <div className='w-full h-[0.5px] bg-black/50 '></div>
+                <div className='w-full h-[0px] bg-black/50 '></div>
 
                 <div className="px-10 flex flex-col overflow-y-auto">
                     <div className="text-xl mb-4">Welcome here</div>
@@ -98,7 +132,7 @@ const Signup = () => {
                                 : <VisibilityOffOutlinedIcon className='cursor-pointer' sx={{ stroke: "#fff", strokeWidth: 1, color: '#CACACA' }} onClick={() => setConfirmationPasswordVisible(true)} />
                         }}
                     />
-                    <Button variant="contained" className="w-full" color='secondary' sx={{ mb: 3 }} disableElevation>
+                    <Button variant="contained" className="w-full" color='secondary' sx={{ mb: 3 }} disableElevation disabled={!credentials?.username || !credentials?.email || !credentials?.password || !credentials?.confirmationPassword || credentials?.password !== credentials?.confirmationPassword} onClick={handleSignup}>
                         Sign Up
                     </Button>
                     <div className='text-center text-sm mb-8'>Already have a account? <span className='cursor-pointer text-[#539C52]' onClick={() => navigate('/login')}>Sign In</span></div>
@@ -125,7 +159,7 @@ const Signup = () => {
                 <div className="text-2xl min-h-[2rem] max-h-[2rem] flex items-center">
                     Sign Up
                 </div>
-                <div className='w-full h-[0.5px] bg-black/50 '></div>
+                <div className='w-full h-[0px] bg-black/50 '></div>
 
                 <div className={`flex ${isMinimized ? 'flex-row overflow-hidden' : 'flex-col overflow-y-scroll'} grow gap-5  items-stretch`}>
                 <div className={`bg-[#E8EDDF] ${isMinimized ? 'overflow-y-scroll' : ''} w-full flex flex-col rounded-2xl p-5 justify-center `}>
@@ -135,7 +169,7 @@ const Signup = () => {
                         <div className='text-center text-3xl text-[#207B1F] mb-5'>For Doctors</div>
                         <div className='text-[#2A3F2E] font-normal mb-5 text-center leading-loose'>Join Ayurmitram to elevate your Ayurvedic expertise and encourage visitors to discover the ultimate in holistic health.</div>
                         <div className='text-center mt-10'>
-                            <Button variant="contained" className="w-7/12" color='secondary' sx={{ mb: 2 }} disableElevation onClick={() => {setTypeOfUser('doctor'); dispatch(setIsMinimized(!isMinimized))}}>
+                            <Button variant="contained" className="w-7/12" color='secondary' sx={{ mb: 2 }} disableElevation onClick={() => {setTypeOfUser('doctor'); }}>
                                 Sign Up
                             </Button>
                         </div>
@@ -148,7 +182,7 @@ const Signup = () => {
                         <div className='text-center text-3xl text-[#207B1F] mb-5'>For Patients</div>
                         <div className='text-[#2A3F2E] font-normal mb-5 text-center leading-loose'>Join Ayurmitram, where you can refine your Ayurvedic skills, prepare for holistic health consultations, and embark on a journey to thrive in the world of natural well-being.</div>
                         <div className='text-center mt-10'>
-                            <Button variant="contained" className="w-7/12" color='secondary' sx={{ mb: 2 }} disableElevation onClick={() => {setTypeOfUser('patient'); dispatch(setIsMinimized(!isMinimized))}}>
+                            <Button variant="contained" className="w-7/12" color='secondary' sx={{ mb: 2 }} disableElevation onClick={() => {setTypeOfUser('patient'); }}>
                                 Sign Up
                             </Button>
                         </div>

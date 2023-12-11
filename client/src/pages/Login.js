@@ -9,12 +9,21 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import google from './../assets/google.svg'
 import facebook from './../assets/facebook.svg'
 import apple from './../assets/apple.svg'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'
+import { setIsMinimized } from '../store/layout';
+
 
 const Login = () => {
     const [credentials, setCredentails] = useState(null)
     const [passwordVisible, setPasswordVisible] = useState(false)
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setIsMinimized(false))
+    }, [])
 
     const navigate = useNavigate()
 
@@ -23,7 +32,7 @@ const Login = () => {
             <div className="text-2xl min-h-[2rem] flex items-center">
                 Sign In
             </div>
-            <div className='w-full h-[0.5px] bg-black/50 '></div>
+            <div className='w-full h-[0px] bg-black/50 '></div>
 
             <div className="px-10 flex flex-col overflow-y-auto">
                 <div className="text-xl mb-4">Welcome back</div>
