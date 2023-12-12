@@ -8,7 +8,6 @@ dotenv.config();
 
 const patientRoutes = require("./routes/patientRoutes");
 const doctorRoutes = require("./routes/doctorRoutes");
-const quizRoutes = require("./routes/quizRoutes");
 const langchainRoutes = require("./routes/langchainRoutes");
 try {
     mongoose.connect(process.env.MONGO_URI).then(() => {
@@ -57,7 +56,6 @@ app.post("/predict", async (req, res) => {
 
 app.use("/api/patient", patientRoutes);
 app.use("/api/doctor", doctorRoutes);
-app.use("/api/quiz", quizRoutes);
 app.use('/api/langchain', langchainRoutes);
 
 app.listen(PORT, () => {
