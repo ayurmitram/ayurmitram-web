@@ -37,6 +37,54 @@ router.post('/signup', async (req, res) => {
    }
 })
 
+router.post('/complete-profile', async (req, res) => {
+  try {
+      const {
+          doctorId,
+          doctor_consultant_type,
+          doctor_specialization,
+          doctor_experience,
+          doctor_description,
+          doctor_education,
+          doctor_clinic_name,
+          doctor_clinic_address,
+          doctor_contact_number,
+          doctor_languages_spoken,
+          doctor_availability,
+          doctor_preferred_comm,
+          doctor_area_of_expertise,
+          doctor_website
+      } = req.body;
+
+      const doctor = await DoctorSchema.findById(doctorId);
+      if (!doctor) {
+          return res.status(404).json({ message: 'Doctor not found' });
+      }
+
+      doctor.doctor_consultant_type = doctor_consultant_type;
+      doctor.doctor_specialization = doctor_specialization;
+      doctor.doctor_experience = doctor_experience;
+      doctor.doctor_description = doctor_description;
+      doctor.doctor_education = doctor_education;
+      doctor.doctor_clinic_name = doctor_clinic_name;
+      doctor.doctor_clinic_address = doctor_clinic_address;
+      doctor.doctor_contact_number = doctor_contact_number;
+      doctor.doctor_languages_spoken = doctor_languages_spoken;
+      doctor.doctor_availability = doctor_availability;
+      doctor.doctor_preferred_comm = doctor_preferred_comm;
+      doctor.doctor_area_of_expertise = doctor_area_of_expertise;
+      doctor.doctor_website = doctor_website;
+
+      await doctor.save();
+
+      res.json({ message: 'Profile completed successfully' });
+
+  } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
 router.post('/login', async (req, res) => {
     try {
         const {doctor_email, doctor_password} = req.body;

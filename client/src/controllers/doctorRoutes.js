@@ -38,3 +38,16 @@ export const get_all_doctors = async(obj) => {
     const ans = await res.json();
     return ans;
 }
+
+export const doctor_profile_completion = async(pbj) => {
+    const res = await fetch(`${baseUrl}/api/doctor/complete-profile`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(pbj)
+    })
+
+    const ans = await res.json();
+    return ans;
+}
