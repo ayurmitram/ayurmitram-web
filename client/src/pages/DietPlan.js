@@ -6,13 +6,17 @@ import doshalogo2 from './../assets/about2logo.svg'
 import doshalogo3 from './../assets/about3logo.svg'
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import Button from '@mui/material/Button'
 import { useMemo, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const DietPlan = () => {
     const [selectedDosha, setSelectedDosha] = useState('Vata')
     const beneficialRef = useRef(null)
     const avoidableRef = useRef(null)
+
+    const navigate = useNavigate()
 
     const right = (parent) => {
         parent?.current?.scrollTo({
@@ -225,9 +229,13 @@ const DietPlan = () => {
             backgroundPosition: selectedDosha === 'Vata' ? 'center' : 'bottom',
             backgroundRepeat: 'no-repeat',
         }}>
-            <div className="text-2xl min-h-[2rem] flex items-center">
+            <div className="text-2xl min-h-[2rem] max-h-[2rem] flex items-center">
+                <Button variant="outlined" color='lightGray' disableElevation onClick={() => navigate('/selfcare')}>
+                    <ArrowBackRoundedIcon color='secondary' className='mr-2' />
+                </Button>
                 Diet Plan
             </div>
+
             <div className='w-full h-[0px] bg-black/50 '></div>
 
             <div className='h-full overflow-y-scroll'>
