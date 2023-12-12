@@ -44,7 +44,6 @@ const Signup = () => {
                 localStorage.setItem('token', res?.token)
                 localStorage.setItem('typeOfUser', 'patient')
                 navigate('/')
-                dispatch(setTabValue(0))
             }
         } else if (typeOfUser === 'doctor') {
             const res = await signup_doctor({
@@ -57,7 +56,6 @@ const Signup = () => {
                 localStorage.setItem('token', res?.token)
                 localStorage.setItem('typeOfUser', 'doctor')
                 navigate('/')
-                dispatch(setTabValue(0))
             }
         }
     }
