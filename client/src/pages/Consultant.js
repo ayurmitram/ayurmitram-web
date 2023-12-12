@@ -47,7 +47,7 @@ export default function Consultant() {
 
   return (
     <>
-      <div className="w-full h-full flex flex-col gap-5">
+      <div className="w-full h-full flex flex-col gap-5 p-5">
         <div className="text-2xl min-h-[2rem] flex items-center">
           Consultant (Doctor)
         </div>

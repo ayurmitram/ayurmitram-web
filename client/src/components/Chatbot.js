@@ -1,15 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setIsMinimized } from "../store/layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import Tooltip from '@mui/material/Tooltip';
 import MinimizeIcon from '@mui/icons-material/Minimize';
 import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
 import MicIcon from '@mui/icons-material/Mic';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
-
+import StopRoundedIcon from '@mui/icons-material/StopRounded';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 const MessageBox = ({ message, prev, next, clickHandler }) => {
     return (
@@ -85,6 +87,20 @@ const Chatbot = () => {
         // { type: 'user', text: 'Start a prakruti analysis' },
         // { type: 'bot', text: 'Sure, select a mode from below', options: ['Quick', 'Comprehensive'] },
     ]);
+    const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition, isMicrophoneAvailable, browserSupportsContinuousListening } = useSpeechRecognition();
+
+    let startListening
+    if (browserSupportsContinuousListening) {
+        startListening = () => {
+            resetTranscript()
+            SpeechRecognition.startListening({ continuous: true });
+        }
+    } else {
+        startListening = () => {
+            resetTranscript()
+            SpeechRecognition.startListening();
+        }
+    }
 
     const handleUserInput = (e) => {
         setUserInput(e.target.value);
@@ -107,8 +123,15 @@ const Chatbot = () => {
         dispatch(setIsMinimized(!isMinimized))
     }
 
+    useEffect(() => {
+        if (transcript) {
+            setUserInput(transcript)
+        }
+    }, [transcript])
+
     return (
-        <div className="w-full h-full flex flex-col gap-5 relative">
+        <div className="w-full h-full p-5">
+                    <div className=" flex flex-col h-full gap-5 relative ">
             <div className="text-2xl min-h-[2rem] max-h-[2rem] flex items-center justify-between">
                 Ayurmitram
                 <Button variant="outlined" color="lightGray" onClick={toggleChatbot} >
@@ -142,9 +165,18 @@ const Chatbot = () => {
                             borderRadius: '1.25rem'
                         },
                         startAdornment: <InputAdornment position="start">
-                            <IconButton sx={{ marginLeft: '-0.5rem' }} color="secondary">
-                                <MicIcon />
-                            </IconButton>
+                            <Tooltip title={!browserSupportsSpeechRecognition ? 'Browser does not support speech recognition' : !isMicrophoneAvailable ? 'Microphone access denied' : listening ? 'Stop listening' : 'Start listening'} placement="bottom">
+                                <div>
+                                    <IconButton 
+                                        sx={{ marginLeft: '-0.5rem' }} 
+                                        color="secondary" 
+                                        disabled={!browserSupportsSpeechRecognition || (browserSupportsSpeechRecognition && !isMicrophoneAvailable)} 
+                                        onClick={listening ? SpeechRecognition.stopListening : startListening}
+                                    >
+                                        {listening ? <StopRoundedIcon /> : <MicIcon />}
+                                    </IconButton>
+                                </div>
+                            </Tooltip>
                         </InputAdornment>,
                         endAdornment: <InputAdornment position="end">
                             <Button variant="contained" disabled={!userInput} disableElevation sx={{ padding: '0.5rem', minWidth: '0px', borderRadius: '999px' }} color="secondary" onClick={handleSendMessage}>
@@ -154,6 +186,7 @@ const Chatbot = () => {
                     }}
                 />
             </div>
+        </div>
         </div>
     )
 }

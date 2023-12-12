@@ -2,12 +2,13 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import About from "../pages/About";
-import Results from "../pages/Results";
+import Result from "../pages/Result";
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Layout from '../components/Layout';
 import FindPrakruti from '../pages/FindPrakruti';
 import Consultant from '../pages/Consultant';
+import SelfCare from '../pages/SelfCare';
 import DietPlan from '../pages/DietPlan';
 
 export default function Router() {
@@ -18,12 +19,13 @@ export default function Router() {
                 <Routes>
                     <Route exact path="/" element={<Home />} />
                     <Route exact path="/about" element={<About />} />
-                    <Route exact path="/results" element={<Results />} />
+                    <Route exact path="/results" element={<Result />} />
                     <Route exact path="/login" element={<Login />} />
                     <Route exact path="/signup" element={<Signup />} />
                     <Route exact path="/find-your-prakruti" element={<FindPrakruti />} />
                     <Route exact path="/consultant" element={<Consultant />} />
-                    <Route exact path="/dietplan" element={<DietPlan />} />
+                    <Route exact path="/selfcare" element={<SelfCare />} />
+                    <Route exact path="/selfcare/diet" element={<DietPlan />} />
                 </Routes>
             </Layout>
         </BrowserRouter>

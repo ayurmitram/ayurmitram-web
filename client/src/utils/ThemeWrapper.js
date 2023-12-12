@@ -83,6 +83,9 @@ const ThemeWrapper = ({ children }) => {
                         padding: '0.75rem 1.25rem',
                         borderRadius: '0.5rem',
                         fontSize: '1rem',
+                        "&.Mui-disabled": {
+                            pointerEvents: "auto"
+                        }                      
                     },
                 },
             },
@@ -98,6 +101,27 @@ const ThemeWrapper = ({ children }) => {
                     },
                 },
             },
+            MuiInput: {
+                styleOverrides: {
+                    root: {
+                        fontFamily: 'inherit',
+                    }
+                }
+            },
+            MuiTextField: {
+                styleOverrides: {
+                    root: {
+                        fontFamily: 'inherit',
+                    }
+                }
+            },
+            MuiInputBase: {
+                styleOverrides: {
+                    root: {
+                        fontFamily: 'inherit',
+                    }
+                }
+            }
         }
     })
 

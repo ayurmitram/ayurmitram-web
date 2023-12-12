@@ -8,13 +8,14 @@ import Button from '@mui/material/Button';
 import google from './../assets/google.svg'
 import facebook from './../assets/facebook.svg'
 import apple from './../assets/apple.svg'
-import smiley from './../assets/logo-smiley.svg'
+import sthetoscope from './../assets/logo-sthetoscope.svg'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import { setIsMinimized, setTabValue } from '../store/layout';
 import { signup_patient } from '../controllers/patientRoutes';
 import { signup_doctor } from '../controllers/doctorRoutes';
+import SignupCarousel from '../components/SignupCarousel';
 
 const Signup = () => {
 
@@ -27,6 +28,10 @@ const Signup = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const handleGoToLogin = () => {
+        dispatch(setTabValue(10))
+        navigate('/login')
+    }
     const handleSignup = async () => {
         if (typeOfUser === 'patient') {
             const res = await signup_patient({
@@ -67,7 +72,7 @@ const Signup = () => {
 
     return (
         typeOfUser !== '' ? (
-            <div className="w-full h-full flex flex-col gap-5">
+            <div className="w-full h-full flex flex-col gap-5 p-5">
                 <div className="text-2xl min-h-[2rem] max-h-[2rem] flex items-center">
                     <Button variant="outlined" className="" color='lightGray' disableElevation onClick={() => setTypeOfUser('')}>
                         <ArrowBackRoundedIcon color='secondary' className='mr-2' />
@@ -135,7 +140,7 @@ const Signup = () => {
                     <Button variant="contained" className="w-full" color='secondary' sx={{ mb: 3 }} disableElevation disabled={!credentials?.username || !credentials?.email || !credentials?.password || !credentials?.confirmationPassword || credentials?.password !== credentials?.confirmationPassword} onClick={handleSignup}>
                         Sign Up
                     </Button>
-                    <div className='text-center text-sm mb-8'>Already have a account? <span className='cursor-pointer text-[#539C52]' onClick={() => navigate('/login')}>Sign In</span></div>
+                    <div className='text-center text-sm mb-8'>Already have a account? <span className='cursor-pointer text-[#539C52]' onClick={handleGoToLogin}>Sign In</span></div>
                     <div className='flex items-center justify-center gap-2 mb-3'>
                         <div className='h-[0.5px] grow bg-[#9EAFB0]'></div>
                         <div className='text-xs text-[#9EAFB0]'>or continue with</div>
@@ -155,38 +160,37 @@ const Signup = () => {
                 </div>
             </div>
         ) : (
-            <div className="w-full h-full flex flex-col gap-5">
+            <div className="w-full h-full flex flex-col gap-5 p-5">
                 <div className="text-2xl min-h-[2rem] max-h-[2rem] flex items-center">
-                    Sign Up
+                    Welcome
                 </div>
                 <div className='w-full h-[0px] bg-black/50 '></div>
 
                 <div className={`flex ${isMinimized ? 'flex-row overflow-hidden' : 'flex-col overflow-y-scroll'} grow gap-5  items-stretch`}>
-                <div className={`bg-[#E8EDDF] ${isMinimized ? 'overflow-y-scroll' : ''} w-full flex flex-col rounded-2xl p-5 justify-center `}>
-                        <div className='mb-5 flex justify-center'>
-                            <img src={smiley} alt="smiley" className="w-[5rem] aspect-square" />
-                        </div>
-                        <div className='text-center text-3xl text-[#207B1F] mb-5'>For Doctors</div>
-                        <div className='text-[#2A3F2E] font-normal mb-5 text-center leading-loose'>Join Ayurmitram to elevate your Ayurvedic expertise and encourage visitors to discover the ultimate in holistic health.</div>
-                        <div className='text-center mt-10'>
-                            <Button variant="contained" className="w-7/12" color='secondary' sx={{ mb: 2 }} disableElevation onClick={() => {setTypeOfUser('doctor'); }}>
+                    <div className={`bg-[#E8EDDF] text-center font-medium ${isMinimized ? 'overflow-y-scroll' : ''} w-full rounded-2xl p-5 justify-center `}>
+                        <div className=' text-5xl xl:text-6xl 2xl:text-7xl text-[#207B1F] mb-2 mt-8'>Ayurmitram</div>
+                        <div className=' text-[#2A3F2E] mb-12'>Unveiling the essence of your prakruti</div>
+                        <div className='text-[#2A3F2E] font-normal mb-1'>Join Ayurmitram now</div>
+                        <div className='text-center'>
+                            <Button variant="contained" className="w-7/12" color='secondary' sx={{ mb: 2 }}  onClick={() => {setTypeOfUser('patient'); }}>
                                 Sign Up
                             </Button>
                         </div>
-                        <div className='text-center text-sm'>Already have a account? <span className='cursor-pointer text-[#539C52]' onClick={() => navigate('/login')}>Sign In</span></div>                        
+                        <div className='text-[#2A3F2E] font-normal mb-1'>Already have a account? <span className='cursor-pointer text-[#539C52]' onClick={handleGoToLogin}>Sign In</span></div>                        
+                        <div className='text-center'>
+                            <Button variant="contained" className="w-7/12" color='secondary' sx={{ mb: 8 }}  onClick={handleGoToLogin}>
+                                Sign In
+                            </Button>
+                        </div>
+                        <div className='flex justify-center mb-2'>
+                            <img src={sthetoscope} alt="sthetoscope" className="w-[5rem] " />
+                        </div>
+                        <div className='text-sm mb-2'>Are you a doctor?</div>
+                        <div className='text-[#539C52] text-sm mb-2 cursor-pointer' onClick={() => {setTypeOfUser('doctor'); }}>Sign up here</div>
+                        <div className='text-xs font-normal'>to connect with individuals seeking holistic insights into their prakruti</div>
                     </div>
-                    <div className={`bg-[#E8EDDF] ${isMinimized ? 'overflow-y-scroll' : ''} w-full flex flex-col rounded-2xl p-5 justify-center `}>
-                        <div className='mb-5 flex justify-center'>
-                            <img src={smiley} alt="smiley" className="w-[5rem] aspect-square" />
-                        </div>
-                        <div className='text-center text-3xl text-[#207B1F] mb-5'>For Patients</div>
-                        <div className='text-[#2A3F2E] font-normal mb-5 text-center leading-loose'>Join Ayurmitram, where you can refine your Ayurvedic skills, prepare for holistic health consultations, and embark on a journey to thrive in the world of natural well-being.</div>
-                        <div className='text-center mt-10'>
-                            <Button variant="contained" className="w-7/12" color='secondary' sx={{ mb: 2 }} disableElevation onClick={() => {setTypeOfUser('patient'); }}>
-                                Sign Up
-                            </Button>
-                        </div>
-                        <div className='text-center text-sm'>Already have a account? <span className='cursor-pointer text-[#539C52]' onClick={() => navigate('/login')}>Sign In</span></div>
+                    <div className='w-1/2 rounded-2xl'>
+                        <SignupCarousel />
                     </div>
                 </div>
             </div>
