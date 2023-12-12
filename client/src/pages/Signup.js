@@ -63,6 +63,7 @@ const Signup = () => {
     }
 
     useEffect(() => {
+        dispatch(setTabValue(9))
         if (typeOfUser === '') {
             dispatch(setIsMinimized(true))
         } else {

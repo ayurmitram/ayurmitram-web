@@ -1,3 +1,4 @@
+import backg from './../assets/darkgreenbg.jpg'
 import Button from '@mui/material/Button';
 import { useEffect } from "react"
 import balance from './../assets/balance.svg'
@@ -13,66 +14,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setIsMinimized, setTabValue } from '../store/layout';
 import { useNavigate } from "react-router-dom";
 
-const SelfCarePoint = ({ body, img }) => {
-    return (
-        <div className='rounded-full aspect-square flex flex-col items-center text-center justify-center  gap-5 font-medium relative'>
-            <img src={img} alt="balance" className='w-[80px]' />
-            <div className='relative'>
-                <div className='absolute flex justify-start items-center h-full w-full'>
-                    <div className='w-6/12 aspect-square bg-[#E8EDDF] mix-blend-multiply rounded-full'></div>
-                </div>
-                <div className='ps-4'>
-                    {body}
-                </div>
-            </div>
-        </div>
-    )
-}
-
 const SelfCare = () => {
     const isMinimized = useSelector(state => state.layout.isMinimized)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const selfcarePoints = [
-        {
-            body: 'Balancing different food groups, and consuming foods in the right proportion',
-            img: balance 
-        },
-        {
-            body: 'Consuming the appropriate number of calories to maintain a healthy weight depending on your metabolism',
-            img: calories 
-        },
-        {
-            body: 'Focussing on creating a diet that is nutrient dense without being high in calories',
-            img: nutrients 
-        },
-        {
-            body: 'Learning how to be moderate with foods that are higher in fat or sugar',
-            img: moderate 
-        },
-        {
-            body: 'Maintaining adequate levels of energy, nutrients, movement and rest for optimal health',
-            img: health 
-        },
-        {
-            body: 'Exploring a varied diet that provides all the nutrients necessary for good health',
-            img: varied 
-        },
-
-    ]
-
-    const openChatbox = () => {
-        if (localStorage.getItem('token')) {
-            dispatch(setIsMinimized(false))
-        } else {
-            dispatch(setTabValue(10))
-            navigate('/login')
-        }
-    }
-
     useEffect(() => {
+        dispatch(setTabValue(4))
         dispatch(setIsMinimized(true))
     }, [])
 
@@ -82,29 +31,44 @@ const SelfCare = () => {
                 Self Care
             </div>
             <div className='w-full h-[0px] bg-black/50 '></div>
-    
-            <div className={`grid ${isMinimized ? 'grid-cols-4' : 'grid-cols-2'} items-center justify-center gap-5 overflow-y-auto grow place-items-center`}>
-                {selfcarePoints?.slice(0,5)?.map((point, index) => (
-                    <SelfCarePoint body={point.body} img={point.img} key={index} />
-                ))}
-                <div className={`col-span-2 ${isMinimized ? '' : 'order-last'} p-5 max-w-[400px] flex flex-col items-center justify-center gap-5 w-full h-full self-stretch`}>
-                    <Button variant="contained" fullWidth color='primary' disableElevation onClick={() => navigate('diet')}>
-                        Know your food
-                        <BentoRoundedIcon className='ms-2' />
-                    </Button>
-                    <Button variant="contained" fullWidth color='primary' disableElevation onClick={() => navigate('yoga')}>
-                        Yoga for you
-                        <SelfImprovementRoundedIcon className='ms-2' />
-                    </Button>
-                    <Button variant="contained" fullWidth color='primary' disableElevation onClick={() => navigate('lifestyle')}>
-                        Good Lifestyle
-                        <WbSunnyRoundedIcon className='ms-2' />
-                    </Button>
-                    
+            <div className='h-full overflow-y-scroll p-5 bg-cover rounded-2xl text-[#E8EDDF] text-center' style={{
+                backgroundImage: `url(${backg})`
+            }}>
+                <div className='font-medium text-2xl mb-1'>Welcome to your Self Care hub</div>
+                <div className='font-normal text-lg mb-8'>Embrace a Holistic Wellness Journey Tailored Just for You</div>
+                <div className={`flex gap-10 ${isMinimized ? 'flex-row px-5': 'flex-col items-center'}`}>
+                    <div className={`w-full bg-[#FFF2F2]/[20%] backdrop-blur-[25rem] rounded-2xl p-5 flex flex-col items-center ${!isMinimized && 'max-w-[400px]'}`}>
+                        <div className='self-stretch bg-[#E8EDDF] rounded-md text-black py-2 px-3 font-normal flex items-center justify-center'>
+                            <BentoRoundedIcon className='me-2' />
+                            Tailored diet planning
+                        </div>
+                        <div className='font-normal p-5'>Personalized dietary recommendations designed around your prakruti.<br /><br />Experience a balanced and nourishing diet crafted uniquely for your well-being.</div>
+                        <Button variant='contained' sx={{ minWidth: '75%', marginTop: 'auto' }} disableElevation onClick={() => navigate('diet')}>
+                            Explore diet planning
+                        </Button>
+                    </div>
+                    <div className={`w-full bg-[#FFF2F2]/[20%] backdrop-blur-[25rem] rounded-2xl p-5 flex flex-col items-center ${!isMinimized && 'max-w-[400px]'}`}>
+                        <div className='self-stretch bg-[#E8EDDF] rounded-md text-black py-2 px-3 font-normal flex items-center justify-center'>
+                            <SelfImprovementRoundedIcon className='me-2' />
+                            Curated workout routine
+                        </div>
+                        <div className='font-normal p-5'>Access specialized exercise regimes harmonized with your individual constitution.<br /><br />Elevate your fitness journey with routines tailored for your body's needs.</div>
+                        <Button variant='contained' sx={{ minWidth: '75%', marginTop: 'auto' }} disableElevation onClick={() => navigate('workout')}>
+                            Explore workouts
+                        </Button>
+                    </div>
+                    <div className={`w-full bg-[#FFF2F2]/[20%] backdrop-blur-[25rem] rounded-2xl p-5 flex flex-col items-center ${!isMinimized && 'max-w-[400px]'}`}>
+                        <div className='self-stretch bg-[#E8EDDF] rounded-md text-black py-2 px-3 font-normal flex items-center justify-center'>
+                            <BentoRoundedIcon className='me-2' />
+                            Lifestyle guidance
+                        </div>
+                        <div className='font-normal p-5'>Receive personalized lifestyle advice aligning with the essence of Ayurveda.<br /><br />Embrace a holistic approach to well-being, fostering vitality beyond the physical.</div>
+                        <Button variant='contained' sx={{ minWidth: '75%', marginTop: 'auto' }} disableElevation onClick={() => navigate('lifestyle')}>
+                            Explore lifestyle tips
+                        </Button>
+                    </div>
                 </div>
-                {selfcarePoints?.slice(5,6)?.map((point, index) => (
-                    <SelfCarePoint body={point.body} img={point.img} key={index} />
-                ))}
+                <div className='font-medium text-2xl mt-10'>Your journey starts here</div>
             </div>
         </div>
     )

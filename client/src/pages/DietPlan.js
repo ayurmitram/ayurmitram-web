@@ -8,14 +8,17 @@ import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRound
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import Button from '@mui/material/Button'
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setIsMinimized, setTabValue } from '../store/layout'
 
 const DietPlan = () => {
     const [selectedDosha, setSelectedDosha] = useState('Vata')
     const beneficialRef = useRef(null)
     const avoidableRef = useRef(null)
 
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const right = (parent) => {
@@ -221,6 +224,11 @@ const DietPlan = () => {
         else if (selectedDosha === 'Pitta') return pittaData
         else return kaphaData
     }, [selectedDosha])
+
+    useEffect(() => {
+        dispatch(setTabValue(4))
+        dispatch(setIsMinimized(true))
+    }, [])
 
     return (
         <div className='rounded-2xl h-full w-full p-5 flex flex-col gap-5' style={{

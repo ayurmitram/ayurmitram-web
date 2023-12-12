@@ -27,6 +27,7 @@ const Login = () => {
     }
 
     useEffect(() => {
+        dispatch(setTabValue(10))
         dispatch(setIsMinimized(false))
     }, [])
 

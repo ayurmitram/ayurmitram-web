@@ -18,6 +18,7 @@ export default function Home() {
   }
 
   useEffect(() => {
+    dispatch(setTabValue(0))
     if (localStorage.getItem('token'))
       dispatch(setIsMinimized(false))
   }, [])
