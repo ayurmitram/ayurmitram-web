@@ -16,7 +16,7 @@ export default function Home() {
   
   return (
     <>
-    <div className="text-center overflow-y-scroll h-full">
+    <div className="text-center overflow-y-scroll h-full p-5">
       <h1 className="text-3xl text-[#2A3F2E]">
         Decode your <br /> Prakriti with AI
       </h1>
