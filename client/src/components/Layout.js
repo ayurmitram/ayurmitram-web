@@ -61,36 +61,36 @@ const Layout = ({ children }) => {
 					<div className='w-full h-[0px] bg-black/50 '></div>
 
 					<Tabs value={tabValue} onChange={handleTabValue} orientation="vertical">
-						<Tab label="Home" icon={<HomeRoundedIcon />} iconPosition="start" onClick={() => {redirectTo('/'); dispatch(setTabValue(0)); }} />
-						<Tab label="Find Your Prakriti" icon={<TroubleshootRoundedIcon />} iconPosition="start" onClick={(e) => {redirectTo('/find-your-prakruti'); dispatch(setTabValue(1))}} />
+						<Tab label="Home" icon={<HomeRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/')} />
+						<Tab label="Find Your Prakriti" icon={<TroubleshootRoundedIcon />} iconPosition="start" onClick={(e) => redirectTo('/find-your-prakruti')} />
 						{localStorage.getItem('token') ? (
-							<Tab label="Results" icon={<AssessmentRoundedIcon />} iconPosition="start" onClick={() => {redirectTo('/results'); dispatch(setTabValue(2))}} />
+							<Tab label="Results" icon={<AssessmentRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/result')} />
 						) : (
 							<div></div>
 						)}
-						<Tab label="Consultant (Doctor)" icon={<LocalHospitalRoundedIcon />} iconPosition="start" onClick={() => {redirectTo('/consultant'); dispatch(setTabValue(3))}} />
-						<Tab label="Self care" icon={<SpaRoundedIcon />} iconPosition="start" onClick={() => {redirectTo('/selfcare'); dispatch(setTabValue(4))}} />
-						<Tab label="About" icon={<InfoRoundedIcon />} iconPosition="start" onClick={() => {redirectTo('/about'); dispatch(setTabValue(5))}} />
+						<Tab label="Consultant (Doctor)" icon={<LocalHospitalRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/consultant')} />
+						<Tab label="Self care" icon={<SpaRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/selfcare')} />
+						<Tab label="About" icon={<InfoRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/about')} />
 
 						<div className='w-full h-[0.5px] bg-black/50 mt-5 mb-1'></div>
 
 						{localStorage.getItem('token') ? (
-							<Tab label="Profile" icon={<AccountCircleRoundedIcon />} iconPosition="start" onClick={() => {redirectTo('/profile'); dispatch(setTabValue(7))}} />
+							<Tab label="Profile" icon={<AccountCircleRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/profile')} />
 						) : (
 							<div></div>
 						)}
 						{localStorage.getItem('token') ? (
-							<Tab label="Logout" icon={<LogoutRoundedIcon />} iconPosition="start" onClick={() => {localStorage.removeItem('token'); redirectTo('/'); dispatch(setTabValue(0))}} />
+							<Tab label="Logout" icon={<LogoutRoundedIcon />} iconPosition="start" onClick={() => {localStorage.removeItem('token'); redirectTo('/') }} />
 						) : (
 							<div></div>
 						)}
 						{!localStorage.getItem('token') ? (
-							<Tab label="Signup" icon={<PersonAddRoundedIcon />} iconPosition="start" onClick={() => {redirectTo('/signup'); dispatch(setTabValue(9))}} />
+							<Tab label="Signup" icon={<PersonAddRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/signup')} />
 						) : (
 							<div></div>
 						)}
 						{!localStorage.getItem('token') ? (
-							<Tab label="Login" icon={<LoginRoundedIcon />} iconPosition="start" onClick={() => {redirectTo('/login'); dispatch(setTabValue(10))}} />
+							<Tab label="Login" icon={<LoginRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/login')} />
 						) : (
 							<div></div>
 						)}

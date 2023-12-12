@@ -23,6 +23,7 @@ const FindPrakruti = () => {
     }
 
     useEffect(() => {
+        dispatch(setTabValue(1))
         dispatch(setIsMinimized(true))
     }, [])
 

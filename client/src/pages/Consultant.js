@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { get_all_doctors } from "../controllers/doctorRoutes";
 import doctor_image from "../assets/docimage.png"
+import { setTabValue } from "../store/layout";
+import { useDispatch } from "react-redux";
 
 const DoctorCard = ({ doctor_name, description }) => (
     <>
@@ -38,7 +40,10 @@ const DoctorCard = ({ doctor_name, description }) => (
 export default function Consultant() {
   const [doctors, setDoctors] = useState([]);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
+    dispatch(setTabValue(3))
     get_all_doctors().then((res) => {
       console.log(res);
       setDoctors(res);

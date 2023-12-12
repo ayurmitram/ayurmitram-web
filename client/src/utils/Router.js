@@ -10,6 +10,7 @@ import FindPrakruti from '../pages/FindPrakruti';
 import Consultant from '../pages/Consultant';
 import SelfCare from '../pages/SelfCare';
 import DietPlan from '../pages/DietPlan';
+import Profile from '../pages/Profile';
 
 export default function Router() {
     return (
@@ -18,14 +19,15 @@ export default function Router() {
             <Layout>
                 <Routes>
                     <Route exact path="/" element={<Home />} />
-                    <Route exact path="/about" element={<About />} />
-                    <Route exact path="/results" element={<Result />} />
-                    <Route exact path="/login" element={<Login />} />
-                    <Route exact path="/signup" element={<Signup />} />
                     <Route exact path="/find-your-prakruti" element={<FindPrakruti />} />
+                    <Route exact path="/result" element={<Result />} />
                     <Route exact path="/consultant" element={<Consultant />} />
                     <Route exact path="/selfcare" element={<SelfCare />} />
                     <Route exact path="/selfcare/diet" element={<DietPlan />} />
+                    <Route exact path="/about" element={<About />} />
+                    <Route exact path="/profile" element={<Profile />} />
+                    <Route exact path="/signup" element={<Signup />} />
+                    <Route exact path="/login" element={<Login />} />
                 </Routes>
             </Layout>
         </BrowserRouter>

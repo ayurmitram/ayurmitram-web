@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import { setIsMinimized, setTabValue } from '../store/layout';
+import { login_common } from '../controllers/loginRoutes';
 
 const Login = () => {
     const [credentials, setCredentails] = useState(null)
@@ -26,7 +27,20 @@ const Login = () => {
         navigate('/signup')
     }
 
+    const handleLogin = async () => {
+        const res = await login_common({
+            email: credentials?.email,
+            password: credentials?.password
+        })
+        // console.log(res, 'signup')
+        if (res?.token) {
+            localStorage.setItem('token', res?.token)
+            navigate('/')
+        }
+    }
+
     useEffect(() => {
+        dispatch(setTabValue(10))
         dispatch(setIsMinimized(false))
     }, [])
 
@@ -81,7 +95,7 @@ const Login = () => {
                         label="Remember me" 
                     />
                 </div>
-                <Button variant="contained" className="w-full" color='secondary' sx={{ mb: 3 }} disableElevation>
+                <Button variant="contained" className="w-full" color='secondary' sx={{ mb: 3 }} disableElevation onClick={handleLogin}>
                     Sign In
                 </Button>
                 <div className='cursor-pointer text-xs text-[#539C52] text-center mb-3'>forgot password?</div>
