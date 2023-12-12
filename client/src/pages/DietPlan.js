@@ -4,77 +4,212 @@ import dietBg3 from './../assets/dietBg3.png'
 import doshalogo1 from './../assets/about1logo.svg'
 import doshalogo2 from './../assets/about2logo.svg'
 import doshalogo3 from './../assets/about3logo.svg'
-import CircleRoundedIcon from '@mui/icons-material/CircleRounded';
-import { useMemo, useState } from 'react'
+import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
+import Button from '@mui/material/Button'
+import { useMemo, useRef, useState } from 'react'
 
 const DietPlan = () => {
     const [selectedDosha, setSelectedDosha] = useState('Vata')
+    const beneficialRef = useRef(null)
+    const avoidableRef = useRef(null)
+
+    const right = (parent) => {
+        parent?.current?.scrollTo({
+            left: parent?.current?.scrollLeft - parent?.current?.offsetWidth,
+            behavior: 'smooth'
+        })
+    }
+    const left = (parent) => {
+        parent?.current?.scrollTo({
+            left: parent?.current?.scrollLeft + parent?.current?.offsetWidth,
+            behavior: 'smooth'
+        })
+    }
 
     const vataData = {
         title: 'Vata Prakruti',
         content1: "For those with a Vata constitution, the ideal diet is one that's nutritive, strengthening, calming, and grounding. This ensures a harmonious balance for your Vata nature.",
         content2: 'Gaining insight into tastes empowers us to make informed choices, irrespective of having an exhaustive list of Vata-pacifying foods readily available.',
-        beneficialFoods : {
-            type: 'Sweet',
-            tips: [
-                'Prioritize naturally sweet foods: fruits, grains, root vegetables, milk, ghee, fresh yogurt, eggs, nuts, seeds, oils, and lean meats.',
-                'The sweet taste forms the basis of a vata-pacifying diet, being predominant in many staple vata foods and serving as a primary source of nutrition.',
-                "Emphasizing sweetness doesn't mean excessive refined sugar or sugary foods, as this can worsen vata's tendency to over-exert and crash.",
-                'Naturally sweet foods provide grounding, nourishment, strength-building, and satisfaction in a vata-pacifying diet.'
-            ]
-        },
-        foodsToAvoid: {
-            type: 'Pungent',
-            tips: [
-                'Pungent, a spicy and hot flavor, is present in foods like chilies, radishes, turnips, raw onions, and various heating spices.',
-                'In moderation, mild spices are generally vata-pacifying. Refer to our resource on Vata-Pacifying Foods for a comprehensive list of herbs and spices to favor or reduce.',
-                'The pungent taste is characterized by being hot, dry, and light; excessive consumption can lead to extreme drying, aggravating the rough quality and potentially disturbing vata.'
-            ]
-        }
+        beneficialFoods : [
+            {
+                type: 'Sweet',
+                tips: [
+                    'Prioritize naturally sweet foods: fruits, grains, root vegetables, milk, ghee, fresh yogurt, eggs, nuts, seeds, oils, and lean meats.',
+                    'The sweet taste forms the basis of a vata-pacifying diet, being predominant in many staple vata foods and serving as a primary source of nutrition.',
+                    "Emphasizing sweetness doesn't mean excessive refined sugar or sugary foods, as this can worsen vata's tendency to over-exert and crash.",
+                    'Naturally sweet foods provide grounding, nourishment, strength-building, and satisfaction in a vata-pacifying diet.'
+                ]
+            },
+            {
+                type: 'Sweet',
+                tips: [
+                    'Prioritize naturally sweet foods: fruits, grains, root vegetables, milk, ghee, fresh yogurt, eggs, nuts, seeds, oils, and lean meats.',
+                    'The sweet taste forms the basis of a vata-pacifying diet, being predominant in many staple vata foods and serving as a primary source of nutrition.',
+                    "Emphasizing sweetness doesn't mean excessive refined sugar or sugary foods, as this can worsen vata's tendency to over-exert and crash.",
+                    'Naturally sweet foods provide grounding, nourishment, strength-building, and satisfaction in a vata-pacifying diet.'
+                ]
+            },
+            {
+                type: 'Sweet',
+                tips: [
+                    'Prioritize naturally sweet foods: fruits, grains, root vegetables, milk, ghee, fresh yogurt, eggs, nuts, seeds, oils, and lean meats.',
+                    'The sweet taste forms the basis of a vata-pacifying diet, being predominant in many staple vata foods and serving as a primary source of nutrition.',
+                    "Emphasizing sweetness doesn't mean excessive refined sugar or sugary foods, as this can worsen vata's tendency to over-exert and crash.",
+                    'Naturally sweet foods provide grounding, nourishment, strength-building, and satisfaction in a vata-pacifying diet.'
+                ]
+            }
+        ],
+        foodsToAvoid: [
+            {
+                type: 'Pungent',
+                tips: [
+                    'Pungent, a spicy and hot flavor, is present in foods like chilies, radishes, turnips, raw onions, and various heating spices.',
+                    'In moderation, mild spices are generally vata-pacifying. Refer to our resource on Vata-Pacifying Foods for a comprehensive list of herbs and spices to favor or reduce.',
+                    'The pungent taste is characterized by being hot, dry, and light; excessive consumption can lead to extreme drying, aggravating the rough quality and potentially disturbing vata.'
+                ]
+            },
+            {
+                type: 'Pungent',
+                tips: [
+                    'Pungent, a spicy and hot flavor, is present in foods like chilies, radishes, turnips, raw onions, and various heating spices.',
+                    'In moderation, mild spices are generally vata-pacifying. Refer to our resource on Vata-Pacifying Foods for a comprehensive list of herbs and spices to favor or reduce.',
+                    'The pungent taste is characterized by being hot, dry, and light; excessive consumption can lead to extreme drying, aggravating the rough quality and potentially disturbing vata.'
+                ]
+            },
+            {
+                type: 'Pungent',
+                tips: [
+                    'Pungent, a spicy and hot flavor, is present in foods like chilies, radishes, turnips, raw onions, and various heating spices.',
+                    'In moderation, mild spices are generally vata-pacifying. Refer to our resource on Vata-Pacifying Foods for a comprehensive list of herbs and spices to favor or reduce.',
+                    'The pungent taste is characterized by being hot, dry, and light; excessive consumption can lead to extreme drying, aggravating the rough quality and potentially disturbing vata.'
+                ]
+            }
+        ]
     }
 
     const pittaData = {
         title: 'Pitta Prakruti',
         content1: "For those with a Pitta constitution, the key to a harmonious diet lies in embracing a cooling, calming, cleansing, and nurturing approach. Picture your plate filled with cool, heavy, and slightly dry foods, creating a perfect balance for Pitta dosha.",
         content2: "Consider adding refreshing green juices to your anti-Pitta diet as a delightful twist. And here's a tip: establish a dedicated mealtime and stick to it religiously – this not only ensures regularity but also contributes to the overall well-being of your Pitta nature.",
-        beneficialFoods: {
-            type: 'Sweet',
-            tips: [
-                'Prioritize naturally sweet foods: sweet fruits, most grains, squashes, root vegetables, milk, ghee, and fresh yogurt',
-                'The sweet taste, being cooling and heavy, offers various benefits, including pacifying heat, satisfying thirst, benefiting the skin and hair, and providing grounding, nourishment, strength building, and satisfaction.',
-                "It's important to note that emphasizing the sweet taste doesn't mean consuming large amounts of refined sugar or sugary sweets; the focus should be on naturally sweet foods for optimal balance."
-            ]
-        }, 
-        foodsToAvoid: {
-            type: 'Pungent',
-            tips: [
-                'Pungent, a spicy and hot flavor, is present in foods like chilies, radishes, turnips, raw onions, and various heating spices.',
-                'In moderation, mild spices are generally pitta-pacifying. Refer to our resource on Pitta-Pacifying Foods for a comprehensive list of herbs and spices to favor or reduce.',
-                'The pungent taste is characterized by being hot, dry, and light; excessive consumption can lead to extreme drying, aggravating the rough quality and potentially disturbing pitta.'
-            ]
-        }
+        beneficialFoods: [
+            {
+                type: 'Sweet',
+                tips: [
+                    'Choose naturally sweet foods like ripe fruits, whole grains, sweet potatoes, honey, milk, and ghee to form the foundation of a pitta-pacifying diet.',
+                    'The sweet taste plays a vital role in satisfying Pitta\'s nutritional needs and promoting overall balance.',
+                    'It\'s crucial to avoid excessive refined sugars or overly sugary foods, as they can contribute to overheating in pitta dosha.',
+                    'Embracing naturally sweet foods provides a cooling, calming, and nourishing effect, fostering equilibrium and satisfaction for individuals with a pitta constitution.'
+                ]
+            },
+            {
+                type: 'Bitter',
+                tips: [
+                    'Incorporate moderate amounts of bitter foods such as leafy greens (e.g., kale, arugula), bitter melon, asparagus, turmeric, and dark chocolate.',
+                    'While not the primary focus of a meal, the bitter taste complements and balances other flavors in a pitta-pacifying diet.',
+                    'Bitter foods possess cooling, light, and drying qualities, effectively counteracting the natural heat and intensity associated with pitta dosha.',
+                    'Including these foods supports digestion, aids in detoxification, and helps alleviate excess heat, contributing to a more harmonious state for individuals with a pitta constitution.'
+                ]
+            },
+            {
+                type: 'Astringent',
+                tips: [
+                    'Include astringent flavors found in legumes (e.g., lentils, chickpeas), beans, pomegranate, apples, broccoli, and quinoa.',
+                    'The astringent taste, characterized by dryness and mild contraction, helps offset pitta\'s tendency toward excess heat and inflammation.',
+                    'While not the primary taste of a meal, incorporating astringent foods contributes to a well-rounded, pitta-pacifying diet, imparting a sense of balance and calm.',
+                    'Astringent taste supports proper hydration, helps control excessive sweating, and promotes a cooling effect for individuals with pitta dosha.'
+                ]
+            },
+            {
+                type: 'Pungent',
+                tips: [
+                    'Incorporate pungent flavors in moderation, including mild spices like ginger, black pepper, and mustard.',
+                    'While some mild spices are pitta-pacifying, excessive pungency can exacerbate pitta dosha.',
+                    'It\'s essential to balance the pungent taste, as an overdose may contribute to heat and inflammation, disrupting the natural harmony of pitta.',
+                    'Moderate pungency supports digestion, stimulates metabolism, and provides a subtle warmth for individuals with pitta constitution.'
+                ]
+            }
+        ], 
+        foodsToAvoid: [
+            {
+                type: 'Sour',
+                tips: [
+                    'Limit the intake of sour foods like citrus fruits, tomatoes, yogurt, and vinegar, as excess sourness can exacerbate pitta\'s heat.',
+                    'While some sour tastes can be beneficial in moderation, an excess may contribute to acidity and inflammation in pitta dosha.',
+                    'Restricting sour foods helps maintain a more balanced and cool internal environment, aligning with the specific needs of individuals with a pitta constitution.'
+                ]
+            },
+            {
+                type: 'Salty',
+                tips: [
+                    'Exercise moderation in salt intake, preferring high-quality sea salt or natural mineral salt over common table salt.',
+                    'While salt enhances flavors, excessive intake may lead to increased heat and water retention, posing challenges for pitta dosha.',
+                    'Striking a balance in salt consumption supports Pitta\'s digestive fire without causing unnecessary heat buildup or aggravation.'
+                ]
+            }
+        ]
     }
 
     const kaphaData = {
         title: 'Kapha Prakruti',
         content1: "Tailored for Kapha individuals, an ideal diet leans towards being reducing, lightening, and stimulating.",
         content2: "Go for warm, light, and dry foods to strike the perfect balance for Kapha dosha. Consider this – setting a specific mealtime and adhering to it diligently not only promotes regularity but also aligns with the principles of a Kapha-pacifying diet.",
-        beneficialFoods: {
-            type: 'Pungent',
-            tips: [
-                'Pungent taste, found in spices like chilies, radishes, and onions, is highly Kapha-pacifying.',
-                'Embrace a variety of mild spices such as cardamom, cinnamon, and turmeric for Kapha balance.',
-                'Pungency, with its light, hot, rough, and dry qualities, stimulates digestion, clears bodily channels, and thins the blood in Kapha individuals.'
-            ]
-        },
-        foodsToAvoid: {
-            type: 'Sweet',
-            tips: [
-                'The sweet taste, being heavy, moist, and cooling, is generally Kapha-aggravating.',
-                'Favor naturally sweet foods like fruits, grains, root vegetables, milk, ghee, and fresh yogurt.',
-                "Avoid refined sugar and sugary foods, as these can worsen Kapha's tendency to become overweight and congested."
-            ]
-        }
+        beneficialFoods: [
+            {
+                type: 'Sweet',
+                tips: [
+                    'Choose naturally sweet foods like ripe fruits, whole grains, sweet potatoes, honey, milk, and ghee to form the foundation of a pitta-pacifying diet.',
+                    'The sweet taste plays a vital role in satisfying Pitta\'s nutritional needs and promoting overall balance.',
+                    'It\'s crucial to avoid excessive refined sugars or overly sugary foods, as they can contribute to overheating in pitta dosha.',
+                    'Embracing naturally sweet foods provides a cooling, calming, and nourishing effect, fostering equilibrium and satisfaction for individuals with a pitta constitution.'
+                ]
+            },
+            {
+                type: 'Bitter',
+                tips: [
+                    'Incorporate moderate amounts of bitter foods such as leafy greens (e.g., kale, arugula), bitter melon, asparagus, turmeric, and dark chocolate.',
+                    'While not the primary focus of a meal, the bitter taste complements and balances other flavors in a pitta-pacifying diet.',
+                    'Bitter foods possess cooling, light, and drying qualities, effectively counteracting the natural heat and intensity associated with pitta dosha.',
+                    'Including these foods supports digestion, aids in detoxification, and helps alleviate excess heat, contributing to a more harmonious state for individuals with a pitta constitution.'
+                ]
+            },
+            {
+                type: 'Astringent',
+                tips: [
+                    'Include astringent flavors found in legumes (e.g., lentils, chickpeas), beans, pomegranate, apples, broccoli, and quinoa.',
+                    'The astringent taste, characterized by dryness and mild contraction, helps offset pitta\'s tendency toward excess heat and inflammation.',
+                    'While not the primary taste of a meal, incorporating astringent foods contributes to a well-rounded, pitta-pacifying diet, imparting a sense of balance and calm.',
+                    'Astringent taste supports proper hydration, helps control excessive sweating, and promotes a cooling effect for individuals with pitta dosha.'
+                ]
+            },
+            {
+                type: 'Pungent',
+                tips: [
+                    'Incorporate pungent flavors in moderation, including mild spices like ginger, black pepper, and mustard.',
+                    'While some mild spices are pitta-pacifying, excessive pungency can exacerbate pitta dosha.',
+                    'It\'s essential to balance the pungent taste, as an overdose may contribute to heat and inflammation, disrupting the natural harmony of pitta.',
+                    'Moderate pungency supports digestion, stimulates metabolism, and provides a subtle warmth for individuals with pitta constitution.'
+                ]
+            }
+        ], 
+        foodsToAvoid: [
+            {
+                type: 'Sour',
+                tips: [
+                    'Limit the intake of sour foods like citrus fruits, tomatoes, yogurt, and vinegar, as excess sourness can exacerbate pitta\'s heat.',
+                    'While some sour tastes can be beneficial in moderation, an excess may contribute to acidity and inflammation in pitta dosha.',
+                    'Restricting sour foods helps maintain a more balanced and cool internal environment, aligning with the specific needs of individuals with a pitta constitution.'
+                ]
+            },
+            {
+                type: 'Salty',
+                tips: [
+                    'Exercise moderation in salt intake, preferring high-quality sea salt or natural mineral salt over common table salt.',
+                    'While salt enhances flavors, excessive intake may lead to increased heat and water retention, posing challenges for pitta dosha.',
+                    'Striking a balance in salt consumption supports Pitta\'s digestive fire without causing unnecessary heat buildup or aggravation.'
+                ]
+            }
+        ]
     }
 
     const data = useMemo(() => {
@@ -113,22 +248,62 @@ const DietPlan = () => {
                 <div className='font-normal text-center'>{data?.content2}</div>
 
                 <div className='mb-4 mt-12 text-xl font-medium'>Food beneficial to {selectedDosha} Dosha</div>
-                <div className='text-center text-xl font-medium mb-3'>{data?.beneficialFoods?.type}</div>
-                <div className='flex flex-col gap-2'>
-                    {data?.beneficialFoods?.tips.map((tip, index) => (
-                        <div key={index} className='font-normal flex items-center gap-4'>
-                            <div className='w-[8px] h-[8px] aspect-square rounded-full bg-black' />
-                            {tip}
+                <div className='flex gap-5 w-full overflow-x-scroll snap-x' ref={beneficialRef}>
+                    {data?.beneficialFoods?.map((food, index) => (
+                        <div key={index} className='min-w-full snap-center'>
+                            <div className='flex items-center justify-between'>
+                                <Button variant='outlined' color='lightGray' disableElevation size='small' onClick={() => right(beneficialRef)}>
+                                    <ArrowBackIosNewRoundedIcon sx={{ color: '#000' }} />
+                                </Button>
+                                <div className='text-center text-xl font-medium'>{food?.type}</div>
+                                <Button variant='outlined' color='lightGray' disableElevation size='small' onClick={() => left(beneficialRef)}>
+                                    <ArrowForwardIosRoundedIcon sx={{ color: '#000' }} />
+                                </Button>
+                            </div>
+                            <div className='flex gap-3 mb-3 justify-center items-center'>
+                                {data?.beneficialFoods.map((x, i) => (
+                                    <div className={`w-[12px] h-[12px] rounded-full bg-[#D0E1EE] transition-all ${i === index && 'w-[20px] h-[20px]'}`}></div>
+                                ))}
+                            </div>
+                            <div className='flex flex-col gap-2 mb-3'>
+                                {food?.tips.map((tip, i) => (
+                                    <div key={i} className='font-normal flex items-center gap-4'>
+                                        <div className='w-[8px] h-[8px] aspect-square rounded-full bg-black' />
+                                        {tip}
+                                    </div>
+                                ))}
+                            </div>
+
                         </div>
                     ))}
                 </div>
                 <div className='mb-4 mt-12 text-xl font-medium'>Food to avoid for {selectedDosha} Dosha</div>
-                <div className='text-center text-xl font-medium mb-3'>{data?.foodsToAvoid?.type}</div>
-                <div className='flex flex-col gap-2'>
-                    {data?.foodsToAvoid?.tips.map((tip, index) => (
-                        <div key={index} className='font-normal flex items-center gap-4'>
-                            <div className='w-[8px] h-[8px] aspect-square rounded-full bg-black' />
-                            {tip}
+                <div className='flex gap-5 w-full overflow-x-scroll snap-x' ref={avoidableRef}>
+                    {data?.foodsToAvoid?.map((food, index) => (
+                        <div key={index} className='min-w-full snap-center'>
+                            <div className='flex items-center justify-between'>
+                                <Button variant='outlined' color='lightGray' disableElevation size='small' onClick={() => right(avoidableRef)}>
+                                    <ArrowBackIosNewRoundedIcon sx={{ color: '#000' }} />
+                                </Button>
+                                <div className='text-center text-xl font-medium'>{food?.type}</div>
+                                <Button variant='outlined' color='lightGray' disableElevation size='small' onClick={() => left(avoidableRef)}>
+                                    <ArrowForwardIosRoundedIcon sx={{ color: '#000' }} />
+                                </Button>
+                            </div>
+                            <div className='flex gap-3 mb-3 justify-center items-center'>
+                                {data?.foodsToAvoid?.map((x, i) => (
+                                    <div className={`w-[12px] h-[12px] rounded-full bg-[#D0E1EE] transition-all ${i === index && 'w-[20px] h-[20px]'}`}></div>
+                                ))}
+                            </div>
+                            <div className='flex flex-col gap-2 mb-3'>
+                                {food?.tips.map((tip, i) => (
+                                    <div key={i} className='font-normal flex items-center gap-4'>
+                                        <div className='w-[8px] h-[8px] aspect-square rounded-full bg-black' />
+                                        {tip}
+                                    </div>
+                                ))}
+                            </div>
+
                         </div>
                     ))}
                 </div>
