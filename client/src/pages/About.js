@@ -3,7 +3,7 @@ import about1logo from "../assets/about1logo.svg";
 import about2logo from "../assets/about2logo.svg";
 import about3logo from "../assets/about3logo.svg";
 import { useDispatch } from 'react-redux'
-import { setIsMinimized } from '../store/layout';
+import { setIsMinimized, setTabValue } from '../store/layout';
 
 
 const Card = ({
@@ -37,6 +37,7 @@ export default function About() {
   const dispatch = useDispatch()
 
   useEffect(() => {
+      dispatch(setTabValue(5))
       if (localStorage.getItem('token')) 
         dispatch(setIsMinimized(false))
   }, [])
