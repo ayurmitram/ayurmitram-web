@@ -17,7 +17,8 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 
-const MessageBox = ({ message, prev, next, clickHandler }) => {
+const MessageBox = ({ message, prev, next, optionHandler }) => {
+  console.log(message, 'message');
   return (
     <>
       <div
@@ -39,19 +40,25 @@ const MessageBox = ({ message, prev, next, clickHandler }) => {
         `}
         style={{ whiteSpace: "pre-line" }}
       >
-        {message?.type === "user" ? message.text : message.text.answer}
+        {message?.type === "user" ? message?.text : (JSON.parse(message?.text?.answer ?? `{}`)?.answer || JSON.parse(message?.text?.answer ?? `{}`)?.question)}
       </div>
-      {message?.options && next === null && (
-        <div className="flex items-center gap-2 w-full overflow-scroll px-5 h-auto">
-          {message?.options?.map((option, index) => (
-            <div
-              key={index}
-              className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] max-w-[15rem] bg-[#EFEEEE] overflow-hidden text-ellipsis text-slate-600 text-center "
-              onClick={() => clickHandler(option)}
-            >
-              {option}
+      {JSON.parse(message?.text?.answer ?? `{}`)?.options && next === null && (
+        <div className="flex flex-col items-start gap-2 mt-2 w-full px-5">
+          {JSON.parse(message?.text?.answer)?.options?.[1] && (
+            <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] bg-[#EFEEEE] overflow-hidden text-ellipsis text-slate-600 text-center" onClick={() => optionHandler({ msg: '1' })}>
+              {JSON.parse(message?.text?.answer)?.options?.[1]}
             </div>
-          ))}
+          )}
+          {JSON.parse(message?.text?.answer)?.options?.[2] && (
+            <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] bg-[#EFEEEE] overflow-hidden text-ellipsis text-slate-600 text-center" onClick={() => optionHandler({ msg: '2' })}>
+              {JSON.parse(message?.text?.answer)?.options?.[2]}
+            </div>
+          )}
+          {JSON.parse(message?.text?.answer)?.options?.[3] && (
+            <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] bg-[#EFEEEE] overflow-hidden text-ellipsis text-slate-600 text-center" onClick={() => optionHandler({ msg: '3' })}>
+              {JSON.parse(message?.text?.answer)?.options?.[3]}
+            </div>
+          )}
         </div>
       )}
     </>
@@ -61,6 +68,7 @@ const MessageBox = ({ message, prev, next, clickHandler }) => {
 const Chatbot = () => {
   const dispatch = useDispatch();
   const isMinimized = useSelector((state) => state.layout.isMinimized);
+  const activeBot = useSelector((state) => state.layout.activeBot);
   const [userInput, setUserInput] = useState("");
   const [responseList, setResponseList] = useState([]);
 
@@ -129,12 +137,12 @@ const Chatbot = () => {
       { type: "bot", text: botReply },
     ]);
 
-    console.log(botReply.answer, "#####");
-    if (botReply.answer.includes("Your Prakriti is:")) {
+    console.log(botReply?.answer, "#####");
+    if (JSON.parse(botReply?.answer ?? `{}`)?.answer && JSON.parse(botReply?.answer ?? `{}`)?.answer?.includes("Your Prakriti is")) {
       setResponseList([
         ...responseList,
-        { type: "user", text: newUserMessage.text },
-        { type: "bot", text: botReply.answer },
+        { type: "user", text: newUserMessage?.text },
+        { type: "bot", text: botReply?.answer },
       ]);
 
       setChatMessages([]);
@@ -142,7 +150,7 @@ const Chatbot = () => {
       setResponseList([
         ...responseList,
         { type: "user", text: newUserMessage.text },
-        { type: "bot", text: botReply.answer },
+        { type: "bot", text: botReply?.answer },
       ]);
     }
 
@@ -224,7 +232,7 @@ const Chatbot = () => {
 
     // Populate the table with data
     let serialNo = 1;
-    responseList.slice(4).forEach((message) => {
+    responseList?.slice(4).forEach((message) => {
       const { type, text } = message;
 
       if (type === "user") {
@@ -241,7 +249,7 @@ const Chatbot = () => {
         });
       } else {
         doc.autoTable({
-          body: [["", text, ""]],
+          body: [["", JSON.parse(text ?? `{}`)?.answer || JSON.parse(text ?? `{}`)?.question, ""]],
           startY: startY + lineHeight, // Add some space here, adjust as needed
           theme: "plain",
           columnStyles: {
@@ -291,7 +299,7 @@ const Chatbot = () => {
                   ? null
                   : chatMessages[index + 1]
               }
-              clickHandler={handleSendMessage}
+              optionHandler={handleSendMessage}
             />
           ))}
           <div className=" my-2 flex justify-center w-full">
@@ -317,6 +325,7 @@ const Chatbot = () => {
 
         <div className="w-full mt-auto absolute bottom-0 z-10 bg-white">
           <TextField
+            disabled={activeBot === 'quiz'}
             variant="outlined"
             fullWidth
             type="text"

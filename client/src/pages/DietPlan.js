@@ -257,13 +257,12 @@ const DietPlan = () => {
                     <div title='Kapha Prakruti'className={`w-12 h-12 bg-[#F9C80E] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'Kapha' && 'scale-75'} transition-all`} onClick={() => setSelectedDosha('Kapha')}>
                         <img src={doshalogo3} alt="icon" className="" />
                     </div>
-
                 </div>
 
                 <div className='font-normal text-center mb-4'>{data?.content1}</div>
                 <div className='font-normal text-center'>{data?.content2}</div>
 
-                <div className='mb-4 mt-12 text-xl font-medium'>Food beneficial to {selectedDosha} Dosha</div>
+                <div className='mb-4 mt-12 text-2xl font-medium'>Food beneficial to {selectedDosha} Dosha</div>
                 <div className='flex gap-5 w-full overflow-x-scroll snap-x' ref={beneficialRef}>
                     {data?.beneficialFoods?.map((food, index) => (
                         <div key={index} className='min-w-full snap-center'>
@@ -271,7 +270,7 @@ const DietPlan = () => {
                                 <Button variant='outlined' color='lightGray' disableElevation size='small' onClick={() => right(beneficialRef)}>
                                     <ArrowBackIosNewRoundedIcon sx={{ color: '#000' }} />
                                 </Button>
-                                <div className='text-center text-xl font-medium'>{food?.type}</div>
+                                <div className='text-center text-2xl font-medium'>{food?.type}</div>
                                 <Button variant='outlined' color='lightGray' disableElevation size='small' onClick={() => left(beneficialRef)}>
                                     <ArrowForwardIosRoundedIcon sx={{ color: '#000' }} />
                                 </Button>
@@ -293,7 +292,7 @@ const DietPlan = () => {
                         </div>
                     ))}
                 </div>
-                <div className='mb-4 mt-12 text-xl font-medium'>Food to avoid for {selectedDosha} Dosha</div>
+                <div className='mb-4 mt-12 text-2xl font-medium'>Food to avoid for {selectedDosha} Dosha</div>
                 <div className='flex gap-5 w-full overflow-x-scroll snap-x' ref={avoidableRef}>
                     {data?.foodsToAvoid?.map((food, index) => (
                         <div key={index} className='min-w-full snap-center'>
@@ -301,7 +300,7 @@ const DietPlan = () => {
                                 <Button variant='outlined' color='lightGray' disableElevation size='small' onClick={() => right(avoidableRef)}>
                                     <ArrowBackIosNewRoundedIcon sx={{ color: '#000' }} />
                                 </Button>
-                                <div className='text-center text-xl font-medium'>{food?.type}</div>
+                                <div className='text-center text-2xl font-medium'>{food?.type}</div>
                                 <Button variant='outlined' color='lightGray' disableElevation size='small' onClick={() => left(avoidableRef)}>
                                     <ArrowForwardIosRoundedIcon sx={{ color: '#000' }} />
                                 </Button>
