@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import AssessmentRoundedIcon from '@mui/icons-material/AssessmentRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import TroubleshootRoundedIcon from '@mui/icons-material/TroubleshootRounded';
@@ -28,9 +28,9 @@ const Layout = ({ children }) => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
-	const handleTabValue = ({ event, newValue}) => {
-		
-	}
+	const disableAllTabs = useMemo(() => {
+		return tabValue === 11
+	}, [tabValue])
 
 	const openChatbox = () => {
         if (localStorage.getItem('token')) {
@@ -44,6 +44,20 @@ const Layout = ({ children }) => {
 	const redirectTo = (path) => {
 		navigate(path)
 	}
+
+	// tabvalues = {
+	// 	'Home': 0,
+	// 	'Find Your Prakriti': 1,
+	// 	'Results': 2,
+	// 	'Consultant (Doctor)': 3,
+	// 	'Self care': 4,
+	// 	'About': 5,
+	// 	'Profile': 7,
+	// 	'Logout': 8,
+	// 	'Signup': 9,
+	// 	'Login': 10,
+	// 	'Onboarding': 11,
+	// }
 
 	return (
 		<ThemeWrapper>
@@ -60,22 +74,22 @@ const Layout = ({ children }) => {
 					
 					<div className='w-full h-[0px] bg-black/50 '></div>
 
-					<Tabs value={tabValue} onChange={handleTabValue} orientation="vertical">
-						<Tab label="Home" icon={<HomeRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/')} />
-						<Tab label="Find Your Prakriti" icon={<TroubleshootRoundedIcon />} iconPosition="start" onClick={(e) => redirectTo('/find-your-prakruti')} />
+					<Tabs value={tabValue} onChange={() => {}} orientation="vertical">
+						<Tab label="Home" icon={<HomeRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/')} disabled={disableAllTabs} />
+						<Tab label="Find Your Prakriti" icon={<TroubleshootRoundedIcon />} iconPosition="start" onClick={(e) => redirectTo('/find-your-prakruti')} disabled={disableAllTabs} />
 						{localStorage.getItem('token') ? (
-							<Tab label="Results" icon={<AssessmentRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/result')} />
+							<Tab label="Results" icon={<AssessmentRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/result')} disabled={disableAllTabs} />
 						) : (
 							<div></div>
 						)}
-						<Tab label="Consultant (Doctor)" icon={<LocalHospitalRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/consultant')} />
-						<Tab label="Self care" icon={<SpaRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/selfcare')} />
-						<Tab label="About" icon={<InfoRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/about')} />
+						<Tab label="Consultant (Doctor)" icon={<LocalHospitalRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/consultant')} disabled={disableAllTabs} />
+						<Tab label="Self care" icon={<SpaRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/selfcare')} disabled={disableAllTabs} />
+						<Tab label="About" icon={<InfoRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/about')} disabled={disableAllTabs} />
 
 						<div className='w-full h-[0.5px] bg-black/50 mt-5 mb-1'></div>
 
 						{localStorage.getItem('token') ? (
-							<Tab label="Profile" icon={<AccountCircleRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/profile')} />
+							<Tab label="Profile" icon={<AccountCircleRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/profile')} disabled={disableAllTabs} />
 						) : (
 							<div></div>
 						)}
@@ -85,12 +99,12 @@ const Layout = ({ children }) => {
 							<div></div>
 						)}
 						{!localStorage.getItem('token') ? (
-							<Tab label="Signup" icon={<PersonAddRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/signup')} />
+							<Tab label="Signup" icon={<PersonAddRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/signup')} disabled={disableAllTabs} />
 						) : (
 							<div></div>
 						)}
 						{!localStorage.getItem('token') ? (
-							<Tab label="Login" icon={<LoginRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/login')} />
+							<Tab label="Login" icon={<LoginRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/login')} disabled={disableAllTabs} />
 						) : (
 							<div></div>
 						)}
@@ -100,7 +114,7 @@ const Layout = ({ children }) => {
 					{children}
 				</div>
 				{isMinimized ? (
-					<div className="fixed bottom-8 right-8">
+					<div className="fixed bottom-8 right-8 z-20">
 						<button
 							className="bg-ayurgreen text-white p-4 rounded-full"
 							onClick={openChatbox}
@@ -110,7 +124,7 @@ const Layout = ({ children }) => {
 					</div>
 				) : (
 					<div className="flex w-5/12 bg-white border rounded-2xl ">
-						{(tabValue === 10 || tabValue === 9) ? (
+						{(tabValue === 10 || tabValue === 9 || tabValue === 11) ? (
 							<SignupCarousel />
 						) : (
 							<Chatbot />
