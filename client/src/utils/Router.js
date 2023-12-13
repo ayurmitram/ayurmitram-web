@@ -12,6 +12,7 @@ import SelfCare from '../pages/SelfCare';
 import DietPlan from '../pages/DietPlan';
 import Profile from '../pages/Profile';
 import Workout from '../pages/Workout';
+import OnboardingDoctor from '../pages/OnboardingDoctor';
 
 export default function Router() {
     return (
@@ -30,6 +31,7 @@ export default function Router() {
                     <Route exact path="/profile" element={<Profile />} />
                     <Route exact path="/signup" element={<Signup />} />
                     <Route exact path="/login" element={<Login />} />
+                    <Route exact path="/onboarding/doctor" element={<OnboardingDoctor />} />
                 </Routes>
             </Layout>
         </BrowserRouter>
