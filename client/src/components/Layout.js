@@ -100,7 +100,7 @@ const Layout = ({ children }) => {
 					{children}
 				</div>
 				{isMinimized ? (
-					<div className="fixed bottom-8 right-8">
+					<div className="fixed bottom-8 right-8 z-20">
 						<button
 							className="bg-ayurgreen text-white p-4 rounded-full"
 							onClick={openChatbox}

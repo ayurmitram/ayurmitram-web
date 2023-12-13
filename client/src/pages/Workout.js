@@ -1,6 +1,9 @@
 import doshalogo1 from './../assets/about1logo.svg'
 import doshalogo2 from './../assets/about2logo.svg'
 import doshalogo3 from './../assets/about3logo.svg'
+import rejuvenation1 from './../assets/rejuvenation1.svg'
+import rejuvenation2 from './../assets/rejuvenation2.svg'
+import rejuvenation3 from './../assets/rejuvenation3.svg'
 import workout from './../assets/workout.svg'
 import asanas from './../assets/asanas.svg'
 import rejuvenation from './../assets/rejuvenation.svg'
@@ -27,14 +30,17 @@ const Workout = () => {
         ],
         compactPts: [
             {
+                color: '#E6F5FF',
                 title: 'Ideal Workout Session',
                 data: 'Optimize workouts with gentle strength training, deep breathing, gradual tempo, and grounding asanas'
             },
             {
+                color: '#E6F5FF',
                 title: 'Asansas',
                 data: 'Experience the depth of knowledge from experts across all areas of yoga.'
             },
             {
+                color: '#E6F5FF',
                 title: 'Rejuvenation',
                 data: 'An essential aspect of a comprehensive Ayurveda fitness routine for Vata dosha involves prioritizing rejuvenation.'
             }
@@ -62,7 +68,23 @@ const Workout = () => {
                 title: 'Cool-down Phase',
                 data: 'Conclude with grounding movements, including stretching, self-massage, and deep breathing. Feel your body, promote relaxation, and culminate with Savasana for a holistic conclusion.'
             }
-        ]
+        ],
+        rejuvenation: {
+            img: rejuvenation1,
+            color: '#E6F5FF',
+            desc: 'Focusing on increasing Ojas and achieving mind-body balance is crucial. Follow these Ayurvedic tips to enhance fitness without aggravating Vata:',
+            ptsList1: [
+                'Exercise 3-5 times weekly, allowing ample rest for muscle recovery.',
+                'Opt for 20-45 minutes of low-intensity workouts.',
+                'Prioritize joint care with warm oil massages.',
+                'Consume milk decoctions with nourishing spices like Ashwagandha.'
+            ],
+            ptsList2: [
+                'Aid tissue recovery with Epsom salt baths.',
+                'Practice lunar alternate nostril breathing pre and post-exercise.',
+                'Add yoga asanas at the end of your workout that purposefully stretch the target muscles and bring softness to the body.',
+            ]
+        }
     }
 
     const pittaData = {
@@ -74,14 +96,17 @@ const Workout = () => {
         ],
         compactPts: [
             {
+                color: '#FBE3E1',
                 title: 'Ideal Workout Session',
                 data: 'Gentle strength training, deep breathing, gradual tempo, and grounding asanas optimize workout benefits'
             },
             {
+                color: '#FBE3E1',
                 title: 'Asansas',
                 data: 'Experience the depth of knowledge from experts across all areas of yoga via videos'
             },
             {
+                color: '#FBE3E1',
                 title: 'Rejuvenation',
                 data: 'Rejuvenation should be a special component of an adequate Ayurvedic fitness routine for Pitta dosha.'
             }
@@ -109,7 +134,22 @@ const Workout = () => {
                 title: 'Cool-down Phase',
                 data: 'Conclude your session with grounding movements, incorporating stretches, self-massage, and deep breathing exercises. Take the time to attune to your body, breathe deeply, and induce a state of relaxation. Complete your practice with the restorative Savasana pose for a holistic conclusion.'
             }
-        ]
+        ],
+        rejuvenation: {
+            img: rejuvenation2,
+            color: '#FBE3E1',
+            desc: 'Rejuvenation holds a distinct place in a well-rounded Ayurvedic fitness regimen tailored for Pitta dosha.',
+            ptsList1: [
+                'Engage in workouts 4 to 5 days a week, ensuring sufficient rest periods for muscle recovery and growth',
+                'Exercise for 35-45 minutes with a moderate intensity level to strike the right balance.',
+                'Practice "green therapy" by spending time in nature for a calming and balancing effect.',
+            ],
+            ptsList2: [
+                'Prioritize joint health by incorporating coconut oil massages for protection and nourishment.',
+                'Consume milk decoctions with nourishing and cooling spices like Shatavari.',
+                'Integrate lunar alternate nostril breathing before and after workouts.',
+            ]
+        }
     }
 
     const kaphaData = {
@@ -121,14 +161,17 @@ const Workout = () => {
         ],
         compactPts: [
             {
+                color: '#FEF6D2',
                 title: 'Ideal Workout Session',
                 data: 'Kaphas, often sluggish, benefit from consistent, energetic workouts, melting excess fat, promoting a lighter body, and enhancing endurance.'
             },
             {
+                color: '#FEF6D2',
                 title: 'Asansas',
                 data: 'Experience the depth of knowledge from experts across all areas of yoga via videos'
             },
             {
+                color: '#FEF6D2',
                 title: 'Rejuvenation',
                 data: 'Incorporating rejuvenation is a crucial element of a well-rounded Ayurvedic fitness regimen tailored for Kapha dosha.'
             }
@@ -156,7 +199,22 @@ const Workout = () => {
                 title: 'Cool-down Phase',
                 data: 'Conclude with grounding movements, including stretching, self-massage, and deep breathing. Immerse yourself in the sensory experience, taking deep breaths and relaxing. Finish with a plank for a final moment of strength and stability.'
             }
-        ]
+        ],
+        rejuvenation: {
+            img: rejuvenation3,
+            color: '#FEF6D2',
+            desc: 'Here are Ayurvedic strategies for you to get in the best shape of your life while avoiding the exacerbation of Kapha.',
+            ptsList1: [
+                'Engage in workouts 5 to 6 days a week, ensuring at least one day of rest.',
+                'Prioritize joint care with Mustard oil massages.',
+                'Incorporate milk decoctions with nourishing spices like Ashwagandha.',
+            ],
+            ptsList2: [
+                'Aim for 45-60 minutes of exercise with a fast intensity to maximize your fitness routine.',
+                'Immerse yourself in nature as part of your green therapy for a refreshing and balancing effect.',
+                'Conclude your exercise session with planks, adding a final touch of strength and stability.',
+            ]
+        }
     }
 
     const data = useMemo(() => {
@@ -202,12 +260,12 @@ const Workout = () => {
 
                 <div className={`text-center flex ${isMinimized ? 'flex-row' : 'flex-col items-center'} gap-5 my-3 justify-center`}>
                     {data?.compactPts?.map((item, index) => (
-                        <div key={index} className='flex flex-col gap-5 justify-start px-5 py-20 bg-[#ECFEFF] rounded-2xl w-full max-w-[400px]'>
+                        <div key={index} className={`flex flex-col gap-5 justify-start px-5 py-20 rounded-2xl w-full max-w-[400px]`} style={{ backgroundColor: item?.color}}>
                             {index === 0 && <img src={workout} alt="icon" className='w-16 h-16 mx-auto' />}
                             {index === 1 && <img src={asanas} alt="icon" className='w-16 h-16 mx-auto' />}
                             {index === 2 && <img src={rejuvenation} alt="icon" className='w-16 h-16 mx-auto' />}
-                            <div className='text-2xl font-medium'>{item.title}</div>
-                            <div className='font-normal'>{item.data}</div>
+                            <div className='text-2xl font-medium'>{item?.title}</div>
+                            <div className='font-normal'>{item?.data}</div>
                         </div>
                     ))}
                 </div>
@@ -229,6 +287,37 @@ const Workout = () => {
                             <div className='font-normal ms-5'>{item.data}</div>
                         </div>
                     ))}
+                </div>
+
+                <div className='flex my-10 gap-5 items-center'>
+                    <div className='w-[5rem] h-[1px] bg-black/50'></div>
+                    <div className=' text-2xl font-medium'>Rejuvenation</div>
+                </div>
+                <div className={`flex-col flex ${isMinimized ? 'items-end' : 'items-center gap-5'} relative`}>
+                    <div className={`${isMinimized ? 'w-8/12 px-5' : 'w-full'} font-normal text-center`}>{data?.rejuvenation?.desc}</div>
+                    <div className={`${isMinimized ? 'absolute w-4/12' : 'static w-full '} rounded-2xl p-10 max-w-[400px] aspect-square left-0 flex justify-center items-center`} style={{
+                        backgroundColor: data?.rejuvenation?.color,
+                    }}>
+                        <img src={data?.rejuvenation?.img} alt="icon" className='w-full aspect-square' />
+                    </div>
+                    <div className={`${isMinimized ? 'w-9/12 ps-10 pt-10 pe-5 pb-10 gap-10 bg-white' : 'w-full flex-col gap-0 rounded-2xl'} flex z-10`}>
+                        <div className={`bg-[#243227] text-white p-5 w-full ${isMinimized ? '' : 'rounded-t-2xl pb-0'}`}>
+                            {data?.rejuvenation?.ptsList1?.map((item, index) => (
+                                <div className='flex items-center gap-5 mb-5'>
+                                    <div className='w-[8px] h-[8px] aspect-square rounded-full bg-white'></div>
+                                    <div className='font-normal'>{item}</div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className={`bg-[#243227] text-white p-5 w-full ${isMinimized ? '' : 'rounded-b-2xl pt-0'}`}>
+                            {data?.rejuvenation?.ptsList2?.map((item, index) => (
+                                <div className='flex items-center gap-4 mb-5'>
+                                    <div className='w-[8px] h-[8px] aspect-square rounded-full bg-white'></div>
+                                    <div className='font-normal'>{item}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
