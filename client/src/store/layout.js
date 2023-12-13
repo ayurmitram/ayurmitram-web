@@ -4,7 +4,8 @@ const layoutSlice = createSlice({
     name: 'layout',
     initialState: {
         tabValue: 0,
-        isMinimized: false
+        isMinimized: false,
+        activeBot: 'chat' // chat or quiz
     },
     reducers: {
         setTabValue(state, action) {
