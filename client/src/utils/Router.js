@@ -11,6 +11,7 @@ import Consultant from '../pages/Consultant';
 import SelfCare from '../pages/SelfCare';
 import DietPlan from '../pages/DietPlan';
 import Profile from '../pages/Profile';
+import Workout from '../pages/Workout';
 
 export default function Router() {
     return (
@@ -24,6 +25,7 @@ export default function Router() {
                     <Route exact path="/consultant" element={<Consultant />} />
                     <Route exact path="/selfcare" element={<SelfCare />} />
                     <Route exact path="/selfcare/diet" element={<DietPlan />} />
+                    <Route exact path="/selfcare/workout" element={<Workout />} />
                     <Route exact path="/about" element={<About />} />
                     <Route exact path="/profile" element={<Profile />} />
                     <Route exact path="/signup" element={<Signup />} />
