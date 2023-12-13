@@ -40,22 +40,22 @@ const MessageBox = ({ message, prev, next, optionHandler }) => {
         `}
         style={{ whiteSpace: "pre-line" }}
       >
-        {message?.type === "user" ? message?.text : (JSON.parse(message?.text?.answer ?? `{}`)?.answer || JSON.parse(message?.text?.answer ?? `{}`)?.question)}
+        {message?.type === "user" ? message?.display || message?.text : (JSON.parse(message?.text?.answer ?? `{}`)?.answer || JSON.parse(message?.text?.answer ?? `{}`)?.question)}
       </div>
       {JSON.parse(message?.text?.answer ?? `{}`)?.options && next === null && (
         <div className="flex flex-col items-start gap-2 mt-2 w-full px-5">
           {JSON.parse(message?.text?.answer)?.options?.[1] && (
-            <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] bg-[#EFEEEE] overflow-hidden text-ellipsis text-slate-600 text-center" onClick={() => optionHandler({ msg: '1' })}>
+            <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] bg-[#EFEEEE] overflow-hidden text-ellipsis text-slate-600 text-center" onClick={() => optionHandler({ msg: '1', display: JSON.parse(message?.text?.answer)?.options?.[1] })}>
               {JSON.parse(message?.text?.answer)?.options?.[1]}
             </div>
           )}
           {JSON.parse(message?.text?.answer)?.options?.[2] && (
-            <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] bg-[#EFEEEE] overflow-hidden text-ellipsis text-slate-600 text-center" onClick={() => optionHandler({ msg: '2' })}>
+            <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] bg-[#EFEEEE] overflow-hidden text-ellipsis text-slate-600 text-center" onClick={() => optionHandler({ msg: '2', display: JSON.parse(message?.text?.answer)?.options?.[2] })}>
               {JSON.parse(message?.text?.answer)?.options?.[2]}
             </div>
           )}
           {JSON.parse(message?.text?.answer)?.options?.[3] && (
-            <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] bg-[#EFEEEE] overflow-hidden text-ellipsis text-slate-600 text-center" onClick={() => optionHandler({ msg: '3' })}>
+            <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] bg-[#EFEEEE] overflow-hidden text-ellipsis text-slate-600 text-center" onClick={() => optionHandler({ msg: '3', display: JSON.parse(message?.text?.answer)?.options?.[3] })}>
               {JSON.parse(message?.text?.answer)?.options?.[3]}
             </div>
           )}
@@ -94,12 +94,12 @@ const Chatbot = () => {
   };
 
   const [chatMessages, setChatMessages] = useState([
-    // { type: "user", text: "Hello, Ayurmitram!" },
-    // { type: "bot", text: "Hi there! How can I assist you today?" },
-    // { type: 'user', text: 'I am not feeling well' },
-    // { type: 'user', text: 'Start a prakruti analysis' },
-    // { type: 'bot', text: 'Sure, select a mode from below', options: ['Quick', 'Comprehensive'] },
   ]);
+  // example values
+  // { type: user, text: '1', display: 'short hair' },
+  // { type: bot, text: {
+  //   answer: "{\"question\": \"Describe the general feel of skin\", \"options\": {\"1\": \"Dry and thin- cool to touch, rough\", \"2\": \"Smooth and warm, oily T-zone\", \"3\": \"Thick and moist-greasy, cold\"}}"
+  // }
   const {
     transcript,
     listening,
@@ -126,8 +126,8 @@ const Chatbot = () => {
     setUserInput(e.target.value);
   };
 
-  const handleSendMessage = async ({ msg = userInput }) => {
-    const newUserMessage = { type: "user", text: msg };
+  const handleSendMessage = async ({ msg = userInput, display = undefined }) => {
+    const newUserMessage = { type: "user", text: msg, display };
     setChatMessages([...chatMessages, newUserMessage]);
 
     const botReply = await predictResponse(msg);
@@ -141,7 +141,7 @@ const Chatbot = () => {
     if (JSON.parse(botReply?.answer ?? `{}`)?.answer && JSON.parse(botReply?.answer ?? `{}`)?.answer?.includes("Your Prakriti is")) {
       setResponseList([
         ...responseList,
-        { type: "user", text: newUserMessage?.text },
+        { type: "user", text: newUserMessage?.text, display: newUserMessage?.display },
         { type: "bot", text: botReply?.answer },
       ]);
 
@@ -149,7 +149,7 @@ const Chatbot = () => {
     } else {
       setResponseList([
         ...responseList,
-        { type: "user", text: newUserMessage.text },
+        { type: "user", text: newUserMessage.text, display: newUserMessage?.display },
         { type: "bot", text: botReply?.answer },
       ]);
     }
@@ -233,11 +233,11 @@ const Chatbot = () => {
     // Populate the table with data
     let serialNo = 1;
     responseList?.slice(4).forEach((message) => {
-      const { type, text } = message;
+      const { type, text, display } = message;
 
       if (type === "user") {
         doc.autoTable({
-          body: [[serialNo++, "", text]],
+          body: [[serialNo++, "", display || text]],
           startY: startY + 2*lineHeight, // Add some space here, adjust as needed
           theme: "plain",
           columnStyles: {
@@ -334,6 +334,11 @@ const Chatbot = () => {
             color="black"
             // onKeyDown={handleKeyDown}
             placeholder="Type your message here"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSendMessage({});
+              }
+            }}
             InputProps={{
               sx: {
                 borderRadius: "1.25rem",
