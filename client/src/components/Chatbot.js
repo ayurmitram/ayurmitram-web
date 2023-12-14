@@ -429,7 +429,7 @@ const Chatbot = () => {
                       borderRadius: "999px",
                     }}
                     color="secondary"
-                    onClick={generatePDF}
+                    onClick={handleSendMessage}
                   >
                     <SendRoundedIcon />
                   </Button>
