@@ -37,6 +37,40 @@ router.post('/signup', async (req, res) => {
    }
 })
 
+router.post('/complete-profile', async (req, res) => {
+  try {
+    const {
+      patientId,
+      patient_age,
+      patient_gender,
+      patient_medical_history
+    } = req.body;
+
+    // Find the patient by ID
+    const patient = await PatientSchema.findById(patientId);
+
+    // If patient not found, return a 404 error
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+
+    // Update patient details
+    patient.patient_age = patient_age;
+    patient.patient_gender = patient_gender;
+    patient.patient_medical_history = patient_medical_history;
+
+    // Save the updated patient profile
+    await patient.save();
+
+    // Send a success message
+    res.json({ message: 'Profile completed successfully' });
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
 router.post('/login', async (req, res) => {
     try {
         const {patient_email, patient_password} = req.body;
@@ -76,13 +110,14 @@ router.post('/auth', async (req, res) => {
       const userId = decoded.patientId;
   
       const patient = await PatientSchema.findById(userId);
+      console.log(patient);
   
       if (!patient) {
         return res.status(401).json({ error: 'Patient not found' });
       }
   
 
-      return res.json({ message: `Authenticated user: ${userId}`, tag: true });
+      return res.json({ message: `Authenticated user: ${userId}`, tag: true, patient });
     } catch (error) {
       return res.status(401).json({ error: 'Not authenticated' });
     }

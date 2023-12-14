@@ -16,6 +16,7 @@ import StopRoundedIcon from "@mui/icons-material/StopRounded";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
+import { auth_patient } from "../controllers/patientRoutes";
 
 const MessageBox = ({ message, prev, next, optionHandler }) => {
   console.log(message, 'message');
@@ -71,6 +72,37 @@ const Chatbot = () => {
   const activeBot = useSelector((state) => state.layout.activeBot);
   const [userInput, setUserInput] = useState("");
   const [responseList, setResponseList] = useState([]);
+  const [patientDetails, setPatientDetails] = useState({
+    name: "",
+    age: "",
+    gender: "",
+    medical_history: ""
+  });
+
+  const getPatientDetails = () => {
+    if(localStorage.getItem("token")){
+      let obj = {
+        token: localStorage.getItem("token"),
+      }
+      auth_patient(obj).then((res) => {
+        if(res.tag){
+          let {patient_name, patient_age, patient_gender, patient_medical_history} = res.patient;
+          console.log("patient name: ", patient_name);
+          console.log("patient age: ", patient_age);
+          console.log("patient gender", patient_gender);
+          console.log("patient_medical_history", patient_medical_history);
+
+          let obj = {
+            name: patient_name,
+            age: patient_age,
+            gender: patient_gender,
+            medical_history: patient_medical_history
+          };
+          setPatientDetails(obj);
+        }
+      })
+    }
+  }
 
   const predictResponse = async (userMessage) => {
     try {
@@ -86,7 +118,7 @@ const Chatbot = () => {
 
       const data = await response.json();
       console.log(data);
-      return data; // Assuming the response contains a 'reply' field
+      return data; 
     } catch (error) {
       console.error("Error predicting response:", error);
       return "Sorry, an error occurred.";
@@ -157,10 +189,12 @@ const Chatbot = () => {
     setUserInput("");
   };
 
-  const generatePDF = () => {
+  
+
+  const generatePDF = async () => {
     const doc = new jsPDF();
 
-    const lineHeight = 5; // Adjust this value based on your font size and line spacing
+    const lineHeight = 5; 
     const margin = 10;
     const maxWidth = doc.internal.pageSize.width - 2 * margin;
     const pageCenter = doc.internal.pageSize.width / 2;
@@ -168,9 +202,8 @@ const Chatbot = () => {
     doc.setFont("Poppins", "bold");
 
     // Add title
-    doc.setFontSize(30); // Set a larger font size for the title
-    // doc.setFont('bold'); // Make the title bold
-    doc.setTextColor(83, 156, 82); // Set the color to #539C52
+    doc.setFontSize(30); 
+    doc.setTextColor(83, 156, 82); 
     const titleText = "Ayurmitram Report";
     const titleWidth =
       (doc.getStringUnitWidth(titleText) * doc.internal.getFontSize()) /
@@ -179,14 +212,15 @@ const Chatbot = () => {
     doc.text(titleText, titleX, currentY);
     currentY += 2 * lineHeight;
 
-    // Reset font style and color for the rest of the content
-    // doc.setFont('normal');
-    doc.setTextColor(0); // Reset to default black
+  
+    doc.setTextColor(0);
 
-    // Add patient details
-    const patientName = "John Doe"; // Replace with actual patient name
-    const patientAge = 30; // Replace with actual patient age
-    const todayDate = new Date().toLocaleDateString(); // Get current date
+ 
+    const patientName = patientDetails.name;
+    const patientAge = patientDetails.age;
+    const patientGender = patientDetails.gender; 
+    const patientMedicalHistory = patientDetails.medical_history;
+    const todayDate = new Date().toLocaleDateString(); 
 
     doc.setFontSize(12);
     doc.text(`Patient Name: ${patientName}`, margin, currentY);
@@ -195,22 +229,26 @@ const Chatbot = () => {
     doc.text(`Patient Age: ${patientAge}`, margin, currentY);
     currentY += lineHeight;
 
+    doc.text(`Patient Name: ${patientGender}`, margin, currentY);
+    currentY += lineHeight;
+
+    doc.text(`Patient Medical History: ${patientMedicalHistory}`, margin, currentY);
+    currentY += lineHeight;
+
     doc.text(`Date: ${todayDate}`, margin, currentY);
     currentY += 5 * lineHeight;
 
     doc.setFontSize(25);
-    doc.setTextColor(0, 0, 0); // Set text color to black
+    doc.setTextColor(0, 0, 0); 
     const prakrutiAnalysisText = "Prakruti Analysis";
     doc.text(prakrutiAnalysisText, margin, currentY);
     currentY += 2 * lineHeight;
 
     doc.setFontSize(12);
 
-    // Add chat history
     const tableHeaders = ["Serial No.", "Question", "User Response"];
-    const colWidths = [30, 120, 30];
+    const colWidths = [30, 90, 50];
 
-    // Set initial startY value
     let startY = currentY + lineHeight;
 
     doc.autoTable({
@@ -219,8 +257,8 @@ const Chatbot = () => {
       body: [],
       theme: "plain",
       headStyles: {
-        fillColor: [83, 156, 82], // Header background color
-        textColor: 255, // Header text color
+        fillColor: [83, 156, 82], 
+        textColor: 255, 
         fontSize: 12
       },
       columnStyles: {
@@ -230,7 +268,6 @@ const Chatbot = () => {
       },
     });
 
-    // Populate the table with data
     let serialNo = 1;
     responseList?.slice(4).forEach((message) => {
       const { type, text, display } = message;
@@ -238,7 +275,7 @@ const Chatbot = () => {
       if (type === "user") {
         doc.autoTable({
           body: [[serialNo++, "", display || text]],
-          startY: startY + 2*lineHeight, // Add some space here, adjust as needed
+          startY: startY + 2*lineHeight, 
           theme: "plain",
           columnStyles: {
             0: { cellWidth: colWidths[0] },
@@ -246,11 +283,14 @@ const Chatbot = () => {
             2: { cellWidth: colWidths[2]},
             fontSize: 10
           },
+          cellStyles: {
+            1: { overflow: "linebreak", columnWidth: colWidths[1] },
+          },
         });
       } else {
         doc.autoTable({
           body: [["", JSON.parse(text ?? `{}`)?.answer || JSON.parse(text ?? `{}`)?.question, ""]],
-          startY: startY + lineHeight, // Add some space here, adjust as needed
+          startY: startY + lineHeight, 
           theme: "plain",
           columnStyles: {
             0: { cellWidth: colWidths[0] },
@@ -260,8 +300,7 @@ const Chatbot = () => {
         });
       }
 
-      // Update startY for the next iteration
-      startY += 2*lineHeight;
+      startY += lineHeight;
     });
     doc.save("chat_history.pdf");
   };
@@ -271,6 +310,7 @@ const Chatbot = () => {
   };
 
   useEffect(() => {
+    getPatientDetails();
     if (transcript) {
       setUserInput(transcript);
     }
@@ -332,7 +372,6 @@ const Chatbot = () => {
             value={userInput}
             onChange={handleUserInput}
             color="black"
-            // onKeyDown={handleKeyDown}
             placeholder="Type your message here"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
@@ -390,7 +429,7 @@ const Chatbot = () => {
                       borderRadius: "999px",
                     }}
                     color="secondary"
-                    onClick={handleSendMessage}
+                    onClick={generatePDF}
                   >
                     <SendRoundedIcon />
                   </Button>

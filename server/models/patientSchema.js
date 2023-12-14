@@ -13,7 +13,17 @@ const PatientSchema = new mongoose.Schema(
         patient_password: {
             type: String,
             required: true,
+        },
+        patient_age: {
+            type: String,
+        },
+        patient_gender: {
+            type: String,
+        },
+        patient_medical_history: {
+            type: String,
         }
+        
     }
 )
 
