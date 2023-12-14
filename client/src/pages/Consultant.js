@@ -21,7 +21,7 @@ const DoctorCard = ({
   doctor_website,
 }) => (
   <>
-    <div className="flex max-w-xl bg-gray-300 shadow-md rounded-md overflow-hidden mx-auto my-4">
+    <div className="flex max-w-xl bg-gray-300 shadow-md rounded-md overflow-hidden my-4 mx-4">
       <img
         src={doctor_image}
         alt="Card Image"
@@ -97,7 +97,7 @@ export default function Consultant() {
 
         {/* Doctor cards */}
         <div className="overflow-y-auto max-h-[50rem]">
-          <div className="flex flex-row">
+          <div className="flex flex-row m-4">
             {doctors.map((doctor, index) => (
               <DoctorCard key={index} {...doctor} />
             ))}

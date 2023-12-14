@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import AssessmentRoundedIcon from '@mui/icons-material/AssessmentRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import TroubleshootRoundedIcon from '@mui/icons-material/TroubleshootRounded';
@@ -31,6 +31,10 @@ const Layout = ({ children }) => {
 	const disableAllTabs = useMemo(() => {
 		return tabValue === 11
 	}, [tabValue])
+
+	useEffect(() => {
+        dispatch(setIsMinimized(true));
+    }, []);
 
 	const openChatbox = () => {
         if (localStorage.getItem('token')) {
