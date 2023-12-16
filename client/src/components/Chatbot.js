@@ -72,6 +72,7 @@ const Chatbot = () => {
   const activeBot = useSelector((state) => state.layout.activeBot);
   const [userInput, setUserInput] = useState("");
   const [responseList, setResponseList] = useState([]);
+  const [selectedResponses, setSelectedResponses] = useState([]);
   const [patientDetails, setPatientDetails] = useState({
     name: "",
     age: "",
@@ -158,7 +159,23 @@ const Chatbot = () => {
     setUserInput(e.target.value);
   };
 
+  function isStringAnInteger(str) {
+    return /^\d+$/.test(str);
+  }
+
   const handleSendMessage = async ({ msg = userInput, display = undefined }) => {
+    if (isStringAnInteger(msg)) {
+      if(msg === '1' || msg === '2' || msg === '3'){
+        const botReply = await predictResponse(msg);
+        setSelectedResponses((prevSelectedResponse) => [
+          ...prevSelectedResponse,
+          { type: "user", text: msg, display },
+          { type: "bot", text: botReply?.answer }, // Replace with actual bot response
+        ]);
+        console.log(selectedResponses, '$$$$$$$');
+      }
+    }
+
     const newUserMessage = { type: "user", text: msg, display };
     setChatMessages([...chatMessages, newUserMessage]);
 
@@ -269,7 +286,7 @@ const Chatbot = () => {
     });
 
     let serialNo = 1;
-    responseList?.slice(4).forEach((message) => {
+    selectedResponses?.forEach((message) => {
       const { type, text, display } = message;
 
       if (type === "user") {
