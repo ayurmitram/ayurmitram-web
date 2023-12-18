@@ -1,3 +1,5 @@
+import ImportantDevicesIcon from '@mui/icons-material/ImportantDevices';
+import FormatSizeIcon from '@mui/icons-material/FormatSize';
 import React, { useMemo, useState, useEffect } from "react";
 import AssessmentRoundedIcon from '@mui/icons-material/AssessmentRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
@@ -10,9 +12,15 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import logo from './../assets/logo.svg'
+import translateIcon from './../assets/translate.svg'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import { setLanguage } from '../store/layout';
+import { languages } from '../pages/OnboardingDoctor';
 import ThemeWrapper from "../utils/ThemeWrapper";
 import { useSelector, useDispatch } from 'react-redux'
 import { setTabValue, setIsMinimized } from '../store/layout'
@@ -24,6 +32,7 @@ const Layout = ({ children }) => {
 
 	const tabValue = useSelector(state => state.layout.tabValue)
 	const isMinimized = useSelector(state => state.layout.isMinimized)
+	const lang = useSelector(state => state.layout.language)
 
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
@@ -70,7 +79,46 @@ const Layout = ({ children }) => {
 					<span className="text-2xl font-semibold">AyurMitram</span>
 				</div>
 			</div> */}
-			<div className="flex justify-start gap-5 h-screen p-5 font-['Poppins'] font-semibold bg-[#E8EDDF] overflow-hidden" >
+			<div className="h-[2rem] px-3 flex gap-5 items-center justify-end w-full bg-[#E8EDDF] border-0 border-black border-b-2">
+				<div className="flex gap-1 cursor-pointer">
+					<ImportantDevicesIcon className='' />
+					<div className="font-semibold">Main Content</div>
+				</div>
+				<div className='flex gap-1'>
+					<FormatSizeIcon className='' />
+					<div className='font-bold cursor-pointer text-lg'>A-</div>
+					<div className='font-bold cursor-pointer text-lg'>A</div>
+					<div className='font-bold cursor-pointer text-lg'>A+</div>
+				</div>
+				<div className='flex gap-1'>
+					<img src={translateIcon} alt="" className='w-5 h-5' />
+					<Select
+						sx={{ 
+							'& .MuiSelect-select': {
+								padding: '0rem',
+								paddingRight: '1rem',
+								paddingLeft: '1rem',
+							}
+						}}
+						
+						labelId="language"
+						id="language"
+						value={lang}
+						onChange={(e) => dispatch(setLanguage(e.target.value))}
+						color='secondary'
+					>
+						{languages.map((name) => (
+							<MenuItem
+								key={name}
+								value={name}
+							>
+								{name}
+							</MenuItem>
+						))}
+					</Select>
+				</div>
+			</div>
+			<div className="flex justify-start gap-5 h-[calc(100vh_-_2rem)] p-5 font-['Poppins'] font-semibold bg-[#E8EDDF] overflow-hidden" >
 				<div className="flex w-2/12 flex-col gap-5 rounded-xl overflow-auto h-full">
 					<div className="flex gap-2 items-center text-2xl p-5 pb-0">
 						AyurMitram

@@ -5,7 +5,8 @@ const layoutSlice = createSlice({
     initialState: {
         tabValue: 0,
         isMinimized: false,
-        activeBot: 'chat' // chat or quiz
+        activeBot: 'chat', // chat or quiz
+        language: 'English'
     },
     reducers: {
         setTabValue(state, action) {
@@ -13,10 +14,16 @@ const layoutSlice = createSlice({
         },
         setIsMinimized(state, action) {
             state.isMinimized = action.payload
+        },
+        setActiveBot(state, action) {
+            state.activeBot = action.payload
+        },
+        setLanguage(state, action) {
+            state.language = action.payload
         }
     }
 })
 
-export const { setTabValue, setIsMinimized } = layoutSlice.actions
+export const { setTabValue, setIsMinimized, setActiveBot, setLanguage } = layoutSlice.actions
 
 export default layoutSlice.reducer
