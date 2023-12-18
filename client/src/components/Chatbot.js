@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setIsMinimized } from "../store/layout";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Button from "@mui/material/Button";
@@ -70,8 +70,10 @@ const Chatbot = () => {
   const dispatch = useDispatch();
   const isMinimized = useSelector((state) => state.layout.isMinimized);
   const activeBot = useSelector((state) => state.layout.activeBot);
+  const chatResponseContainerRef = useRef(null);
   const [userInput, setUserInput] = useState("");
-  const [responseList, setResponseList] = useState([]);
+  const [quizEnded, setQuizEnded] = useState(false);
+  // const [responseList, setResponseList] = useState([]);
   const [selectedResponses, setSelectedResponses] = useState([]);
   const [patientDetails, setPatientDetails] = useState({
     name: "",
@@ -79,6 +81,8 @@ const Chatbot = () => {
     gender: "",
     medical_history: ""
   });
+
+  // const isEndOfQuiz = () => quizEnded
 
   const getPatientDetails = () => {
     if(localStorage.getItem("token")){
@@ -166,45 +170,58 @@ const Chatbot = () => {
   const handleSendMessage = async ({ msg = userInput, display = undefined }) => {
     if (isStringAnInteger(msg)) {
       if(msg === '1' || msg === '2' || msg === '3'){
+        const newUserMessage = { type: "user", text: msg, display };
         const botReply = await predictResponse(msg);
         setSelectedResponses((prevSelectedResponse) => [
           ...prevSelectedResponse,
           { type: "user", text: msg, display },
           { type: "bot", text: botReply?.answer }, // Replace with actual bot response
         ]);
+
+        setChatMessages([
+          ...chatMessages, newUserMessage,
+          { type: "bot", text: botReply },
+        ]);
         console.log(selectedResponses, '$$$$$$$');
       }
     }
 
-    const newUserMessage = { type: "user", text: msg, display };
-    setChatMessages([...chatMessages, newUserMessage]);
-
-    const botReply = await predictResponse(msg);
-
-    setChatMessages((prevMessages) => [
-      ...prevMessages,
-      { type: "bot", text: botReply },
-    ]);
-
-    console.log(botReply?.answer, "#####");
-    if (JSON.parse(botReply?.answer ?? `{}`)?.answer && JSON.parse(botReply?.answer ?? `{}`)?.answer?.includes("Your Prakriti is")) {
-      setResponseList([
-        ...responseList,
-        { type: "user", text: newUserMessage?.text, display: newUserMessage?.display },
-        { type: "bot", text: botReply?.answer },
+    else{
+      const newUserMessage = { type: "user", text: msg, display };
+      setChatMessages([...chatMessages, newUserMessage]);
+  
+      const botReply = await predictResponse(msg);
+      
+  
+      setChatMessages([
+        ...chatMessages, newUserMessage,
+        { type: "bot", text: botReply },
       ]);
 
-      setChatMessages([]);
-    } else {
-      setResponseList([
-        ...responseList,
-        { type: "user", text: newUserMessage.text, display: newUserMessage?.display },
-        { type: "bot", text: botReply?.answer },
-      ]);
+      if(botReply?.answer?.end)
+  
+      console.log(botReply?.answer, "#####");
+      // if (JSON.parse(botReply?.answer ?? `{}`)?.answer && JSON.parse(botReply?.answer ?? `{}`)?.answer?.includes("Your Prakriti is")) {
+      //   setResponseList([
+      //     ...responseList,
+      //     { type: "user", text: newUserMessage?.text, display: newUserMessage?.display },
+      //     { type: "bot", text: botReply?.answer },
+      //   ]);
+  
+      //   setChatMessages([]);
+      // } else {
+      //   setResponseList([
+      //     ...responseList,
+      //     { type: "user", text: newUserMessage.text, display: newUserMessage?.display },
+      //     { type: "bot", text: botReply?.answer },
+      //   ]);
+      // }
+  
+      setUserInput("");
+    };
     }
 
-    setUserInput("");
-  };
+   
 
   
 
@@ -253,7 +270,7 @@ const Chatbot = () => {
     currentY += lineHeight;
 
     doc.text(`Date: ${todayDate}`, margin, currentY);
-    currentY += 5 * lineHeight;
+    currentY += 3 * lineHeight;
 
     doc.setFontSize(25);
     doc.setTextColor(0, 0, 0); 
@@ -327,11 +344,21 @@ const Chatbot = () => {
   };
 
   useEffect(() => {
+    const container = chatResponseContainerRef.current;
+
+    const isNearBottom = () => {
+      const threshold = 100;
+      return container.scrollTop + container.clientHeight + threshold >= container.scrollHeight;
+    };
+
+    if(isNearBottom()){
+      container.scrollTop = container.scrollHeight;
+    }
     getPatientDetails();
     if (transcript) {
       setUserInput(transcript);
     }
-  }, [transcript]);
+  }, [transcript, chatMessages]);
 
   return (
     <div className="w-full h-full p-5">
@@ -344,6 +371,8 @@ const Chatbot = () => {
         </div>
         <div className="w-full h-[0px] bg-black/50 "></div>
         <div
+        ref={chatResponseContainerRef}
+        style={{ scrollBehavior: 'smooth' }}
           className={`flex flex-col items-start gap-1 font-medium h-[calc(100%_-_2rem_-_0.5px_-_4rem_-_2.5rem)] overflow-y-auto`}
         >
           {chatMessages?.map((message, index) => (

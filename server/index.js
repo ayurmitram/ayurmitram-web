@@ -55,6 +55,11 @@ app.post("/predict", async (req, res) => {
     }
 });
 
+app.post("/llm", async (req, res) => {
+    console.log("Yesss I am in llm");
+    res.json("Llm data");
+})
+
 
 app.use("/api/patient", patientRoutes);
 app.use("/api/doctor", doctorRoutes);
