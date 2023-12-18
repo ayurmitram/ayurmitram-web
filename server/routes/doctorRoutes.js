@@ -14,7 +14,7 @@ router.post('/signup', async (req, res) => {
     }
     console.log(doctor_name, doctor_email, doctor_password)
 
-    const existingUser = await DoctorSchema.findOne({doctor_email});
+    const existingUser = await DoctorSchema.findOne({doctor_email}) || await DoctorSchema.findOne({patient_email: doctor_email})
     if(existingUser){
         console.log(existingUser);
         return res.status(400).json({message: 'Email already exists. Please choose another email'});
@@ -29,8 +29,8 @@ router.post('/signup', async (req, res) => {
 
     await newDoctor.save();
 
-    const token=jwt.sign({patientId: newDoctor._id}, process.env.SECRET_KEY, {expiresIn: '2h'});
-    res.json({token});
+    const token=jwt.sign({doctorId: newDoctor._id}, process.env.SECRET_KEY, {expiresIn: '2h'});
+    res.json({token, doctor: newDoctor});
 
    } catch (err) {
     console.log(err);

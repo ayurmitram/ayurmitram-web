@@ -382,7 +382,7 @@ const Chatbot = () => {
 
         <div className="w-full mt-auto absolute bottom-0 z-10 bg-white">
           <TextField
-            disabled={activeBot === 'quiz'}
+            disabled={chatMessages[chatMessages.length - 1]?.type === "bot" && JSON.parse(chatMessages[chatMessages.length - 1]?.text?.answer ?? `{}`)?.options}
             variant="outlined"
             fullWidth
             type="text"
