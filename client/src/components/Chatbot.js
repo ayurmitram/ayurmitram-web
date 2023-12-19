@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setIsMinimized } from "../store/layout";
 import { useEffect, useState, useRef } from "react";
+import { CircularProgress } from "@mui/material";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Button from "@mui/material/Button";
@@ -73,6 +74,7 @@ const Chatbot = () => {
   const chatResponseContainerRef = useRef(null);
   const [userInput, setUserInput] = useState("");
   const [quizEnded, setQuizEnded] = useState(false);
+  const [loading, setLoading] = useState(false);
   // const [responseList, setResponseList] = useState([]);
   const [selectedResponses, setSelectedResponses] = useState([]);
   const [patientDetails, setPatientDetails] = useState({
@@ -168,43 +170,70 @@ const Chatbot = () => {
     return /^\d+$/.test(str);
   }
 
+  
+
+  const saveMessageToBackend = async(messageData) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/message/create`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(messageData)
+      })
+      if(response.ok){
+        const data = await response.json();
+        return data;
+      }
+    } catch (err) {
+      console.error('Error saving message:', err);
+    }
+  }
+
   const handleSendMessage = async ({ msg = userInput, display = undefined }) => {
+    setLoading(true);
     if (isStringAnInteger(msg)) {
       if(msg === '1' || msg === '2' || msg === '3'){
-        const newUserMessage = { type: "user", text: msg, display };
+        const newUserMessage = { type: "user", text: msg, display, timestamp: new Date().toLocaleTimeString() };
         const botReply = await predictResponse(msg);
         setSelectedResponses((prevSelectedResponse) => [
           ...prevSelectedResponse,
-          { type: "user", text: msg, display },
-          { type: "bot", text: botReply?.answer }, // Replace with actual bot response
+          { type: "user", text: msg, display, timestamp: new Date().toLocaleTimeString() },
+          { type: "bot", text: botReply?.answer, timestamp: new Date().toLocaleTimeString() }, // Replace with actual bot response
         ]);
-        if (JSON.parse(botReply?.answer ?? `{}`)?.answer?.includes("Your prakriti is")){
-          console.log("yes praktiti saved !!!!!!!!!!!!!!!");
-          const prakritiType = JSON.parse(botReply?.answer ?? `{}`)?.answer;
-          console.log(prakritiType, '$$$$$$$$$$$$$$$$$')
-          const profileUpdateResponse = await fetch("http://localhost:8000/api/patient/complete-profile", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              patientId: localStorage.getItem("token").patientId,
-              prakriti_type: prakritiType,
-            }),
-          });
+        // if (JSON.parse(botReply?.answer ?? `{}`)?.answer?.includes("Your prakriti is")){
+        //   console.log("yes praktiti saved !!!!!!!!!!!!!!!");
+        //   const prakritiType = JSON.parse(botReply?.answer ?? `{}`)?.answer;
+        //   console.log(prakritiType, '$$$$$$$$$$$$$$$$$')
+        //   const profileUpdateResponse = await fetch("http://localhost:8000/api/patient/complete-profile", {
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({
+        //       patientId: localStorage.getItem("token").patientId,
+        //       prakriti_type: prakritiType,
+        //     }),
+        //   });
 
-          const profileDataUpdate = await profileUpdateResponse.json();
-          console.log(profileDataUpdate, '#########');
-        }
+        //   const profileDataUpdate = await profileUpdateResponse.json();
+        //   console.log(profileDataUpdate, '#########');
+        // }
 
-        setChatMessages([
-          ...chatMessages, newUserMessage,
-          { type: "bot", text: botReply },
-        ]);
+        // saveMessageToBackend({ type: "user", message: msg, display });
+        // saveMessageToBackend({ type: "bot", message: botReply?.answer });
+
+        
+        setTimeout(() => {
+          setLoading(false);
+          setChatMessages([
+            ...chatMessages, newUserMessage,
+            { type: "bot", text: botReply },
+          ]);
+        }, 1000);
         console.log(selectedResponses, '$$$$$$$');
       }
-
-      
+     
     }
 
     else{
@@ -212,12 +241,12 @@ const Chatbot = () => {
       setChatMessages([...chatMessages, newUserMessage]);
   
       const botReply = await predictResponse(msg);
+
+      // saveMessageToBackend({ type: "user", message: msg, display });
+      // saveMessageToBackend({ type: "bot", message: botReply?.answer });
       
   
-      setChatMessages([
-        ...chatMessages, newUserMessage,
-        { type: "bot", text: botReply },
-      ]);
+      
 
    
   
@@ -239,6 +268,13 @@ const Chatbot = () => {
       // }
   
       setUserInput("");
+      setTimeout(() => {
+        setLoading(false);
+        setChatMessages([
+          ...chatMessages, newUserMessage,
+          { type: "bot", text: botReply },
+        ]);
+      }, 1000);
     };
     }
 
@@ -284,7 +320,7 @@ const Chatbot = () => {
     doc.text(`Patient Age: ${patientAge}`, margin, currentY);
     currentY += lineHeight;
 
-    doc.text(`Patient Name: ${patientGender}`, margin, currentY);
+    doc.text(`Patient Gender: ${patientGender}`, margin, currentY);
     currentY += lineHeight;
 
     doc.text(`Patient Medical History: ${patientMedicalHistory}`, margin, currentY);
@@ -301,8 +337,8 @@ const Chatbot = () => {
 
     doc.setFontSize(12);
 
-    const tableHeaders = ["Serial No.", "Question", "User Response"];
-    const colWidths = [30, 90, 50];
+    const tableHeaders = ["Serial No.", "TimeStamp", "Question", "User Response"];
+    const colWidths = [40, 30, 60, 50];
 
     let startY = currentY + lineHeight;
 
@@ -320,22 +356,24 @@ const Chatbot = () => {
         0: { cellWidth: colWidths[0] },
         1: { cellWidth: colWidths[1] },
         2: { cellWidth: colWidths[2]},
+        3: {cellWidth: colWidths[3]}
       },
     });
 
     let serialNo = 1;
     selectedResponses?.forEach((message) => {
-      const { type, text, display } = message;
+      const { type, text, display,timestamp } = message;
 
       if (type === "user") {
         doc.autoTable({
-          body: [[serialNo++, "", display || text]],
+          body: [[serialNo++, timestamp ,"", display || text]], // Add timestamp for bot],
           startY: startY + 2*lineHeight, 
           theme: "plain",
           columnStyles: {
             0: { cellWidth: colWidths[0] },
             1: { cellWidth: colWidths[1] },
             2: { cellWidth: colWidths[2]},
+            3: { cellWidth: colWidths[3]},
             fontSize: 10
           },
           cellStyles: {
@@ -344,16 +382,21 @@ const Chatbot = () => {
         });
       } else {
         doc.autoTable({
-          body: [["", JSON.parse(text ?? `{}`)?.answer || JSON.parse(text ?? `{}`)?.question, ""]],
+          body: [
+            ["", "", JSON.parse(text ?? `{}`)?.answer || JSON.parse(text ?? `{}`)?.question, ""], // Add timestamp for bot
+          ],
           startY: startY + lineHeight, 
           theme: "plain",
           columnStyles: {
             0: { cellWidth: colWidths[0] },
             1: { cellWidth: colWidths[1] },
             2: { cellWidth: colWidths[2] },
+            3: { cellWidth: colWidths[3]},
           },
         });
       }
+      
+
 
       startY += lineHeight;
     });
@@ -409,6 +452,14 @@ const Chatbot = () => {
               optionHandler={handleSendMessage}
             />
           ))}
+
+          {loading && (
+            <>
+            <div className="my-2 flex justify-center w-full">
+              <CircularProgress color="secondary" />
+            </div>
+            </>
+          )}
           <div className=" my-2 flex justify-center w-full">
             <Button
               disableElevation

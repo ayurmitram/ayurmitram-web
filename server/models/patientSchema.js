@@ -20,9 +20,19 @@ const PatientSchema = new mongoose.Schema(
         patient_gender: {
             type: String,
         },
-        patient_medical_history: {
-            type: String,
-        },
+        patient_medical_history: [{
+            blood_pressure: {
+                high: String,
+                low: String,
+            },
+            sugar_level: {
+                before_food: String,
+                after_food: String,
+            },
+            pulse_rate: String,
+            temperature: String,
+            sleep_hours: String,
+        }],
         prakriti_type: {
             type: String,
         }
