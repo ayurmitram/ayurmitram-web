@@ -34,13 +34,17 @@ export default function Home() {
       <div className='h-[65%] bg-[#FFF2F2]/[15%] backdrop-blur-2xl rounded-2xl max-w-[500px] w-full p-8 xl:p-12 text-[#E8EDDF] flex flex-col justify-start items-center overflow-y-scroll'>
         <div className='text-xl font-medium mb-auto'>Decode your Prakriti with AI<br />and much more...</div>
         <div className='text-sm font-normal mb-2'>Select a mode to initiate the assessment</div>
-        <Button variant="contained" sx={{ mb: 2, width: '80%', maxWidth: '400px' }}>
+        {/* <Button variant="contained" sx={{ mb: 2, width: '80%', maxWidth: '400px' }}>
           Quick
           <ElectricBoltRoundedIcon className='ml-2' />
         </Button>
         <Button variant="contained" sx={{ mb: 2, width: '80%', maxWidth: '400px' }}>
           Comprehensive
           <SubjectRoundedIcon className='ml-2' />
+        </Button> */}
+        <Button variant="contained" sx={{ mb: 2, width: '80%', maxWidth: '400px' }}>
+          Take a Test Now
+          <ElectricBoltRoundedIcon className='ml-2' />
         </Button>
         <div className='font-normal text-xs'>don't know about prakruti <span className='text-[#539C52] cursor-pointer' onClick={handleGoToAbout}>learn more...</span></div>
       </div>

@@ -229,98 +229,99 @@ const Workout = () => {
     }, [])
 
     return (
-        <div className='rounded-2xl h-full w-full p-5 flex flex-col gap-5'>
-            <div className="text-2xl min-h-[2rem] max-h-[2rem] flex items-center">
-                <Button variant="outlined" color='lightGray' disableElevation onClick={() => navigate('/selfcare')}>
-                    <ArrowBackRoundedIcon color='secondary' className='mr-2' />
-                </Button>
-                Workout Routine
-            </div>
+        // <div className='rounded-2xl h-full w-full p-5 flex flex-col gap-5'>
+        //     <div className="text-2xl min-h-[2rem] max-h-[2rem] flex items-center">
+        //         <Button variant="outlined" color='lightGray' disableElevation onClick={() => navigate('/selfcare')}>
+        //             <ArrowBackRoundedIcon color='secondary' className='mr-2' />
+        //         </Button>
+        //         Workout Routine
+        //     </div>
 
-            <div className='w-full h-[0px] bg-black/50 '></div>
+        //     <div className='w-full h-[0px] bg-black/50 '></div>
 
-            <div className='h-full overflow-y-scroll'>
-                <div className='flex gap-2 justify-center mb-4'>
-                    <div title='Vata Prakruti' className={`w-12 h-12 bg-[#7CC6FE] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'Vata' && "scale-75"} transition-all`} onClick={() => setSelectedDosha('Vata')}>
-                        <img src={doshalogo1} alt="icon" className="" />
-                    </div>
-                    <div title='Pitta Prakruti' className={`w-12 h-12 bg-[#E87461] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'Pitta' && 'scale-75'} transition-all`} onClick={() => setSelectedDosha('Pitta')}>
-                        <img src={doshalogo2} alt="icon" className="" />
-                    </div>
-                    <div title='Kapha Prakruti'className={`w-12 h-12 bg-[#F9C80E] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'Kapha' && 'scale-75'} transition-all`} onClick={() => setSelectedDosha('Kapha')}>
-                        <img src={doshalogo3} alt="icon" className="" />
-                    </div>
-                </div>
+        //     <div className='h-full overflow-y-scroll'>
+        //         <div className='flex gap-2 justify-center mb-4'>
+        //             <div title='Vata Prakruti' className={`w-12 h-12 bg-[#7CC6FE] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'Vata' && "scale-75"} transition-all`} onClick={() => setSelectedDosha('Vata')}>
+        //                 <img src={doshalogo1} alt="icon" className="" />
+        //             </div>
+        //             <div title='Pitta Prakruti' className={`w-12 h-12 bg-[#E87461] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'Pitta' && 'scale-75'} transition-all`} onClick={() => setSelectedDosha('Pitta')}>
+        //                 <img src={doshalogo2} alt="icon" className="" />
+        //             </div>
+        //             <div title='Kapha Prakruti'className={`w-12 h-12 bg-[#F9C80E] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'Kapha' && 'scale-75'} transition-all`} onClick={() => setSelectedDosha('Kapha')}>
+        //                 <img src={doshalogo3} alt="icon" className="" />
+        //             </div>
+        //         </div>
 
-                <div className='text-center font-normal'>
-                    {data?.desc?.map((item, index) => (
-                        <div key={index} className={`text-lg mb-5 ${index === data?.desc?.length - 1 && 'font-medium'}`}>{item}</div>
-                    ))}
-                </div>
+        //         <div className='text-center font-normal'>
+        //             {data?.desc?.map((item, index) => (
+        //                 <div key={index} className={`text-lg mb-5 ${index === data?.desc?.length - 1 && 'font-medium'}`}>{item}</div>
+        //             ))}
+        //         </div>
 
-                <div className={`text-center flex ${isMinimized ? 'flex-row' : 'flex-col items-center'} gap-5 my-3 justify-center`}>
-                    {data?.compactPts?.map((item, index) => (
-                        <div key={index} className={`flex flex-col gap-5 justify-start px-5 py-20 rounded-2xl w-full max-w-[400px]`} style={{ backgroundColor: item?.color}}>
-                            {index === 0 && <img src={workout} alt="icon" className='w-16 h-16 mx-auto' />}
-                            {index === 1 && <img src={asanas} alt="icon" className='w-16 h-16 mx-auto' />}
-                            {index === 2 && <img src={rejuvenation} alt="icon" className='w-16 h-16 mx-auto' />}
-                            <div className='text-2xl font-medium'>{item?.title}</div>
-                            <div className='font-normal'>{item?.data}</div>
-                        </div>
-                    ))}
-                </div>
+        //         <div className={`text-center flex ${isMinimized ? 'flex-row' : 'flex-col items-center'} gap-5 my-3 justify-center`}>
+        //             {data?.compactPts?.map((item, index) => (
+        //                 <div key={index} className={`flex flex-col gap-5 justify-start px-5 py-20 rounded-2xl w-full max-w-[400px]`} style={{ backgroundColor: item?.color}}>
+        //                     {index === 0 && <img src={workout} alt="icon" className='w-16 h-16 mx-auto' />}
+        //                     {index === 1 && <img src={asanas} alt="icon" className='w-16 h-16 mx-auto' />}
+        //                     {index === 2 && <img src={rejuvenation} alt="icon" className='w-16 h-16 mx-auto' />}
+        //                     <div className='text-2xl font-medium'>{item?.title}</div>
+        //                     <div className='font-normal'>{item?.data}</div>
+        //                 </div>
+        //             ))}
+        //         </div>
 
-                <div className='my-10 text-2xl font-medium text-center'>Asanas</div>
-                <div className={`flex text-center ${isMinimized ? 'flex-row' : 'flex-col items-center'} gap-10 my-5 justify-center mx-5`}>
-                    {data?.asanas?.map((item, index) => (
-                        <div className='w-full max-w-[400px] py-10 px-5 bg-slate-700 h-[450px] rounded-2xl text-white flex flex-col justify-end'>
-                            <div className='text-xl font-medium'>{item.title}</div>
-                        </div>
-                    ))}
-                </div>
+        //         <div className='my-10 text-2xl font-medium text-center'>Asanas</div>
+        //         <div className={`flex text-center ${isMinimized ? 'flex-row' : 'flex-col items-center'} gap-10 my-5 justify-center mx-5`}>
+        //             {data?.asanas?.map((item, index) => (
+        //                 <div className='w-full max-w-[400px] py-10 px-5 bg-slate-700 h-[450px] rounded-2xl text-white flex flex-col justify-end'>
+        //                     <div className='text-xl font-medium'>{item.title}</div>
+        //                 </div>
+        //             ))}
+        //         </div>
 
-                <div className='p-5 bg-[#E8EDDF] mt-10 rounded-2xl'>
-                    <div className=' text-2xl font-medium text-center mb-5 mt-5'>Ideal Workout Session</div>                    
-                    {data?.workout?.map((item, index) => (
-                        <div className='mb-5'>
-                            <div className='text-xl font-medium mb-1'>{item.title}</div>
-                            <div className='font-normal ms-5'>{item.data}</div>
-                        </div>
-                    ))}
-                </div>
+        //         <div className='p-5 bg-[#E8EDDF] mt-10 rounded-2xl'>
+        //             <div className=' text-2xl font-medium text-center mb-5 mt-5'>Ideal Workout Session</div>                    
+        //             {data?.workout?.map((item, index) => (
+        //                 <div className='mb-5'>
+        //                     <div className='text-xl font-medium mb-1'>{item.title}</div>
+        //                     <div className='font-normal ms-5'>{item.data}</div>
+        //                 </div>
+        //             ))}
+        //         </div>
 
-                <div className='flex my-10 gap-5 items-center'>
-                    <div className='w-[5rem] h-[1px] bg-black/50'></div>
-                    <div className=' text-2xl font-medium'>Rejuvenation</div>
-                </div>
-                <div className={`flex-col flex ${isMinimized ? 'items-end' : 'items-center gap-5'} relative`}>
-                    <div className={`${isMinimized ? 'w-8/12 px-5' : 'w-full'} font-normal text-center`}>{data?.rejuvenation?.desc}</div>
-                    <div className={`${isMinimized ? 'absolute w-4/12' : 'static w-full '} rounded-2xl p-10 max-w-[400px] aspect-square left-0 flex justify-center items-center`} style={{
-                        backgroundColor: data?.rejuvenation?.color,
-                    }}>
-                        <img src={data?.rejuvenation?.img} alt="icon" className='w-full aspect-square' />
-                    </div>
-                    <div className={`${isMinimized ? 'w-9/12 ps-10 pt-10 pe-5 pb-10 gap-10 bg-white' : 'w-full flex-col gap-0 rounded-2xl'} flex z-10`}>
-                        <div className={`bg-[#243227] text-white p-5 w-full ${isMinimized ? '' : 'rounded-t-2xl pb-0'}`}>
-                            {data?.rejuvenation?.ptsList1?.map((item, index) => (
-                                <div className='flex items-center gap-5 mb-5'>
-                                    <div className='w-[8px] h-[8px] aspect-square rounded-full bg-white'></div>
-                                    <div className='font-normal'>{item}</div>
-                                </div>
-                            ))}
-                        </div>
-                        <div className={`bg-[#243227] text-white p-5 w-full ${isMinimized ? '' : 'rounded-b-2xl pt-0'}`}>
-                            {data?.rejuvenation?.ptsList2?.map((item, index) => (
-                                <div className='flex items-center gap-4 mb-5'>
-                                    <div className='w-[8px] h-[8px] aspect-square rounded-full bg-white'></div>
-                                    <div className='font-normal'>{item}</div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        //         <div className='flex my-10 gap-5 items-center'>
+        //             <div className='w-[5rem] h-[1px] bg-black/50'></div>
+        //             <div className=' text-2xl font-medium'>Rejuvenation</div>
+        //         </div>
+        //         <div className={`flex-col flex ${isMinimized ? 'items-end' : 'items-center gap-5'} relative`}>
+        //             <div className={`${isMinimized ? 'w-8/12 px-5' : 'w-full'} font-normal text-center`}>{data?.rejuvenation?.desc}</div>
+        //             <div className={`${isMinimized ? 'absolute w-4/12' : 'static w-full '} rounded-2xl p-10 max-w-[400px] aspect-square left-0 flex justify-center items-center`} style={{
+        //                 backgroundColor: data?.rejuvenation?.color,
+        //             }}>
+        //                 <img src={data?.rejuvenation?.img} alt="icon" className='w-full aspect-square' />
+        //             </div>
+        //             <div className={`${isMinimized ? 'w-9/12 ps-10 pt-10 pe-5 pb-10 gap-10 bg-white' : 'w-full flex-col gap-0 rounded-2xl'} flex z-10`}>
+        //                 <div className={`bg-[#243227] text-white p-5 w-full ${isMinimized ? '' : 'rounded-t-2xl pb-0'}`}>
+        //                     {data?.rejuvenation?.ptsList1?.map((item, index) => (
+        //                         <div className='flex items-center gap-5 mb-5'>
+        //                             <div className='w-[8px] h-[8px] aspect-square rounded-full bg-white'></div>
+        //                             <div className='font-normal'>{item}</div>
+        //                         </div>
+        //                     ))}
+        //                 </div>
+        //                 <div className={`bg-[#243227] text-white p-5 w-full ${isMinimized ? '' : 'rounded-b-2xl pt-0'}`}>
+        //                     {data?.rejuvenation?.ptsList2?.map((item, index) => (
+        //                         <div className='flex items-center gap-4 mb-5'>
+        //                             <div className='w-[8px] h-[8px] aspect-square rounded-full bg-white'></div>
+        //                             <div className='font-normal'>{item}</div>
+        //                         </div>
+        //                     ))}
+        //                 </div>
+        //             </div>
+        //         </div>
+        //     </div>
+        // </div>
+        <div>qwertyuiop</div>
     )
 }
 

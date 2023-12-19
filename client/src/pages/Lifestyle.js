@@ -179,73 +179,74 @@ const Lifestyle = () => {
   }, []);
 
   return (
-    <div className="rounded-2xl h-full w-full p-5 flex flex-col gap-5">
-      <div className="text-2xl min-h-[2rem] max-h-[2rem] flex items-center">
-        <Button
-          variant="outlined"
-          color="lightGray"
-          disableElevation
-          onClick={() => navigate("/selfcare")}
-        >
-          <ArrowBackRoundedIcon color="secondary" className="mr-2" />
-        </Button>
-        Lifestyle Routine
-      </div>
+    // <div className="rounded-2xl h-full w-full p-5 flex flex-col gap-5">
+    //   <div className="text-2xl min-h-[2rem] max-h-[2rem] flex items-center">
+    //     <Button
+    //       variant="outlined"
+    //       color="lightGray"
+    //       disableElevation
+    //       onClick={() => navigate("/selfcare")}
+    //     >
+    //       <ArrowBackRoundedIcon color="secondary" className="mr-2" />
+    //     </Button>
+    //     Lifestyle Routine
+    //   </div>
 
-      <div className="w-full h-[0px] bg-black/50 "></div>
+    //   <div className="w-full h-[0px] bg-black/50 "></div>
 
-      <div className="h-full overflow-y-scroll w-full">
-        <div className='flex gap-2 justify-center mb-4'>
-            <div title='Vata Prakruti' className={`w-12 h-12 bg-[#7CC6FE] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'Vata' && "scale-75"} transition-all`} onClick={() => setSelectedDosha('Vata')}>
-                <img src={doshalogo1} alt="icon" className="" />
-            </div>
-            <div title='Pitta Prakruti' className={`w-12 h-12 bg-[#E87461] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'Pitta' && 'scale-75'} transition-all`} onClick={() => setSelectedDosha('Pitta')}>
-                <img src={doshalogo2} alt="icon" className="" />
-            </div>
-            <div title='Kapha Prakruti'className={`w-12 h-12 bg-[#F9C80E] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'Kapha' && 'scale-75'} transition-all`} onClick={() => setSelectedDosha('Kapha')}>
-                <img src={doshalogo3} alt="icon" className="" />
-            </div>
-        </div>
+    //   <div className="h-full overflow-y-scroll w-full">
+    //     <div className='flex gap-2 justify-center mb-4'>
+    //         <div title='Vata Prakruti' className={`w-12 h-12 bg-[#7CC6FE] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'Vata' && "scale-75"} transition-all`} onClick={() => setSelectedDosha('Vata')}>
+    //             <img src={doshalogo1} alt="icon" className="" />
+    //         </div>
+    //         <div title='Pitta Prakruti' className={`w-12 h-12 bg-[#E87461] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'Pitta' && 'scale-75'} transition-all`} onClick={() => setSelectedDosha('Pitta')}>
+    //             <img src={doshalogo2} alt="icon" className="" />
+    //         </div>
+    //         <div title='Kapha Prakruti'className={`w-12 h-12 bg-[#F9C80E] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'Kapha' && 'scale-75'} transition-all`} onClick={() => setSelectedDosha('Kapha')}>
+    //             <img src={doshalogo3} alt="icon" className="" />
+    //         </div>
+    //     </div>
 
 
 
-        <div className='flex mt-10 gap-5 items-center w-full'>
-          <div className={`flex-col flex ${isMinimized ? 'items-end' : 'items-center gap-5'} relative`}>
-              <div className={`${isMinimized ? 'w-8/12 px-5' : 'w-full'} font-medium text-2xl pb-5 text-start`}>Lifestyle tips</div>
-              <div className={`${isMinimized ? 'absolute w-4/12' : 'static w-full '} left-0 flex flex-col gap-5 justify-center items-center`}>
-                <div className={`rounded-2xl p-10 max-w-[400px] aspect-square flex justify-center items-center`} style={{
-                    backgroundColor: data?.color,
-                }}>
-                    <img src={data?.img} alt="icon" className='w-full aspect-square' />
-                </div>
-                <div className={`flex gap-4 w-10/12 justify-center items-center self-start ${isMinimized ? 'block': 'hidden'}`}>
-                    <Button variant="outlined" color="lightGray" disableElevation onClick={() => right(car)}>
-                      <ArrowBackIosNewRoundedIcon color="black" />
-                    </Button>
-                    <Button variant="outlined" color="lightGray" disableElevation onClick={() => left(car)}>
-                      <ArrowForwardIosRoundedIcon color="black" />
-                    </Button>
-                </div>
-              </div>
-              <div ref={car} className={`${isMinimized ? 'w-9/12 ps-10 pt-10 pe-5 pb-10 gap-10 bg-white' : 'w-full p-5 flex-col gap-5'} rounded-3xl overflow-y-scroll flex z-10 snap-x`}>
-                {data?.cards?.map((item, index) => (
-                  <div key={index} className={` min-w-[calc((100%_-_2rem)_/_2)] snap-block bg-[#243227] text-black p-5 w-full rounded-2xl`} style={{
-                    backgroundColor: data?.color,
-                  }}>
-                      <div className='mb-5 text-xl font-medium text-center'>{item?.title}</div>
-                      {item?.pts?.map((it, i) => (
-                          <div className='flex items-center gap-5 mb-5' key={i}>
-                              <div className='w-[8px] h-[8px] aspect-square rounded-full bg-black'></div>
-                              <div className='font-normal'>{it}</div>
-                          </div>
-                      ))}
-                  </div>
-                ))}
-              </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    //     <div className='flex mt-10 gap-5 items-center w-full'>
+    //       <div className={`flex-col flex ${isMinimized ? 'items-end' : 'items-center gap-5'} relative`}>
+    //           <div className={`${isMinimized ? 'w-8/12 px-5' : 'w-full'} font-medium text-2xl pb-5 text-start`}>Lifestyle tips</div>
+    //           <div className={`${isMinimized ? 'absolute w-4/12' : 'static w-full '} left-0 flex flex-col gap-5 justify-center items-center`}>
+    //             <div className={`rounded-2xl p-10 max-w-[400px] aspect-square flex justify-center items-center`} style={{
+    //                 backgroundColor: data?.color,
+    //             }}>
+    //                 <img src={data?.img} alt="icon" className='w-full aspect-square' />
+    //             </div>
+    //             <div className={`flex gap-4 w-10/12 justify-center items-center self-start ${isMinimized ? 'block': 'hidden'}`}>
+    //                 <Button variant="outlined" color="lightGray" disableElevation onClick={() => right(car)}>
+    //                   <ArrowBackIosNewRoundedIcon color="black" />
+    //                 </Button>
+    //                 <Button variant="outlined" color="lightGray" disableElevation onClick={() => left(car)}>
+    //                   <ArrowForwardIosRoundedIcon color="black" />
+    //                 </Button>
+    //             </div>
+    //           </div>
+    //           <div ref={car} className={`${isMinimized ? 'w-9/12 ps-10 pt-10 pe-5 pb-10 gap-10 bg-white' : 'w-full p-5 flex-col gap-5'} rounded-3xl overflow-y-scroll flex z-10 snap-x`}>
+    //             {data?.cards?.map((item, index) => (
+    //               <div key={index} className={` min-w-[calc((100%_-_2rem)_/_2)] snap-block bg-[#243227] text-black p-5 w-full rounded-2xl`} style={{
+    //                 backgroundColor: data?.color,
+    //               }}>
+    //                   <div className='mb-5 text-xl font-medium text-center'>{item?.title}</div>
+    //                   {item?.pts?.map((it, i) => (
+    //                       <div className='flex items-center gap-5 mb-5' key={i}>
+    //                           <div className='w-[8px] h-[8px] aspect-square rounded-full bg-black'></div>
+    //                           <div className='font-normal'>{it}</div>
+    //                       </div>
+    //                   ))}
+    //               </div>
+    //             ))}
+    //           </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
+    <div>qwertyuiop</div>
   )
 };
 

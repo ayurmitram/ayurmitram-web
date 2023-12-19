@@ -79,7 +79,7 @@ const Layout = ({ children }) => {
 					<span className="text-2xl font-semibold">AyurMitram</span>
 				</div>
 			</div> */}
-			<div className="h-[2rem] px-3 flex gap-5 items-center justify-end w-full bg-[#E8EDDF] border-0 border-black border-b-2">
+			{/* <div className="h-[2rem] px-3 flex gap-5 items-center justify-end w-full bg-[#E8EDDF] border-0 border-black border-b-2">
 				<div className="flex gap-1 cursor-pointer">
 					<ImportantDevicesIcon className='' />
 					<div className="font-semibold">Main Content</div>
@@ -117,8 +117,9 @@ const Layout = ({ children }) => {
 						))}
 					</Select>
 				</div>
-			</div>
-			<div className="flex justify-start gap-5 h-[calc(100vh_-_2rem)] p-5 font-['Poppins'] font-semibold bg-[#E8EDDF] overflow-hidden" >
+			</div> */}
+			{/* h-[calc(100vh_-_2rem)] */}
+			<div className="flex justify-start gap-5 h-screen p-5 font-['Poppins'] font-semibold bg-[#E8EDDF] overflow-hidden" > 
 				<div className="flex w-2/12 flex-col gap-5 rounded-xl overflow-auto h-full">
 					<div className="flex gap-2 items-center text-2xl p-5 pb-0">
 						AyurMitram

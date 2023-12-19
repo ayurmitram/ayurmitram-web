@@ -131,12 +131,15 @@ const Chatbot = () => {
   };
 
   const [chatMessages, setChatMessages] = useState([
+    { type: 'user', text: 'find' },
+    { type: 'bot', text: { answer: "{\"question\": \"Describe the general feel of skin\", \"options\": {\"1\": \"Dry and thin- cool to touch, rough\", \"2\": \"Smooth and warm, oily T-zone\", \"3\": \"Thick and moist-greasy, cold\"}}" } },
+    { type: 'user', text: '1', display: 'Dry and thin- cool to touch, rough' },
+    { type: 'bot', text: { answer: "{\"question\": \"Describe the general feel of skin\", \"options\": {\"1\": \"Dry and thin- cool to touch, rough\", \"2\": \"Smooth and warm, oily T-zone\", \"3\": \"Thick and moist-greasy, cold\"}}" } },
+
   ]);
   // example values
   // { type: user, text: '1', display: 'short hair' },
-  // { type: bot, text: {
-  //   answer: "{\"question\": \"Describe the general feel of skin\", \"options\": {\"1\": \"Dry and thin- cool to touch, rough\", \"2\": \"Smooth and warm, oily T-zone\", \"3\": \"Thick and moist-greasy, cold\"}}"
-  // }
+  // { type: bot, text: { answer: "{\"question\": \"Describe the general feel of skin\", \"options\": {\"1\": \"Dry and thin- cool to touch, rough\", \"2\": \"Smooth and warm, oily T-zone\", \"3\": \"Thick and moist-greasy, cold\"}}" }
   const {
     transcript,
     listening,
@@ -168,175 +171,155 @@ const Chatbot = () => {
   }
 
   const handleSendMessage = async ({ msg = userInput, display = undefined }) => {
-    if (isStringAnInteger(msg)) {
-      if(msg === '1' || msg === '2' || msg === '3'){
-        const newUserMessage = { type: "user", text: msg, display };
-        const botReply = await predictResponse(msg);
-        setSelectedResponses((prevSelectedResponse) => [
-          ...prevSelectedResponse,
-          { type: "user", text: msg, display },
-          { type: "bot", text: botReply?.answer }, // Replace with actual bot response
-        ]);
+    // if (isStringAnInteger(msg)) {
+    //   if(msg === '1' || msg === '2' || msg === '3'){
+    //     const newUserMessage = { type: "user", text: msg, display };
+    //     const botReply = await predictResponse(msg);
+    //     setSelectedResponses((prevSelectedResponse) => [
+    //       ...prevSelectedResponse,
+    //       { type: "user", text: msg, display },
+    //       { type: "bot", text: botReply?.answer }, // Replace with actual bot response
+    //     ]);
 
-        setChatMessages([
-          ...chatMessages, newUserMessage,
-          { type: "bot", text: botReply },
-        ]);
-        console.log(selectedResponses, '$$$$$$$');
-      }
-    }
+    //     setChatMessages([
+    //       ...chatMessages, newUserMessage,
+    //       { type: "bot", text: botReply },
+    //     ]);
+    //     console.log(selectedResponses, '$$$$$$$');
+    //   }
+    // }
 
-    else{
-      const newUserMessage = { type: "user", text: msg, display };
-      setChatMessages([...chatMessages, newUserMessage]);
+    // else{
+    //   const newUserMessage = { type: "user", text: msg, display };
+    //   setChatMessages([...chatMessages, newUserMessage]);
   
-      const botReply = await predictResponse(msg);
+    //   const botReply = await predictResponse(msg);
       
   
-      setChatMessages([
-        ...chatMessages, newUserMessage,
-        { type: "bot", text: botReply },
-      ]);
+    //   setChatMessages([
+    //     ...chatMessages, newUserMessage,
+    //     { type: "bot", text: botReply },
+    //   ]);
 
-      if(botReply?.answer?.end)
+    //   if(botReply?.answer?.end)
   
-      console.log(botReply?.answer, "#####");
-      // if (JSON.parse(botReply?.answer ?? `{}`)?.answer && JSON.parse(botReply?.answer ?? `{}`)?.answer?.includes("Your Prakriti is")) {
-      //   setResponseList([
-      //     ...responseList,
-      //     { type: "user", text: newUserMessage?.text, display: newUserMessage?.display },
-      //     { type: "bot", text: botReply?.answer },
-      //   ]);
-  
-      //   setChatMessages([]);
-      // } else {
-      //   setResponseList([
-      //     ...responseList,
-      //     { type: "user", text: newUserMessage.text, display: newUserMessage?.display },
-      //     { type: "bot", text: botReply?.answer },
-      //   ]);
-      // }
-  
-      setUserInput("");
-    };
-    }
-
-   
-
-  
+    //   console.log(botReply?.answer, "#####");  
+    //   setUserInput("");
+    // };
+  }
 
   const generatePDF = async () => {
-    const doc = new jsPDF();
+    // const doc = new jsPDF();
 
-    const lineHeight = 5; 
-    const margin = 10;
-    const maxWidth = doc.internal.pageSize.width - 2 * margin;
-    const pageCenter = doc.internal.pageSize.width / 2;
-    let currentY = margin;
-    doc.setFont("Poppins", "bold");
+    // const lineHeight = 5; 
+    // const margin = 10;
+    // const maxWidth = doc.internal.pageSize.width - 2 * margin;
+    // const pageCenter = doc.internal.pageSize.width / 2;
+    // let currentY = margin;
+    // doc.setFont("Poppins", "bold");
 
-    // Add title
-    doc.setFontSize(30); 
-    doc.setTextColor(83, 156, 82); 
-    const titleText = "Ayurmitram Report";
-    const titleWidth =
-      (doc.getStringUnitWidth(titleText) * doc.internal.getFontSize()) /
-      doc.internal.scaleFactor;
-    const titleX = pageCenter - titleWidth / 2;
-    doc.text(titleText, titleX, currentY);
-    currentY += 2 * lineHeight;
+    // // Add title
+    // doc.setFontSize(30); 
+    // doc.setTextColor(83, 156, 82); 
+    // const titleText = "Ayurmitram Report";
+    // const titleWidth =
+    //   (doc.getStringUnitWidth(titleText) * doc.internal.getFontSize()) /
+    //   doc.internal.scaleFactor;
+    // const titleX = pageCenter - titleWidth / 2;
+    // doc.text(titleText, titleX, currentY);
+    // currentY += 2 * lineHeight;
 
   
-    doc.setTextColor(0);
+    // doc.setTextColor(0);
 
  
-    const patientName = patientDetails.name;
-    const patientAge = patientDetails.age;
-    const patientGender = patientDetails.gender; 
-    const patientMedicalHistory = patientDetails.medical_history;
-    const todayDate = new Date().toLocaleDateString(); 
+    // const patientName = patientDetails.name;
+    // const patientAge = patientDetails.age;
+    // const patientGender = patientDetails.gender; 
+    // const patientMedicalHistory = patientDetails.medical_history;
+    // const todayDate = new Date().toLocaleDateString(); 
 
-    doc.setFontSize(12);
-    doc.text(`Patient Name: ${patientName}`, margin, currentY);
-    currentY += lineHeight;
+    // doc.setFontSize(12);
+    // doc.text(`Patient Name: ${patientName}`, margin, currentY);
+    // currentY += lineHeight;
 
-    doc.text(`Patient Age: ${patientAge}`, margin, currentY);
-    currentY += lineHeight;
+    // doc.text(`Patient Age: ${patientAge}`, margin, currentY);
+    // currentY += lineHeight;
 
-    doc.text(`Patient Name: ${patientGender}`, margin, currentY);
-    currentY += lineHeight;
+    // doc.text(`Patient Name: ${patientGender}`, margin, currentY);
+    // currentY += lineHeight;
 
-    doc.text(`Patient Medical History: ${patientMedicalHistory}`, margin, currentY);
-    currentY += lineHeight;
+    // doc.text(`Patient Medical History: ${patientMedicalHistory}`, margin, currentY);
+    // currentY += lineHeight;
 
-    doc.text(`Date: ${todayDate}`, margin, currentY);
-    currentY += 3 * lineHeight;
+    // doc.text(`Date: ${todayDate}`, margin, currentY);
+    // currentY += 3 * lineHeight;
 
-    doc.setFontSize(25);
-    doc.setTextColor(0, 0, 0); 
-    const prakrutiAnalysisText = "Prakruti Analysis";
-    doc.text(prakrutiAnalysisText, margin, currentY);
-    currentY += 2 * lineHeight;
+    // doc.setFontSize(25);
+    // doc.setTextColor(0, 0, 0); 
+    // const prakrutiAnalysisText = "Prakruti Analysis";
+    // doc.text(prakrutiAnalysisText, margin, currentY);
+    // currentY += 2 * lineHeight;
 
-    doc.setFontSize(12);
+    // doc.setFontSize(12);
 
-    const tableHeaders = ["Serial No.", "Question", "User Response"];
-    const colWidths = [30, 90, 50];
+    // const tableHeaders = ["Serial No.", "Question", "User Response"];
+    // const colWidths = [30, 90, 50];
 
-    let startY = currentY + lineHeight;
+    // let startY = currentY + lineHeight;
 
-    doc.autoTable({
-      startY: startY,
-      head: [tableHeaders],
-      body: [],
-      theme: "plain",
-      headStyles: {
-        fillColor: [83, 156, 82], 
-        textColor: 255, 
-        fontSize: 12
-      },
-      columnStyles: {
-        0: { cellWidth: colWidths[0] },
-        1: { cellWidth: colWidths[1] },
-        2: { cellWidth: colWidths[2]},
-      },
-    });
+    // doc.autoTable({
+    //   startY: startY,
+    //   head: [tableHeaders],
+    //   body: [],
+    //   theme: "plain",
+    //   headStyles: {
+    //     fillColor: [83, 156, 82], 
+    //     textColor: 255, 
+    //     fontSize: 12
+    //   },
+    //   columnStyles: {
+    //     0: { cellWidth: colWidths[0] },
+    //     1: { cellWidth: colWidths[1] },
+    //     2: { cellWidth: colWidths[2]},
+    //   },
+    // });
 
-    let serialNo = 1;
-    selectedResponses?.forEach((message) => {
-      const { type, text, display } = message;
+    // let serialNo = 1;
+    // selectedResponses?.forEach((message) => {
+    //   const { type, text, display } = message;
 
-      if (type === "user") {
-        doc.autoTable({
-          body: [[serialNo++, "", display || text]],
-          startY: startY + 2*lineHeight, 
-          theme: "plain",
-          columnStyles: {
-            0: { cellWidth: colWidths[0] },
-            1: { cellWidth: colWidths[1] },
-            2: { cellWidth: colWidths[2]},
-            fontSize: 10
-          },
-          cellStyles: {
-            1: { overflow: "linebreak", columnWidth: colWidths[1] },
-          },
-        });
-      } else {
-        doc.autoTable({
-          body: [["", JSON.parse(text ?? `{}`)?.answer || JSON.parse(text ?? `{}`)?.question, ""]],
-          startY: startY + lineHeight, 
-          theme: "plain",
-          columnStyles: {
-            0: { cellWidth: colWidths[0] },
-            1: { cellWidth: colWidths[1] },
-            2: { cellWidth: colWidths[2] },
-          },
-        });
-      }
+    //   if (type === "user") {
+    //     doc.autoTable({
+    //       body: [[serialNo++, "", display || text]],
+    //       startY: startY + 2*lineHeight, 
+    //       theme: "plain",
+    //       columnStyles: {
+    //         0: { cellWidth: colWidths[0] },
+    //         1: { cellWidth: colWidths[1] },
+    //         2: { cellWidth: colWidths[2]},
+    //         fontSize: 10
+    //       },
+    //       cellStyles: {
+    //         1: { overflow: "linebreak", columnWidth: colWidths[1] },
+    //       },
+    //     });
+    //   } else {
+    //     doc.autoTable({
+    //       body: [["", JSON.parse(text ?? `{}`)?.answer || JSON.parse(text ?? `{}`)?.question, ""]],
+    //       startY: startY + lineHeight, 
+    //       theme: "plain",
+    //       columnStyles: {
+    //         0: { cellWidth: colWidths[0] },
+    //         1: { cellWidth: colWidths[1] },
+    //         2: { cellWidth: colWidths[2] },
+    //       },
+    //     });
+    //   }
 
-      startY += lineHeight;
-    });
-    doc.save("chat_history.pdf");
+    //   startY += lineHeight;
+    // });
+    // doc.save("chat_history.pdf");
   };
 
   const toggleChatbot = () => {
