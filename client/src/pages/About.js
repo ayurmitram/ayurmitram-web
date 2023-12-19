@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import about1logo from "../assets/about1logo.svg";
 import about2logo from "../assets/about2logo.svg";
 import about3logo from "../assets/about3logo.svg";
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { useDispatch } from 'react-redux'
-import { setIsMinimized, setTabValue } from '../store/layout';
+import { setIsMinimized, setShowTabs, setTabValue } from '../store/layout';
 
 
 const Card = ({
@@ -38,7 +39,8 @@ export default function About() {
 
   useEffect(() => {
       dispatch(setTabValue(5))
-      if (localStorage.getItem('token')) 
+      window.innerWidth < 1024 && dispatch(setShowTabs(false))
+      if (localStorage.getItem('token') && window.innerWidth >= 1024)
         dispatch(setIsMinimized(false))
   }, [])
 
@@ -46,6 +48,7 @@ export default function About() {
     <div className="w-full h-full flex flex-col gap-5 p-5">
       <div className="text-2xl min-h-[2rem] flex items-center">
           About
+          <div className="lg:hidden ms-auto cursor-pointer"><MenuRoundedIcon onClick={() => { dispatch(setShowTabs(true)) }} /></div>
       </div>
       <div className='w-full h-[0px] bg-black/50 '></div>
 

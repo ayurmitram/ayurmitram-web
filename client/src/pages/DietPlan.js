@@ -9,9 +9,10 @@ import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRound
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import Button from '@mui/material/Button'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { setIsMinimized, setTabValue } from '../store/layout'
+import { setIsMinimized, setShowTabs, setTabValue } from '../store/layout'
 
 const DietPlan = () => {
     const [selectedDosha, setSelectedDosha] = useState('Vata')
@@ -165,37 +166,36 @@ const DietPlan = () => {
             {
                 type: 'Sweet',
                 tips: [
-                    'Choose naturally sweet foods like ripe fruits, whole grains, sweet potatoes, honey, milk, and ghee to form the foundation of a pitta-pacifying diet.',
-                    'The sweet taste plays a vital role in satisfying Pitta\'s nutritional needs and promoting overall balance.',
-                    'It\'s crucial to avoid excessive refined sugars or overly sugary foods, as they can contribute to overheating in pitta dosha.',
-                    'Embracing naturally sweet foods provides a cooling, calming, and nourishing effect, fostering equilibrium and satisfaction for individuals with a pitta constitution.'
+                    'Fresh fruits are seasonal, ripe fruits like berries, cherries, or apricots. These provide natural sweetness without overwhelming heaviness.',
+                    'Whole Grains (quinoa, barley, millet offer sustained energy and are less likely to contribute to lethargy.',
+                    'Sweet potatoes are a nutrient-dense root vegetable that adds a sweet and grounding element to meals.',
+                    'Moderate amounts of dairy products Warm milk with a pinch of spices like cinnamon or cardamom can be soothing.'
                 ]
             },
             {
                 type: 'Bitter',
                 tips: [
-                    'Incorporate moderate amounts of bitter foods such as leafy greens (e.g., kale, arugula), bitter melon, asparagus, turmeric, and dark chocolate.',
-                    'While not the primary focus of a meal, the bitter taste complements and balances other flavors in a pitta-pacifying diet.',
-                    'Bitter foods possess cooling, light, and drying qualities, effectively counteracting the natural heat and intensity associated with pitta dosha.',
-                    'Including these foods supports digestion, aids in detoxification, and helps alleviate excess heat, contributing to a more harmonious state for individuals with a pitta constitution.'
+                    'Leafy greens (kale, spinach, and collard greens) are rich in antioxidants and bitter compounds to support digestion and metabolism.',
+                    'Bitter melon to use, it can be beneficial for digestion and reducing excess mucus.',
+                    'Use of turmeric A powerful anti-inflammatory spice that adds a bitter element to dishes.',
+                    'Utilization of fenugreek Incorporate fenugreek seeds or leaves to enhance the bitter taste. '
                 ]
             },
             {
                 type: 'Astringent',
                 tips: [
-                    'Include astringent flavors found in legumes (e.g., lentils, chickpeas), beans, pomegranate, apples, broccoli, and quinoa.',
-                    'The astringent taste, characterized by dryness and mild contraction, helps offset pitta\'s tendency toward excess heat and inflammation.',
-                    'While not the primary taste of a meal, incorporating astringent foods contributes to a well-rounded, pitta-pacifying diet, imparting a sense of balance and calm.',
-                    'Astringent taste supports proper hydration, helps control excessive sweating, and promotes a cooling effect for individuals with pitta dosha.'
+                    'Legumes like lentils and chickpeas, along with astringent beans such as adzuki beans, offer essential astringency without causing undue heaviness in individuals with Kapha Prakrati.',
+                    'The refreshing and astringent qualities of pomegranate, broccoli, and apples are particularly beneficial in supporting Kapha balance.',
+                    'While not the primary taste of a meal, incorporating astringent foods contributes to a well-rounded, kapha-pacifying diet, imparting a sense of balance and calm.',
+                    'Astringent taste supports proper hydration, helps control excessive sweating, and promotes a cooling effect for individuals with kapha dosha.'
                 ]
             },
             {
                 type: 'Pungent',
                 tips: [
-                    'Incorporate pungent flavors in moderation, including mild spices like ginger, black pepper, and mustard.',
-                    'While some mild spices are pitta-pacifying, excessive pungency can exacerbate pitta dosha.',
-                    'It\'s essential to balance the pungent taste, as an overdose may contribute to heat and inflammation, disrupting the natural harmony of pitta.',
-                    'Moderate pungency supports digestion, stimulates metabolism, and provides a subtle warmth for individuals with pitta constitution.'
+                    'Ginger is like a cozy hug for your stomach, helping with digestion without making things too toasty.',
+                    'Black Pepper is a spice that adds a little kick without taking over the whole flavor party.',
+                    'Mild Mustard Varieties like the gentle cheerleaders for your digestion, giving it a nudge without turning up the heat too much.',
                 ]
             }
         ], 
@@ -203,15 +203,15 @@ const DietPlan = () => {
             {
                 type: 'Sour',
                 tips: [
-                    'Limit the intake of sour foods like citrus fruits, tomatoes, yogurt, and vinegar, as excess sourness can exacerbate pitta\'s heat.',
-                    'While some sour tastes can be beneficial in moderation, an excess may contribute to acidity and inflammation in pitta dosha.',
+                    'Limit Citrus Fruits, Tomatoes, Yogurt, and Vinegar these are in moderation to avoid exacerbating mucus production and dampness.',
+                    'While some sour tastes can be beneficial in moderation, an excess may contribute to acidity and inflammation in kapha dosha.',
                     'Restricting sour foods helps maintain a more balanced and cool internal environment, aligning with the specific needs of individuals with a pitta constitution.'
                 ]
             },
             {
                 type: 'Salty',
                 tips: [
-                    'Exercise moderation in salt intake, preferring high-quality sea salt or natural mineral salt over common table salt.',
+                    'Choose high-quality sea salt or natural mineral salt in moderation to prevent water retention and heaviness.',
                     'While salt enhances flavors, excessive intake may lead to increased heat and water retention, posing challenges for pitta dosha.',
                     'Striking a balance in salt consumption supports Pitta\'s digestive fire without causing unnecessary heat buildup or aggravation.'
                 ]
@@ -228,6 +228,7 @@ const DietPlan = () => {
     useEffect(() => {
         dispatch(setTabValue(4))
         dispatch(setIsMinimized(true))
+        window.innerWidth < 1024 && dispatch(setShowTabs(false))
     }, [])
 
     return (
@@ -242,6 +243,7 @@ const DietPlan = () => {
                     <ArrowBackRoundedIcon color='secondary' className='mr-2' />
                 </Button>
                 Diet Plan
+                <div className="lg:hidden ms-auto cursor-pointer"><MenuRoundedIcon onClick={() => { dispatch(setShowTabs(true)) }} /></div>
             </div>
 
             <div className='w-full h-[0px] bg-black/50 '></div>

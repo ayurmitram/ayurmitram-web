@@ -1,3 +1,4 @@
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
@@ -19,17 +20,17 @@ import apple from './../assets/apple.svg'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
-import { setIsMinimized, setTabValue } from '../store/layout';
+import { setIsMinimized, setShowTabs, setTabValue } from '../store/layout';
 import { doctor_profile_completion } from '../controllers/doctorRoutes';
 import { login_common } from '../controllers/commonRoutes';
 
-const languages = [
+export const languages = [
     'English', 'Hindi', 'Bengali', 'Telugu', 'Marathi', 'Tamil', 'Urdu', 'Gujarati', 'Kannada', 'Odia', 'Malayalam', 'Punjabi', 'Assamese', 'Maithili', 'Sanskrit', 'Santali', 'Kashmiri', 'Nepali', 'Sindhi', 'Konkani', 'Dogri', 'Manipuri', 'Bodo', 'Santhali', 'Other'
 ]
-const mode_of_communications = [
+export const mode_of_communications = [
     'Video Call', 'Audio Call', 'Chat', 'Email', 'In Person', 'Other'
 ]
-const area_of_expertise = [
+export const area_of_expertise = [
     'Allergy & Immunology', 'Anesthesiology', 'Dermatology', 'Diagnostic Radiology', 'Emergency Medicine', 'Family Medicine', 'Internal Medicine', 'Medical Genetics', 'Neurology', 'Nuclear Medicine', 'Obstetrics & Gynecology', 'Ophthalmology', 'Pathology', 'Pediatrics', 'Physical Medicine & Rehabilitation', 'Preventive Medicine', 'Psychiatry', 'Radiation Oncology', 'Surgery', 'Urology', 'Other'
 ]
 
@@ -78,6 +79,7 @@ const OnboardingDoctor = () => {
 
     useEffect(() => {
         dispatch(setTabValue(11))
+        window.innerWidth < 1024 && dispatch(setShowTabs(false))
         dispatch(setIsMinimized(false))
     }, [])
 
@@ -91,6 +93,7 @@ const OnboardingDoctor = () => {
 
             <div className="text-2xl min-h-[2rem] flex items-center">
                 Onboarding
+                <div className="lg:hidden ms-auto cursor-pointer"><MenuRoundedIcon onClick={() => { dispatch(setShowTabs(true)) }} /></div>
             </div>
             <div className='w-full h-[0px] bg-black/50 '></div>
 

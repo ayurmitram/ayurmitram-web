@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const PatientSchema = require("../models/patientSchema");
+const DoctorSchema = require("../models/doctorSchema");
 
 router.post('/signup', async (req, res) => {
    try {
@@ -37,6 +38,28 @@ router.post('/signup', async (req, res) => {
    }
 })
 
+
+router.get('/getpatient', async(req, res) => {
+  try {
+    const { patientId } = req.body;
+
+    // Find the patient by ID
+    const patient = await PatientSchema.findById(patientId);
+
+    // If patient not found, return a 404 error
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+
+    // Send the patient details as the response
+    res.json({ patient });
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+})
+
 router.post('/complete-profile', async (req, res) => {
   try {
     const {
@@ -58,7 +81,10 @@ router.post('/complete-profile', async (req, res) => {
     // Update patient details
     patient.patient_age = patient_age;
     patient.patient_gender = patient_gender;
-    patient.patient_medical_history = patient_medical_history;
+    if (Array.isArray(patient_medical_history)) {
+      // Assuming you want to add the new medical history to the existing array
+      patient.patient_medical_history = [...patient.patient_medical_history, ...patient_medical_history];
+    }
     patient.prakriti_type = prakriti_type
 
     // Save the updated patient profile

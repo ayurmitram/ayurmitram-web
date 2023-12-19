@@ -121,7 +121,7 @@ const ThemeWrapper = ({ children }) => {
                         fontFamily: 'inherit',
                     }
                 }
-            }
+            },
         }
     })
 
