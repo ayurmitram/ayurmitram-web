@@ -2,6 +2,7 @@ import ImportantDevicesIcon from '@mui/icons-material/ImportantDevices';
 import FormatSizeIcon from '@mui/icons-material/FormatSize';
 import React, { useMemo, useState, useEffect } from "react";
 import AssessmentRoundedIcon from '@mui/icons-material/AssessmentRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import TroubleshootRoundedIcon from '@mui/icons-material/TroubleshootRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
@@ -17,13 +18,11 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
 import { setLanguage } from '../store/layout';
 import { languages } from '../pages/OnboardingDoctor';
 import ThemeWrapper from "../utils/ThemeWrapper";
 import { useSelector, useDispatch } from 'react-redux'
-import { setTabValue, setIsMinimized } from '../store/layout'
+import { setTabValue, setIsMinimized, setShowTabs } from '../store/layout'
 import Chatbot from "./Chatbot";
 import { useNavigate } from "react-router-dom";
 import SignupCarousel from "./SignupCarousel";
@@ -33,6 +32,7 @@ const Layout = ({ children }) => {
 	const tabValue = useSelector(state => state.layout.tabValue)
 	const isMinimized = useSelector(state => state.layout.isMinimized)
 	const lang = useSelector(state => state.layout.language)
+	const showTabs = useSelector(state => state.layout.showTabs)
 
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
@@ -118,51 +118,54 @@ const Layout = ({ children }) => {
 					</Select>
 				</div>
 			</div>
-			<div className="flex justify-start gap-5 h-[calc(100vh_-_2rem)] p-5 font-['Poppins'] font-semibold bg-[#E8EDDF] overflow-hidden" >
-				<div className="flex w-2/12 flex-col gap-5 rounded-xl overflow-auto h-full">
-					<div className="flex gap-2 items-center text-2xl p-5 pb-0">
-						AyurMitram
+			<div className="flex flex-col lg:flex-row justify-start gap-0 lg:gap-5 h-auto lg:h-[calc(100vh_-_2rem)] min-h-[calc(100vh_-_2rem)] p-0 lg:p-5 font-['Poppins'] font-semibold bg-[#E8EDDF] overflow-hidden" >
+				{showTabs && (
+					<div className="flex w-screen lg:w-2/12 flex-col gap-5 rounded-xl overflow-auto h-screen fixed lg:static bg-[#E8EDDF] z-20 top-0 left-0">
+						<div className="flex gap-2 items-center text-2xl p-5 pb-0">
+							AyurMitram
+							<div className='lg:hidden ms-auto cursor-pointer'><CloseRoundedIcon onClick={() => dispatch(setShowTabs(false))} /></div>
+						</div>
+						
+						<div className='w-full h-[0px] bg-black/50 '></div>
+
+						<Tabs value={tabValue} onChange={() => {}} orientation="vertical">
+							<Tab label="Home" icon={<HomeRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/')} disabled={disableAllTabs} />
+							<Tab label="Find Your Prakriti" icon={<TroubleshootRoundedIcon />} iconPosition="start" onClick={(e) => redirectTo('/find-your-prakruti')} disabled={disableAllTabs} />
+							{localStorage.getItem('token') ? (
+								<div></div>
+							) : (
+								<div></div>
+							)}
+							<Tab label="Consultant (Doctor)" icon={<LocalHospitalRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/consultant')} disabled={disableAllTabs} />
+							<Tab label="Self care" icon={<SpaRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/selfcare')} disabled={disableAllTabs} />
+							<Tab label="About" icon={<InfoRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/about')} disabled={disableAllTabs} />
+
+							<div className='w-full h-[0.5px] bg-black/50 mt-5 mb-1'></div>
+
+							{localStorage.getItem('token') ? (
+								<Tab label="Profile" icon={<AccountCircleRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/profile')} disabled={disableAllTabs} />
+							) : (
+								<div></div>
+							)}
+							{localStorage.getItem('token') ? (
+								<Tab label="Logout" icon={<LogoutRoundedIcon />} iconPosition="start" onClick={() => {localStorage.removeItem('token'); redirectTo('/') }} />
+							) : (
+								<div></div>
+							)}
+							{!localStorage.getItem('token') ? (
+								<Tab label="Signup" icon={<PersonAddRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/signup')} disabled={disableAllTabs} />
+							) : (
+								<div></div>
+							)}
+							{!localStorage.getItem('token') ? (
+								<Tab label="Login" icon={<LoginRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/login')} disabled={disableAllTabs} />
+							) : (
+								<div></div>
+							)}
+						</Tabs>
 					</div>
-					
-					<div className='w-full h-[0px] bg-black/50 '></div>
-
-					<Tabs value={tabValue} onChange={() => {}} orientation="vertical">
-						<Tab label="Home" icon={<HomeRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/')} disabled={disableAllTabs} />
-						<Tab label="Find Your Prakriti" icon={<TroubleshootRoundedIcon />} iconPosition="start" onClick={(e) => redirectTo('/find-your-prakruti')} disabled={disableAllTabs} />
-						{localStorage.getItem('token') ? (
-							<div></div>
-						) : (
-							<div></div>
-						)}
-						<Tab label="Consultant (Doctor)" icon={<LocalHospitalRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/consultant')} disabled={disableAllTabs} />
-						<Tab label="Self care" icon={<SpaRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/selfcare')} disabled={disableAllTabs} />
-						<Tab label="About" icon={<InfoRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/about')} disabled={disableAllTabs} />
-
-						<div className='w-full h-[0.5px] bg-black/50 mt-5 mb-1'></div>
-
-						{localStorage.getItem('token') ? (
-							<Tab label="Profile" icon={<AccountCircleRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/profile')} disabled={disableAllTabs} />
-						) : (
-							<div></div>
-						)}
-						{localStorage.getItem('token') ? (
-							<Tab label="Logout" icon={<LogoutRoundedIcon />} iconPosition="start" onClick={() => {localStorage.removeItem('token'); redirectTo('/') }} />
-						) : (
-							<div></div>
-						)}
-						{!localStorage.getItem('token') ? (
-							<Tab label="Signup" icon={<PersonAddRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/signup')} disabled={disableAllTabs} />
-						) : (
-							<div></div>
-						)}
-						{!localStorage.getItem('token') ? (
-							<Tab label="Login" icon={<LoginRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/login')} disabled={disableAllTabs} />
-						) : (
-							<div></div>
-						)}
-					</Tabs>
-				</div>
-				<div className={` bg-white rounded-2xl ${isMinimized ? 'w-10/12' : 'w-5/12'}`}>
+				)}
+				<div className={` bg-white lg:rounded-2xl ${isMinimized ? 'w-full lg:w-10/12' : 'w-full lg:w-5/12'}`}>
 					{children}
 				</div>
 				{isMinimized ? (
@@ -175,7 +178,7 @@ const Layout = ({ children }) => {
 						</button>
 					</div>
 				) : (
-					<div className="flex w-5/12 bg-white border rounded-2xl ">
+					<div className="flex w-full lg:w-5/12 bg-white border rounded-2xl ">
 						{(tabValue === 10 || tabValue === 9 || tabValue === 11) ? (
 							<SignupCarousel />
 						) : (

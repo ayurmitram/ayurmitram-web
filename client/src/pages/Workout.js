@@ -1,3 +1,4 @@
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import doshalogo1 from './../assets/about1logo.svg'
 import doshalogo2 from './../assets/about2logo.svg'
 import doshalogo3 from './../assets/about3logo.svg'
@@ -10,7 +11,7 @@ import rejuvenation from './../assets/rejuvenation.svg'
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import Button from '@mui/material/Button'
 import { useEffect, useMemo, useState } from "react"
-import { setIsMinimized, setTabValue } from '../store/layout';
+import { setIsMinimized, setShowTabs, setTabValue } from '../store/layout';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux';
@@ -226,6 +227,7 @@ const Workout = () => {
     useEffect(() => {
         dispatch(setTabValue(4))
         dispatch(setIsMinimized(true))
+        window.innerWidth < 1024 && dispatch(setShowTabs(false))
     }, [])
 
     return (
@@ -235,6 +237,7 @@ const Workout = () => {
                     <ArrowBackRoundedIcon color='secondary' className='mr-2' />
                 </Button>
                 Workout Routine
+                <div className="lg:hidden ms-auto cursor-pointer"><MenuRoundedIcon onClick={() => { dispatch(setShowTabs(true)) }} /></div>
             </div>
 
             <div className='w-full h-[0px] bg-black/50 '></div>
@@ -258,7 +261,7 @@ const Workout = () => {
                     ))}
                 </div>
 
-                <div className={`text-center flex ${isMinimized ? 'flex-row' : 'flex-col items-center'} gap-5 my-3 justify-center`}>
+                <div className={`text-center flex ${isMinimized ? 'flex-col lg:flex-row' : 'flex-col items-center'} gap-5 my-3 justify-center`}>
                     {data?.compactPts?.map((item, index) => (
                         <div key={index} className={`flex flex-col gap-5 justify-start px-5 py-20 rounded-2xl w-full max-w-[400px]`} style={{ backgroundColor: item?.color}}>
                             {index === 0 && <img src={workout} alt="icon" className='w-16 h-16 mx-auto' />}
@@ -271,7 +274,7 @@ const Workout = () => {
                 </div>
 
                 <div className='my-10 text-2xl font-medium text-center'>Asanas</div>
-                <div className={`flex text-center ${isMinimized ? 'flex-row' : 'flex-col items-center'} gap-10 my-5 justify-center mx-5`}>
+                <div className={`flex text-center ${isMinimized ? 'flex-col lg:flex-row' : 'flex-col items-center'} gap-10 my-5 justify-center mx-5`}>
                     {data?.asanas?.map((item, index) => (
                         <div className='w-full max-w-[400px] py-10 px-5 bg-slate-700 h-[450px] rounded-2xl text-white flex flex-col justify-end'>
                             <div className='text-xl font-medium'>{item.title}</div>
@@ -293,15 +296,15 @@ const Workout = () => {
                     <div className='w-[5rem] h-[1px] bg-black/50'></div>
                     <div className=' text-2xl font-medium'>Rejuvenation</div>
                 </div>
-                <div className={`flex-col flex ${isMinimized ? 'items-end' : 'items-center gap-5'} relative`}>
-                    <div className={`${isMinimized ? 'w-8/12 px-5' : 'w-full'} font-normal text-center`}>{data?.rejuvenation?.desc}</div>
-                    <div className={`${isMinimized ? 'absolute w-4/12' : 'static w-full '} rounded-2xl p-10 max-w-[400px] aspect-square left-0 flex justify-center items-center`} style={{
+                <div className={`flex-col flex ${isMinimized ? 'items-center lg:items-end gap-5 lg:gap-0' : 'items-center gap-5'} relative`}>
+                    <div className={`${isMinimized ? 'w-full lg:w-8/12 px-0 lg:px-5' : 'w-full'} font-normal text-center`}>{data?.rejuvenation?.desc}</div>
+                    <div className={`${isMinimized ? 'static lg:absolute w-full lg:w-4/12' : 'static w-full '} rounded-2xl p-10 max-w-[400px] aspect-square left-0 flex justify-center items-center`} style={{
                         backgroundColor: data?.rejuvenation?.color,
                     }}>
                         <img src={data?.rejuvenation?.img} alt="icon" className='w-full aspect-square' />
                     </div>
-                    <div className={`${isMinimized ? 'w-9/12 ps-10 pt-10 pe-5 pb-10 gap-10 bg-white' : 'w-full flex-col gap-0 rounded-2xl'} flex z-10`}>
-                        <div className={`bg-[#243227] text-white p-5 w-full ${isMinimized ? '' : 'rounded-t-2xl pb-0'}`}>
+                    <div className={`${isMinimized ? 'w-full lg:w-9/12 p-0 lg:ps-10 lg:pt-10 lg:pe-5 lg:pb-10 gap-0 lg:gap-10 flex-col lg:flex-row rounded-2xl lg:rounded-none bg-white' : 'w-full flex-col gap-0 rounded-2xl'} flex z-10`}>
+                        <div className={`bg-[#243227] text-white p-5 w-full ${isMinimized ? 'rounded-t-2xl lg:rounded-t-none pb-0 lg:pb-5' : 'rounded-t-2xl pb-0'}`}>
                             {data?.rejuvenation?.ptsList1?.map((item, index) => (
                                 <div className='flex items-center gap-5 mb-5'>
                                     <div className='w-[8px] h-[8px] aspect-square rounded-full bg-white'></div>
@@ -309,7 +312,7 @@ const Workout = () => {
                                 </div>
                             ))}
                         </div>
-                        <div className={`bg-[#243227] text-white p-5 w-full ${isMinimized ? '' : 'rounded-b-2xl pt-0'}`}>
+                        <div className={`bg-[#243227] text-white p-5 w-full ${isMinimized ? 'rounded-b-2xl lg:rounded-b-none pt-0 lg:pt-5' : 'rounded-b-2xl pt-0'}`}>
                             {data?.rejuvenation?.ptsList2?.map((item, index) => (
                                 <div className='flex items-center gap-4 mb-5'>
                                     <div className='w-[8px] h-[8px] aspect-square rounded-full bg-white'></div>

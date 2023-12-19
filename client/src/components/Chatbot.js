@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setIsMinimized } from "../store/layout";
+import { setIsMinimized, setNewMessageFunction } from "../store/layout";
 import { useEffect, useState, useRef } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -184,10 +184,9 @@ const Chatbot = () => {
         ]);
         console.log(selectedResponses, '$$$$$$$');
       }
-    }
-
-    else{
+    } else {
       const newUserMessage = { type: "user", text: msg, display };
+      console.log(newUserMessage, "#####")
       setChatMessages([...chatMessages, newUserMessage]);
   
       const botReply = await predictResponse(msg);
@@ -358,10 +357,12 @@ const Chatbot = () => {
     if (transcript) {
       setUserInput(transcript);
     }
+
+    dispatch(setNewMessageFunction(handleSendMessage)) // to start a chat on button click
   }, [transcript, chatMessages]);
 
   return (
-    <div className="w-full h-full p-5">
+    <div className="w-full h-full min-h-screen lg:min-h-0 fixed lg:static z-50 top-0 left-0 bg-white p-5">
       <div className=" flex flex-col h-full gap-5 relative ">
         <div className="text-2xl min-h-[2rem] max-h-[2rem] flex items-center justify-between">
           Ayurmitram
