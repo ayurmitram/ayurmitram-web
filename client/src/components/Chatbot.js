@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setIsMinimized, setNewMessageFunction } from "../store/layout";
+import { setIsMinimized, setNewMessageFunction, setSelectedResponses } from "../store/layout";
 import { useEffect, useState, useRef } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -18,7 +18,37 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import { auth_patient } from "../controllers/patientRoutes";
 
-const MessageBox = ({ message, prev, next, optionHandler }) => {
+const MessageBox = ({ message, prev, next, handleSendMessage }) => {
+  const selectedResponses = useSelector((state) => state.layout.selectedResponses);
+
+  const dispatch = useDispatch();
+
+  const optionHandler = ({ msg, display }) => {
+    if (selectedResponses?.reduce((acc, curr) => acc || curr.text === display, false)) {
+      dispatch(setSelectedResponses(selectedResponses.filter((response) => response.text !== display)))
+    } else {  
+      dispatch(setSelectedResponses([...selectedResponses, { text: display, val: msg }]))
+    }
+  }
+
+  const handleFinal = () => {
+    let map = { '1': 0, '2': 0, '3': 0 };
+    selectedResponses.forEach((response) => {
+      map[response.val] += 1;
+    });
+    let max = 0;
+    let maxKey = '1';
+    for (let key in map) {
+      if (map[key] > max) {
+        max = map[key];
+        maxKey = key;
+      }
+    }
+    console.log(maxKey, 'maxKey');
+    handleSendMessage({ msg: maxKey, display: selectedResponses.map((r) => r?.text)?.join(', ') });
+    dispatch(setSelectedResponses([]));
+  }
+
   console.log(message, 'message');
   return (
     <>
@@ -44,23 +74,44 @@ const MessageBox = ({ message, prev, next, optionHandler }) => {
         {message?.type === "user" ? message?.display || message?.text : (JSON.parse(message?.text?.answer ?? `{}`)?.answer || JSON.parse(message?.text?.answer ?? `{}`)?.question)}
       </div>
       {JSON.parse(message?.text?.answer ?? `{}`)?.options && next === null && (
-        <div className="flex flex-col items-start gap-2 mt-2 w-full px-5">
+        <>
+        <div className="flex flex-row flex-wrap items-start gap-2 mt-2 w-full px-5">
           {JSON.parse(message?.text?.answer)?.options?.[1] && (
-            <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] bg-[#EFEEEE] overflow-hidden text-ellipsis text-slate-600 text-center" onClick={() => optionHandler({ msg: '1', display: JSON.parse(message?.text?.answer)?.options?.[1] })}>
-              {JSON.parse(message?.text?.answer)?.options?.[1]}
-            </div>
+            JSON.parse(message?.text?.answer)?.options?.[1].split(';').map((option, index) => (
+              <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] overflow-hidden text-ellipsis text-black text-center" onClick={() => optionHandler({ msg: '1', display: option })} style={{
+                backgroundColor: selectedResponses?.reduce((acc, curr) => acc || curr.text === option, false) ? '#DFBD50' : '#EFEEEE',
+              }}>
+                {option}
+              </div>
+            ))
           )}
           {JSON.parse(message?.text?.answer)?.options?.[2] && (
-            <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] bg-[#EFEEEE] overflow-hidden text-ellipsis text-slate-600 text-center" onClick={() => optionHandler({ msg: '2', display: JSON.parse(message?.text?.answer)?.options?.[2] })}>
-              {JSON.parse(message?.text?.answer)?.options?.[2]}
-            </div>
+            JSON.parse(message?.text?.answer)?.options?.[2].split(';').map((option, index) => (
+              <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] overflow-hidden text-ellipsis text-black text-center" onClick={() => optionHandler({ msg: '2', display: option })} style={{
+                backgroundColor: selectedResponses?.reduce((acc, curr) => acc || curr.text === option, false) ? '#DFBD50' : '#EFEEEE',
+              }}>
+                {option}
+              </div>
+            ))
           )}
           {JSON.parse(message?.text?.answer)?.options?.[3] && (
-            <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] bg-[#EFEEEE] overflow-hidden text-ellipsis text-slate-600 text-center" onClick={() => optionHandler({ msg: '3', display: JSON.parse(message?.text?.answer)?.options?.[3] })}>
-              {JSON.parse(message?.text?.answer)?.options?.[3]}
-            </div>
+            JSON.parse(message?.text?.answer)?.options?.[3].split(';').map((option, index) => (
+              <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] overflow-hidden text-ellipsis text-black text-center" onClick={() => optionHandler({ msg: '3', display: option })} style={{
+                backgroundColor: selectedResponses?.reduce((acc, curr) => acc || curr.text === option, false) ? '#DFBD50' : '#EFEEEE',
+              }}>
+                {option}
+              </div>
+            ))
           )}
         </div>
+        <div className="px-3 py-2 text-white bg-[#539C52] rounded-lg min-w-[5rem] text-center mt-2 ms-5" onClick={handleFinal} style={{
+          backgroundColor: selectedResponses?.length === 0 ? '#EFEEEE' : '#539C52',
+          cursor: selectedResponses?.length === 0 ? 'not-allowed' : 'pointer',
+          color: selectedResponses?.length === 0 ? '#000000' : '#FFFFFF',
+        }}>
+          Send
+        </div>
+        </>
       )}
     </>
   );
@@ -386,7 +437,7 @@ const Chatbot = () => {
                   ? null
                   : chatMessages[index + 1]
               }
-              optionHandler={handleSendMessage}
+              handleSendMessage={handleSendMessage}
             />
           ))}
           <div className=" my-2 flex justify-center w-full">
