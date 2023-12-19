@@ -7,8 +7,9 @@ import backg from './../assets/darkgreenbg.jpg'
 import { useDispatch, useSelector } from 'react-redux'
 import { setIsMinimized, setShowTabs, setTabValue } from '../store/layout';
 import { useNavigate } from 'react-router-dom';
+import { LineChart } from '../components/Chart';
 
-export default function Home() {  
+export default function Home() {
   const newMessageFunction = useSelector(state => state.layout.newMessageFunction)
 
   const navigate = useNavigate()
@@ -25,7 +26,7 @@ export default function Home() {
     if (localStorage.getItem('token') && window.innerWidth >= 1024)
       dispatch(setIsMinimized(false))
   }, [])
-  
+
   return (
     <div className="text-center overflow-y-scroll min-h-[calc(100vh_-_2rem)] lg:min-h-0 h-full p-8 xl:p-12 bg-cover lg:rounded-2xl flex flex-col justify-start items-center gap-10" style={{
       backgroundImage: `url(${backg})`
@@ -46,6 +47,7 @@ export default function Home() {
           Take a test now
           <ElectricBoltRoundedIcon className='ml-2' />
         </Button>
+
         <div className='font-normal text-xs'>don't know about prakruti <span className='text-[#539C52] cursor-pointer' onClick={handleGoToAbout}>learn more...</span></div>
       </div>
     </div>
