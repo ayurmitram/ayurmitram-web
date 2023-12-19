@@ -6,6 +6,7 @@ import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import CircularProgress from '@mui/material/CircularProgress';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
 import google from './../assets/google.svg'
 import facebook from './../assets/facebook.svg'
@@ -13,7 +14,7 @@ import apple from './../assets/apple.svg'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
-import { setIsMinimized, setTabValue } from '../store/layout';
+import { setIsMinimized, setShowTabs, setTabValue } from '../store/layout';
 import { auth_common, login_common } from '../controllers/commonRoutes';
 import { setUser } from '../store/user';
 
@@ -50,12 +51,14 @@ const Login = () => {
     useEffect(() => {
         dispatch(setTabValue(10))
         dispatch(setIsMinimized(false))
+        window.innerWidth < 1024 && dispatch(setShowTabs(false))
     }, [])
 
     return (
         <div className="w-full h-full flex flex-col gap-5 p-5">
             <div className="text-2xl min-h-[2rem] flex items-center">
                 Sign In
+                <MenuRoundedIcon className='cursor-pointer ms-auto' onClick={() => { dispatch(setShowTabs(true)) }} />
             </div>
             <div className='w-full h-[0px] bg-black/50 '></div>
 

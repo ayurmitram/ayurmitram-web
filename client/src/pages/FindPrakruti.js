@@ -3,8 +3,8 @@ import Button from '@mui/material/Button';
 import { useEffect } from "react"
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from "react-router-dom";
-
-import { setIsMinimized, setTabValue } from '../store/layout';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import { setIsMinimized, setShowTabs, setTabValue } from '../store/layout';
 
 const FindPrakruti = () => {
 
@@ -25,12 +25,14 @@ const FindPrakruti = () => {
     useEffect(() => {
         dispatch(setTabValue(1))
         dispatch(setIsMinimized(true))
+        window.innerWidth < 1024 && dispatch(setShowTabs(false))
     }, [])
 
     return (
         <div className="w-full h-full flex flex-col gap-5 p-5">
             <div className={`text-2xl min-h-[2rem] max-h-[2rem] flex items-center ${isMinimized && 'justify-center'}`}>
                 Find Your Prakruti
+                <div className="lg:hidden ms-auto cursor-pointer"><MenuRoundedIcon onClick={() => { dispatch(setShowTabs(true)) }} /></div>
             </div>
             <div className='w-full h-[0px] bg-black/50 '></div>
 

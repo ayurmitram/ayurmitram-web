@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const PatientSchema = require("../models/patientSchema");
+const DoctorSchema = require("../models/doctorSchema");
 
 router.post('/signup', async (req, res) => {
    try {

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setIsMinimized, setTabValue } from "../store/layout";
+import { setIsMinimized, setShowTabs, setTabValue } from "../store/layout";
 
 export default function Profile(){
 
@@ -8,7 +8,9 @@ export default function Profile(){
 
     useEffect(() => {
         dispatch(setTabValue(7))
-        dispatch(setIsMinimized(false))
+        if (localStorage.getItem('token') && window.innerWidth >= 1024)
+            dispatch(setIsMinimized(false))
+        window.innerWidth < 1024 && dispatch(setShowTabs(false))
     }, [])
     
     return(
