@@ -6,6 +6,7 @@ const layoutSlice = createSlice({
         tabValue: 0,
         isMinimized: false,
         activeBot: 'chat', // chat or quiz
+        selectedResponses: [],
         language: 'English',
         newMessageFunction: null,
         showTabs: window.innerWidth < 1024 ? false : true
@@ -28,10 +29,13 @@ const layoutSlice = createSlice({
         },
         setShowTabs(state, action) {
             state.showTabs = action.payload
+        },
+        setSelectedResponses(state, action) {
+            state.selectedResponses = action.payload
         }
     }
 })
 
-export const { setTabValue, setIsMinimized, setActiveBot, setLanguage, setNewMessageFunction, setShowTabs } = layoutSlice.actions
+export const { setTabValue, setIsMinimized, setActiveBot, setLanguage, setNewMessageFunction, setShowTabs, setSelectedResponses } = layoutSlice.actions
 
 export default layoutSlice.reducer
