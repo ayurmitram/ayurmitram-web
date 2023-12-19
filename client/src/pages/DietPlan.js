@@ -9,9 +9,10 @@ import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRound
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import Button from '@mui/material/Button'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { setIsMinimized, setTabValue } from '../store/layout'
+import { setIsMinimized, setShowTabs, setTabValue } from '../store/layout'
 
 const DietPlan = () => {
     const [selectedDosha, setSelectedDosha] = useState('Vata')
@@ -228,6 +229,7 @@ const DietPlan = () => {
     useEffect(() => {
         dispatch(setTabValue(4))
         dispatch(setIsMinimized(true))
+        window.innerWidth < 1024 && dispatch(setShowTabs(false))
     }, [])
 
     return (
@@ -242,6 +244,7 @@ const DietPlan = () => {
                     <ArrowBackRoundedIcon color='secondary' className='mr-2' />
                 </Button>
                 Diet Plan
+                <div className="lg:hidden ms-auto cursor-pointer"><MenuRoundedIcon onClick={() => { dispatch(setShowTabs(true)) }} /></div>
             </div>
 
             <div className='w-full h-[0px] bg-black/50 '></div>

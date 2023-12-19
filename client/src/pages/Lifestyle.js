@@ -9,10 +9,11 @@ import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRound
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import Button from "@mui/material/Button";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { setIsMinimized, setTabValue } from "../store/layout";
+import { setIsMinimized, setShowTabs, setTabValue } from "../store/layout";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+
 
 const Lifestyle = () => {
   const [selectedDosha, setSelectedDosha] = useState("Vata");
@@ -176,6 +177,7 @@ const Lifestyle = () => {
   useEffect(() => {
     dispatch(setTabValue(4));
     dispatch(setIsMinimized(true));
+    window.innerWidth < 1024 && dispatch(setShowTabs(false))
   }, []);
 
   return (
@@ -190,6 +192,7 @@ const Lifestyle = () => {
           <ArrowBackRoundedIcon color="secondary" className="mr-2" />
         </Button>
         Lifestyle Routine
+        <div className="lg:hidden ms-auto cursor-pointer"><MenuRoundedIcon onClick={() => { dispatch(setShowTabs(true)) }} /></div>
       </div>
 
       <div className="w-full h-[0px] bg-black/50 "></div>
@@ -210,15 +213,15 @@ const Lifestyle = () => {
 
 
         <div className='flex mt-10 gap-5 items-center w-full'>
-          <div className={`flex-col flex ${isMinimized ? 'items-end' : 'items-center gap-5'} relative`}>
-              <div className={`${isMinimized ? 'w-8/12 px-5' : 'w-full'} font-medium text-2xl pb-5 text-start`}>Lifestyle tips</div>
-              <div className={`${isMinimized ? 'absolute w-4/12' : 'static w-full '} left-0 flex flex-col gap-5 justify-center items-center`}>
+          <div className={`flex-col flex ${isMinimized ? 'items-center lg:items-end gap-5 lg:gap-0' : 'items-center gap-5'} relative`}>
+              <div className={`${isMinimized ? 'w-full lg:w-8/12 px-0 lg:px-5' : 'w-full'} font-medium text-2xl pb-5 text-start`}>Lifestyle tips</div>
+              <div className={`${isMinimized ? 'static lg:absolute w-full lg:w-4/12' : 'static w-full '} left-0 flex flex-col gap-5 justify-center items-center`}>
                 <div className={`rounded-2xl p-10 max-w-[400px] aspect-square flex justify-center items-center`} style={{
                     backgroundColor: data?.color,
                 }}>
                     <img src={data?.img} alt="icon" className='w-full aspect-square' />
                 </div>
-                <div className={`flex gap-4 w-10/12 justify-center items-center self-start ${isMinimized ? 'block': 'hidden'}`}>
+                <div className={`flex gap-4 w-10/12 justify-center items-center self-start ${isMinimized ? 'hidden lg:block': 'hidden'}`}>
                     <Button variant="outlined" color="lightGray" disableElevation onClick={() => right(car)}>
                       <ArrowBackIosNewRoundedIcon color="black" />
                     </Button>
@@ -227,7 +230,7 @@ const Lifestyle = () => {
                     </Button>
                 </div>
               </div>
-              <div ref={car} className={`${isMinimized ? 'w-9/12 ps-10 pt-10 pe-5 pb-10 gap-10 bg-white' : 'w-full p-5 flex-col gap-5'} rounded-3xl overflow-y-scroll flex z-10 snap-x`}>
+              <div ref={car} className={`${isMinimized ? 'w-full lg:w-9/12 p-5 lg:ps-10 lg:pt-10 lg:pe-5 lg:pb-10 gap-5 lg:gap-10 flex-col lg:flex-row bg-white' : 'w-full p-5 flex-col gap-5'} rounded-3xl overflow-y-scroll flex z-10 snap-x`}>
                 {data?.cards?.map((item, index) => (
                   <div key={index} className={` min-w-[calc((100%_-_2rem)_/_2)] snap-block bg-[#243227] text-black p-5 w-full rounded-2xl`} style={{
                     backgroundColor: data?.color,

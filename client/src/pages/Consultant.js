@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { get_all_doctors } from "../controllers/doctorRoutes";
 import doctor_image from "../assets/docimage.png";
-import { setTabValue } from "../store/layout";
+import { setShowTabs, setTabValue } from "../store/layout";
 import { useDispatch } from "react-redux";
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+
 
 const DoctorCard = ({
   doctor_name,
@@ -81,6 +83,7 @@ export default function Consultant() {
 
   useEffect(() => {
     dispatch(setTabValue(3));
+    window.innerWidth < 1024 && dispatch(setShowTabs(false))
     get_all_doctors().then((res) => {
       console.log(res);
       setDoctors(res);
@@ -92,6 +95,7 @@ export default function Consultant() {
       <div className="w-full h-full flex flex-col gap-5 p-5">
         <div className="text-2xl min-h-[2rem] flex items-center">
           Consultant (Doctor)
+          <div className="lg:hidden ms-auto cursor-pointer"><MenuRoundedIcon onClick={() => { dispatch(setShowTabs(true)) }} /></div>
         </div>
         <div className="w-full h-[0.5px] bg-black/50 "></div>
 

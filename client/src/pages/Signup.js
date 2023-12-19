@@ -1,3 +1,4 @@
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import TextField from '@mui/material/TextField';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
@@ -12,7 +13,7 @@ import sthetoscope from './../assets/logo-sthetoscope.svg'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
-import { setIsMinimized, setTabValue } from '../store/layout';
+import { setIsMinimized, setShowTabs, setTabValue } from '../store/layout';
 import { signup_patient } from '../controllers/patientRoutes';
 import { signup_doctor } from '../controllers/doctorRoutes';
 import SignupCarousel from '../components/SignupCarousel';
@@ -68,6 +69,7 @@ const Signup = () => {
 
     useEffect(() => {
         dispatch(setTabValue(9))
+        window.innerWidth < 1024 && dispatch(setShowTabs(false))
         if (typeOfUser === '') {
             dispatch(setIsMinimized(true))
         } else {
@@ -83,6 +85,7 @@ const Signup = () => {
                         <ArrowBackRoundedIcon color='secondary' className='mr-2' />
                     </Button>
                     Sign Up
+                    <div className="lg:hidden ms-auto cursor-pointer"><MenuRoundedIcon onClick={() => { dispatch(setShowTabs(true)) }} /></div>
                 </div>
                 <div className='w-full h-[0px] bg-black/50 '></div>
 
@@ -168,10 +171,11 @@ const Signup = () => {
             <div className="w-full h-full flex flex-col gap-5 p-5">
                 <div className="text-2xl min-h-[2rem] max-h-[2rem] flex items-center">
                     Welcome
+                    <div className="lg:hidden ms-auto cursor-pointer"><MenuRoundedIcon onClick={() => { dispatch(setShowTabs(true)) }} /></div>
                 </div>
                 <div className='w-full h-[0px] bg-black/50 '></div>
 
-                <div className={`flex ${isMinimized ? 'flex-row overflow-hidden' : 'flex-col overflow-y-scroll'} grow gap-5  items-stretch`}>
+                <div className={`flex ${isMinimized ? 'flex-col lg:flex-row overflow-hidden' : 'flex-col overflow-y-scroll'} grow gap-5  items-stretch`}>
                     <div className={`bg-[#E8EDDF] text-center font-medium ${isMinimized ? 'overflow-y-scroll' : ''} w-full rounded-2xl p-5 justify-center `}>
                         <div className=' text-5xl xl:text-6xl 2xl:text-7xl text-[#207B1F] mb-2 mt-8'>Ayurmitram</div>
                         <div className=' text-[#2A3F2E] mb-12'>Unveiling the essence of your prakruti</div>
@@ -194,7 +198,7 @@ const Signup = () => {
                         <div className='text-[#539C52] text-sm mb-2 cursor-pointer' onClick={() => {setTypeOfUser('doctor'); }}>Sign up here</div>
                         <div className='text-xs font-normal'>to connect with individuals seeking holistic insights into their prakruti</div>
                     </div>
-                    <div className='w-1/2 rounded-2xl'>
+                    <div className='w-full lg:w-1/2 rounded-2xl'>
                         <SignupCarousel />
                     </div>
                 </div>
