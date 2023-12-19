@@ -22,6 +22,9 @@ const PatientSchema = new mongoose.Schema(
         },
         patient_medical_history: {
             type: String,
+        },
+        prakriti_type: {
+            type: String,
         }
         
     }

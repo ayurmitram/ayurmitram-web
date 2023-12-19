@@ -52,6 +52,9 @@ const DoctorSchema = new mongoose.Schema(
         },
         doctor_website: {
             type: String
+        },
+        prakriti_type: {
+            type: String
         }
 
     }

@@ -43,7 +43,8 @@ router.post('/complete-profile', async (req, res) => {
       patientId,
       patient_age,
       patient_gender,
-      patient_medical_history
+      patient_medical_history,
+      prakriti_type
     } = req.body;
 
     // Find the patient by ID
@@ -58,6 +59,7 @@ router.post('/complete-profile', async (req, res) => {
     patient.patient_age = patient_age;
     patient.patient_gender = patient_gender;
     patient.patient_medical_history = patient_medical_history;
+    patient.prakriti_type = prakriti_type
 
     // Save the updated patient profile
     await patient.save();
