@@ -86,6 +86,7 @@ router.post('/complete-profile', async (req, res) => {
       patient.patient_medical_history = [...patient.patient_medical_history, ...patient_medical_history];
     }
     patient.prakriti_type = prakriti_type
+    patient.timestamp = new Date();
 
     // Save the updated patient profile
     await patient.save();
