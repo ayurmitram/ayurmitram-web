@@ -89,6 +89,7 @@ const Chatbot = () => {
       let obj = {
         token: localStorage.getItem("token"),
       }
+      console.log(obj.token, '***********')
       auth_patient(obj).then((res) => {
         if(res.tag){
           let {patient_name, patient_age, patient_gender, patient_medical_history} = res.patient;
@@ -177,6 +178,24 @@ const Chatbot = () => {
           { type: "user", text: msg, display },
           { type: "bot", text: botReply?.answer }, // Replace with actual bot response
         ]);
+        if (JSON.parse(botReply?.answer ?? `{}`)?.answer?.includes("Your prakriti is")){
+          console.log("yes praktiti saved !!!!!!!!!!!!!!!");
+          const prakritiType = JSON.parse(botReply?.answer ?? `{}`)?.answer;
+          console.log(prakritiType, '$$$$$$$$$$$$$$$$$')
+          const profileUpdateResponse = await fetch("http://localhost:8000/api/patient/complete-profile", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              patientId: localStorage.getItem("token").patientId,
+              prakriti_type: prakritiType,
+            }),
+          });
+
+          const profileDataUpdate = await profileUpdateResponse.json();
+          console.log(profileDataUpdate, '#########');
+        }
 
         setChatMessages([
           ...chatMessages, newUserMessage,
@@ -184,6 +203,8 @@ const Chatbot = () => {
         ]);
         console.log(selectedResponses, '$$$$$$$');
       }
+
+      
     }
 
     else{
@@ -198,7 +219,7 @@ const Chatbot = () => {
         { type: "bot", text: botReply },
       ]);
 
-      if(botReply?.answer?.end)
+   
   
       console.log(botReply?.answer, "#####");
       // if (JSON.parse(botReply?.answer ?? `{}`)?.answer && JSON.parse(botReply?.answer ?? `{}`)?.answer?.includes("Your Prakriti is")) {
@@ -411,7 +432,7 @@ const Chatbot = () => {
 
         <div className="w-full mt-auto absolute bottom-0 z-10 bg-white">
           <TextField
-            disabled={chatMessages[chatMessages.length - 1]?.type === "bot" && JSON.parse(chatMessages[chatMessages.length - 1]?.text?.answer ?? `{}`)?.options}
+            disabled={activeBot === 'quiz'}
             variant="outlined"
             fullWidth
             type="text"
