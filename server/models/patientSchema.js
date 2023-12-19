@@ -32,7 +32,10 @@ const PatientSchema = new mongoose.Schema(
             pulse_rate: String,
             temperature: String,
             sleep_hours: String,
-            timestamp: String,
+            timestamp: {
+                type: Date,
+                default: Date.now,
+            }
         }],
         prakriti_type: {
             type: String,
