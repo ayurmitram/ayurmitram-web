@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import About from "../pages/About";
-import Result from "../pages/Result";
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Layout from '../components/Layout';
@@ -23,7 +22,6 @@ export default function Router() {
                 <Routes>
                     <Route exact path="/" element={<Home />} />
                     <Route exact path="/find-your-prakruti" element={<FindPrakruti />} />
-                    <Route exact path="/result" element={<Result />} />
                     <Route exact path="/consultant" element={<Consultant />} />
                     <Route exact path="/selfcare" element={<SelfCare />} />
                     <Route exact path="/selfcare/diet" element={<DietPlan />} />

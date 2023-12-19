@@ -42,7 +42,7 @@ const DoctorSchema = new mongoose.Schema(
             type: [String]
         },
         doctor_availability: {
-            type: Date
+            type: String
         },
         doctor_preferred_comm: {
             type: [String]

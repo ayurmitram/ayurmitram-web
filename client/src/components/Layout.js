@@ -82,7 +82,7 @@ const Layout = ({ children }) => {
 						<Tab label="Home" icon={<HomeRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/')} disabled={disableAllTabs} />
 						<Tab label="Find Your Prakriti" icon={<TroubleshootRoundedIcon />} iconPosition="start" onClick={(e) => redirectTo('/find-your-prakruti')} disabled={disableAllTabs} />
 						{localStorage.getItem('token') ? (
-							<Tab label="Results" icon={<AssessmentRoundedIcon />} iconPosition="start" onClick={() => redirectTo('/result')} disabled={disableAllTabs} />
+							<div></div>
 						) : (
 							<div></div>
 						)}
