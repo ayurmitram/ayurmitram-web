@@ -5,6 +5,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import google from './../assets/google.svg'
 import facebook from './../assets/facebook.svg'
@@ -13,11 +14,13 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import { setIsMinimized, setTabValue } from '../store/layout';
-import { login_common } from '../controllers/loginRoutes';
+import { auth_common, login_common } from '../controllers/commonRoutes';
+import { setUser } from '../store/user';
 
 const Login = () => {
     const [credentials, setCredentails] = useState(null)
     const [passwordVisible, setPasswordVisible] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -28,15 +31,20 @@ const Login = () => {
     }
 
     const handleLogin = async () => {
+        setLoading(true)
         const res = await login_common({
             email: credentials?.email,
             password: credentials?.password
         })
-        // console.log(res, 'signup')
+        // console.log(res, 'login')
         if (res?.token) {
             localStorage.setItem('token', res?.token)
+            // console.log(res?.patient || res?.doctor)
+            // await dispatch(setUser(res?.patient || res?.doctor))
+            // console.log('user set')
             navigate('/')
         }
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -97,6 +105,7 @@ const Login = () => {
                 </div>
                 <Button variant="contained" className="w-full" color='secondary' sx={{ mb: 3 }} disableElevation onClick={handleLogin}>
                     Sign In
+                    {loading && <CircularProgress size={20} color='white' className='ml-2' />}
                 </Button>
                 <div className='cursor-pointer text-xs text-[#539C52] text-center mb-3'>forgot password?</div>
                 <div className='text-center text-sm mb-8'>Don't have a account? <span className='cursor-pointer text-[#539C52]' onClick={handleGoToSignup}>Sign Up</span></div>

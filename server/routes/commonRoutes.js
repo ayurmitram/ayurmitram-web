@@ -28,7 +28,11 @@ router.post('/login', async (req, res) => {
         }
 
         const token=jwt.sign(patient ? {patientId: patient._id} : {doctorId: doctor._id}, process.env.SECRET_KEY, {expiresIn: '2h'});
-        res.json({token});
+        res.json({
+            token,
+            patient: patient ? patient : null,
+            doctor: doctor ? doctor : null
+        });
     } catch(err) {
         console.log(err);
         res.status(500).json({message: 'Internal Server Error'});
@@ -37,7 +41,7 @@ router.post('/login', async (req, res) => {
 
 router.post('/auth', async (req, res) => {
     const token = req.body.token;
-  
+
     try {
         if (!token) {
             return res.status(401).json({ error: 'Token not provided' });
@@ -56,7 +60,7 @@ router.post('/auth', async (req, res) => {
         return res.status(401).json({ error: 'User not found' });
     }
 
-    return res.json({ message: `Authenticated user: ${doctorId ? doctorId : patientId}`, tag: true });
+    return res.json({ message: `Authenticated user: ${doctorId ? doctorId : patientId}`, tag: true, ...(patient || {}), ...(doctor || {}) })
     } catch (error) {
         return res.status(401).json({ error: 'Not authenticated' });
     }
