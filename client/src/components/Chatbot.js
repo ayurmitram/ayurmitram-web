@@ -376,18 +376,34 @@ const Chatbot = () => {
 
     doc.text(`Patient Gender: ${patientGender}`, margin, currentY);
     currentY += lineHeight;
-
-    doc.text(`Patient Medical History: ${patientMedicalHistory}`, margin, currentY);
-    currentY += lineHeight;
-
     doc.text(`Date: ${todayDate}`, margin, currentY);
-    currentY += 3 * lineHeight;
+
+    const lastEntry = patientMedicalHistory.length > 0 ? patientMedicalHistory[patientMedicalHistory.length - 1] : null;
+
+    if(lastEntry) {
+      // currentY += lineHeight;
+      doc.text(`  Blood Pressure: High - ${lastEntry.blood_pressure.high} mmHg, Low - ${lastEntry.blood_pressure.low} mmHg`, 70, currentY-3*lineHeight);
+      currentY += lineHeight;
+      doc.text(`  Sugar Level: Before Food - ${lastEntry.sugar_level.before_food} mg/dL, After Food - ${lastEntry.sugar_level.after_food} mg/dL`, 70, currentY-3*lineHeight);
+      currentY += lineHeight;
+      doc.text(`  Pulse Rate: ${lastEntry.pulse_rate} bpm`, 70, currentY-3*lineHeight);
+      currentY += lineHeight;
+      doc.text(`  Temperature: ${lastEntry.temperature} °F`, 70, currentY-3*lineHeight);
+      currentY += lineHeight;
+      doc.text(`  Sleep Hours: ${lastEntry.sleep_hours} hours`, 70, currentY-3*lineHeight);
+      currentY += lineHeight;
+    }    
+    
+    // currentY += lineHeight;
+
+   
+    currentY += 1.5 * lineHeight;
 
     doc.setFontSize(25);
     doc.setTextColor(0, 0, 0); 
     const prakrutiAnalysisText = "Prakruti Analysis";
     doc.text(prakrutiAnalysisText, margin, currentY);
-    currentY += 2 * lineHeight;
+    currentY += 0.5 * lineHeight;
 
     doc.setFontSize(12);
 
