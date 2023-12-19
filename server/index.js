@@ -11,6 +11,7 @@ const doctorRoutes = require("./routes/doctorRoutes");
 const langchainRoutes = require("./routes/langchainRoutes");
 const commonRoutes = require("./routes/commonRoutes");
 const messageRoutes = require("./routes/messageRoutes");
+const resultRoutes = require("./routes/resultRoutes");
 
 try {
     mongoose.connect(process.env.MONGO_URI).then(() => {
@@ -67,6 +68,7 @@ app.use("/api/doctor", doctorRoutes);
 app.use('/api/langchain', langchainRoutes);
 app.use('/api/message', messageRoutes);
 app.use("/api/login", commonRoutes);
+app.use('/api/result', resultRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

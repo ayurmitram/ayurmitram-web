@@ -76,29 +76,29 @@ export function LineChart() {
             const medicalHistory = data.patient.patient_medical_history;
 
             const bloodPressureData = medicalHistory?.map(item => ({
-                label: item.timestamp,
+                label: new Date(item.timestamp).toLocaleString(),
                 high: item.blood_pressure.high,
                 low: item.blood_pressure.low,
             }));
 
             const pulseRateData = medicalHistory?.map(item => ({
-                label: item.timestamp,
+                label: new Date(item.timestamp).toLocaleString(),
                 rate: item.pulse_rate,
             }));
 
             const bloodSugarLevelsData = medicalHistory?.map(item => ({
-                label: item.timestamp,
+                label: new Date(item.timestamp).toLocaleString(),
                 beforeFood: item.sugar_level.before_food,
                 afterFood: item.sugar_level.after_food,
             }));
 
             const bodyTemperatureData = medicalHistory?.map(item => ({
-                label: item.timestamp,
+                label: new Date(item.timestamp).toLocaleString(),
                 temperature: item.temperature,
             }));
 
             const sleepPatternsData = medicalHistory?.map(item => ({
-                label: item.timestamp,
+                label: new Date(item.timestamp).toLocaleString(),
                 hours: item.sleep_hours,
             }));
             console.log("data", data)
@@ -182,7 +182,7 @@ export function LineChart() {
 
     return (
         <div>
-            {name && <h1 className='text-2xl font-semibold'>{name}</h1>}
+            {name && <h1 className='text-2xl font-semibold'>Hello {name}</h1>}
 
             {bloodPressure && createChart(bloodPressure, 'Blood Pressure')}
             {bloodSugarLevels && createChart(bloodSugarLevels, 'Blood Sugar Levels')}

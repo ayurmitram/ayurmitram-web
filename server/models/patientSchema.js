@@ -44,4 +44,6 @@ const PatientSchema = new mongoose.Schema(
     }
 )
 
+PatientSchema.index({ createdAt: 1 }, { expireAfterSeconds: 30 * 24 * 60 * 60 });
+
 module.exports = mongoose.model("Patients", PatientSchema);

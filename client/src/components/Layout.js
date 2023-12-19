@@ -25,6 +25,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setTabValue, setIsMinimized, setShowTabs } from '../store/layout'
 import Chatbot from "./Chatbot";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo-smiley.svg"
 import SignupCarousel from "./SignupCarousel";
 
 const Layout = ({ children }) => {
@@ -85,7 +86,7 @@ const Layout = ({ children }) => {
 					<div className="font-semibold">Main Content</div>
 				</div>
 				<div className='flex gap-1'>
-					<FormatSizeIcon className='' />
+					{/* <FormatSizeIcon className='' /> */}
 					<div className='font-bold cursor-pointer text-lg'>A-</div>
 					<div className='font-bold cursor-pointer text-lg'>A</div>
 					<div className='font-bold cursor-pointer text-lg'>A+</div>
@@ -121,7 +122,9 @@ const Layout = ({ children }) => {
 			<div className="flex flex-col lg:flex-row justify-start gap-0 lg:gap-5 h-auto lg:h-[calc(100vh_-_2rem)] min-h-[calc(100vh_-_2rem)] p-0 lg:p-5 font-['Poppins'] font-semibold bg-[#E8EDDF] overflow-hidden" >
 				{showTabs && (
 					<div className="flex w-screen lg:w-2/12 flex-col gap-5 rounded-xl overflow-auto h-screen fixed lg:static bg-[#E8EDDF] z-20 top-0 left-0">
+						
 						<div className="flex gap-2 items-center text-2xl p-5 pb-0">
+						<img src={logo} width={40} height={40}/>
 							AyurMitram
 							<div className='lg:hidden ms-auto cursor-pointer'><CloseRoundedIcon onClick={() => dispatch(setShowTabs(false))} /></div>
 						</div>

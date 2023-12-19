@@ -39,7 +39,7 @@ router.post('/signup', async (req, res) => {
 })
 
 
-router.get('/getpatient', async(req, res) => {
+router.post('/getpatient', async(req, res) => {
   try {
     const { patientId } = req.body;
 
