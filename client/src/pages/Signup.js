@@ -16,6 +16,7 @@ import { setIsMinimized, setTabValue } from '../store/layout';
 import { signup_patient } from '../controllers/patientRoutes';
 import { signup_doctor } from '../controllers/doctorRoutes';
 import SignupCarousel from '../components/SignupCarousel';
+import { setUser } from '../store/user';
 
 const Signup = () => {
 
@@ -23,6 +24,7 @@ const Signup = () => {
     const [credentials, setCredentails] = useState(null)
     const [passwordVisible, setPasswordVisible] = useState(false)
     const [confirmationPasswordVisible, setConfirmationPasswordVisible] = useState(false)
+    const [loading, setLoading] = useState(false)
     const isMinimized = useSelector(state => state.layout.isMinimized)
 
     const dispatch = useDispatch()
@@ -33,6 +35,7 @@ const Signup = () => {
         navigate('/login')
     }
     const handleSignup = async () => {
+        setLoading(true)
         if (typeOfUser === 'patient') {
             const res = await signup_patient({
                 patient_name: credentials?.username,
@@ -43,6 +46,7 @@ const Signup = () => {
             if (res?.token) {
                 localStorage.setItem('token', res?.token)
                 localStorage.setItem('typeOfUser', 'patient')
+                dispatch(setUser(res?.patient))
                 navigate('/')
             }
         } else if (typeOfUser === 'doctor') {
@@ -55,9 +59,11 @@ const Signup = () => {
             if (res?.token) {
                 localStorage.setItem('token', res?.token)
                 localStorage.setItem('typeOfUser', 'doctor')
-                navigate('/')
+                dispatch(setUser(res?.doctor))
+                navigate('/onboarding/doctor')
             }
         }
+        setLoading(false)
     }
 
     useEffect(() => {

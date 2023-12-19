@@ -9,7 +9,7 @@ dotenv.config();
 const patientRoutes = require("./routes/patientRoutes");
 const doctorRoutes = require("./routes/doctorRoutes");
 const langchainRoutes = require("./routes/langchainRoutes");
-const loginRoutes = require("./routes/commonRoutes");
+const commonRoutes = require("./routes/commonRoutes");
 
 try {
     mongoose.connect(process.env.MONGO_URI).then(() => {
@@ -64,7 +64,7 @@ app.post("/llm", async (req, res) => {
 app.use("/api/patient", patientRoutes);
 app.use("/api/doctor", doctorRoutes);
 app.use('/api/langchain', langchainRoutes);
-app.use("/api/login", loginRoutes);
+app.use("/api/login", commonRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

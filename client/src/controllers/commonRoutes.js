@@ -12,3 +12,16 @@ export const login_common = async(obj) => {
     const ans = await res.json();
     return ans;
 }
+
+export const auth_common = async(obj) => {
+    const res = await fetch(`${baseUrl}/api/login/auth`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(obj)
+    })
+
+    const ans = await res.json();
+    return ans;
+}

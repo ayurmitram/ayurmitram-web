@@ -14,7 +14,7 @@ router.post('/signup', async (req, res) => {
     }
     console.log(patient_name, patient_email, patient_password)
 
-    const existingUser = await PatientSchema.findOne({patient_email});
+    const existingUser = await PatientSchema.findOne({patient_email}) || await DoctorSchema.findOne({doctor_email: patient_email});
     if(existingUser){
         console.log(existingUser);
         return res.status(400).json({message: 'Email already exists. Please choose another email'});
