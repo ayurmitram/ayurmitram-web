@@ -497,7 +497,7 @@ const Chatbot = () => {
   }, [transcript, chatMessages]);
 
   return (
-    <div className="w-full h-full min-h-screen lg:min-h-0 fixed lg:static z-50 top-0 left-0 bg-white p-5">
+    <div className={`w-full lg:w-5/12 h-full min-h-screen lg:min-h-0 fixed lg:static z-50 top-0 left-0 bg-white p-5 rounded-none lg:rounded-2xl ${isMinimized ? 'hidden' : 'block'}`}>
       <div className=" flex flex-col h-full gap-5 relative ">
         <div className="text-2xl min-h-[2rem] max-h-[2rem] flex items-center justify-between">
           AyurMitram Chatbot

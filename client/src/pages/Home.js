@@ -1,3 +1,4 @@
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import React, { useEffect } from 'react';
 import ElectricBoltRoundedIcon from '@mui/icons-material/ElectricBoltRounded';
 import SubjectRoundedIcon from '@mui/icons-material/SubjectRounded';
@@ -28,11 +29,14 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="text-center overflow-y-scroll min-h-[calc(100vh_-_2rem)] lg:min-h-0 h-full p-8 xl:p-12 bg-cover lg:rounded-2xl flex flex-col justify-start items-center gap-10" style={{
+    <div className="text-center overflow-y-scroll min-h-[calc(100vh_-_2rem)] lg:min-h-0 h-full p-8 xl:p-12 bg-cover lg:rounded-2xl flex flex-col justify-start items-center gap-16" style={{
       backgroundImage: `url(${backg})`
     }}>
-      <div className='h-[35%] flex flex-col justify-center gap-2 text-[#E8EDDF]'>
-        <div className='text-2xl font-normal'>Welcome to</div>
+      <div className='h-[35%] w-full flex flex-col justify-center items-stretch gap-2 text-[#E8EDDF]'>
+        <div className='text-2xl font-normal flex justify-center w-full gap-2'>
+          <div className='mx-auto'>Welcome to</div>
+          <div className="lg:hidden cursor-pointer text-center"><MenuRoundedIcon onClick={() => { dispatch(setShowTabs(true)) }} /></div>
+        </div>
         <div className='text-5xl xl:text-6xl 2xl:text-7xl font-medium'>AyurMitram</div>
       </div>
       <div className='h-[65%] bg-[#FFF2F2]/[15%] backdrop-blur-2xl rounded-2xl max-w-[500px] w-full p-8 xl:p-12 text-[#E8EDDF] flex flex-col justify-start items-center overflow-y-scroll gap-2'>
