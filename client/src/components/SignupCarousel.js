@@ -22,7 +22,7 @@ const SignupCarousel = () => {
         },
         {
             head: 'Self-Care Hub',
-            body: 'Explore a dedicated Self-Care Hub within Ayurmitram, designed to elevate your well-being through comprehensive diet planning, personalized workout routines, and lifestyle guidance.'
+            body: 'Explore a dedicated Self-Care Hub within AyurMitram, designed to elevate your well-being through comprehensive diet planning, personalized workout routines, and lifestyle guidance.'
         },
         {
             head: 'Voice Input Support',

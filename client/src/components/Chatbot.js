@@ -191,6 +191,9 @@ const Chatbot = () => {
   }
 
   const handleSendMessage = async ({ msg = userInput, display = undefined }) => {
+    SpeechRecognition.stopListening();
+    resetTranscript();
+    setUserInput('');
     setLoading(true);
     if (isStringAnInteger(msg)) {
       if(msg === '1' || msg === '2' || msg === '3'){
@@ -290,12 +293,12 @@ const Chatbot = () => {
     const maxWidth = doc.internal.pageSize.width - 2 * margin;
     const pageCenter = doc.internal.pageSize.width / 2;
     let currentY = margin;
-    doc.setFont("Poppins", "bold");
+    doc.setFont("helvetica", "bold");
 
     // Add title
     doc.setFontSize(30); 
     doc.setTextColor(83, 156, 82); 
-    const titleText = "Ayurmitram Report";
+    const titleText = "AyurMitram Report";
     const titleWidth =
       (doc.getStringUnitWidth(titleText) * doc.internal.getFontSize()) /
       doc.internal.scaleFactor;
@@ -430,7 +433,7 @@ const Chatbot = () => {
     <div className="w-full h-full min-h-screen lg:min-h-0 fixed lg:static z-50 top-0 left-0 bg-white p-5">
       <div className=" flex flex-col h-full gap-5 relative ">
         <div className="text-2xl min-h-[2rem] max-h-[2rem] flex items-center justify-between">
-          Ayurmitram
+          AyurMitram Chatbot
           <Button variant="outlined" color="lightGray" onClick={toggleChatbot}>
             <MinimizeIcon color="black" />
           </Button>

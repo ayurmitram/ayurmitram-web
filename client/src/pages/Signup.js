@@ -177,9 +177,9 @@ const Signup = () => {
 
                 <div className={`flex ${isMinimized ? 'flex-col lg:flex-row overflow-hidden' : 'flex-col overflow-y-scroll'} grow gap-5  items-stretch`}>
                     <div className={`bg-[#E8EDDF] text-center font-medium ${isMinimized ? 'overflow-y-scroll' : ''} w-full rounded-2xl p-5 justify-center `}>
-                        <div className=' text-5xl xl:text-6xl 2xl:text-7xl text-[#207B1F] mb-2 mt-8'>Ayurmitram</div>
+                        <div className=' text-5xl xl:text-6xl 2xl:text-7xl text-[#207B1F] mb-2 mt-8'>AyurMitram</div>
                         <div className=' text-[#2A3F2E] mb-12'>Unveiling the essence of your prakruti</div>
-                        <div className='text-[#2A3F2E] font-normal mb-1'>Join Ayurmitram now</div>
+                        <div className='text-[#2A3F2E] font-normal mb-1'>Join AyurMitram now</div>
                         <div className='text-center'>
                             <Button variant="contained" className="w-7/12" color='secondary' sx={{ mb: 2 }}  onClick={() => {setTypeOfUser('patient'); }}>
                                 Sign Up
