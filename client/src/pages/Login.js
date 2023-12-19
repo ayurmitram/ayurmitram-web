@@ -17,6 +17,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setIsMinimized, setShowTabs, setTabValue } from '../store/layout';
 import { auth_common, login_common } from '../controllers/commonRoutes';
 import { setUser } from '../store/user';
+import LineChart from '../components/Chart';
 
 const Login = () => {
     const [credentials, setCredentails] = useState(null)
@@ -41,7 +42,7 @@ const Login = () => {
         if (res?.token) {
             localStorage.setItem('token', res?.token)
             // console.log(res?.patient || res?.doctor)
-            // await dispatch(setUser(res?.patient || res?.doctor))
+            await dispatch(setUser(res?.patient || res?.doctor))
             // console.log('user set')
             navigate('/')
         }
@@ -88,22 +89,22 @@ const Login = () => {
                     sx={{ mb: 3 }}
                     color='secondary'
                     InputProps={{
-                        endAdornment: passwordVisible 
-                            ? <VisibilityOutlinedIcon className='cursor-pointer' sx={{ stroke: "#fff", strokeWidth: 1, color: '#CACACA' }} onClick={() => setPasswordVisible(false)} /> 
+                        endAdornment: passwordVisible
+                            ? <VisibilityOutlinedIcon className='cursor-pointer' sx={{ stroke: "#fff", strokeWidth: 1, color: '#CACACA' }} onClick={() => setPasswordVisible(false)} />
                             : <VisibilityOffOutlinedIcon className='cursor-pointer' sx={{ stroke: "#fff", strokeWidth: 1, color: '#CACACA' }} onClick={() => setPasswordVisible(true)} />
                     }}
 
                 />
                 <div className='flex gap-2 mb-3'>
-                    <FormControlLabel 
+                    <FormControlLabel
                         control={<Checkbox
                             checked={credentials?.rememberMe}
                             onChange={(e) => setCredentails({ ...(credentials ?? {}), rememberMe: e.target.checked })}
                             disableRipple
                             // sx={{ p: 0 }}
                             color="secondary"
-                        />} 
-                        label="Remember me" 
+                        />}
+                        label="Remember me"
                     />
                 </div>
                 <Button variant="contained" className="w-full" color='secondary' sx={{ mb: 3 }} disableElevation onClick={handleLogin}>
