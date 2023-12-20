@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setIsMinimized, setNewMessageFunction, setSelectedResponses } from "../store/layout";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { CircularProgress } from "@mui/material";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -161,6 +161,10 @@ const Chatbot = () => {
     gender: "",
     medical_history: ""
   });
+
+  const ans = useMemo(() => {
+    return selectedResponses?.filter((response) => response.type === "bot" && JSON.parse(response?.text ?? `{}`)?.ps)
+  }, [selectedResponses])
 
   // const isEndOfQuiz = () => quizEnded
 
@@ -459,7 +463,7 @@ const Chatbot = () => {
 
     let serialNo = 1;
     selectedResponses?.forEach((message) => {
-      const { type, text, display, timestamp } = message;
+      const { type, text, display } = message;
 
       if (type === "user") {
         doc.autoTable({
@@ -492,9 +496,15 @@ const Chatbot = () => {
       }
 
 
-
       startY += lineHeight;
     });
+    if (ans?.length > 0) {
+      doc.text("Prakruti Composition", margin, currentY);
+      doc.text(`  Vata: ${ans?.[0]?.vata}%`, margin, currentY += lineHeight);
+      doc.text(`  Pitta: ${ans?.[0]?.pitta}%`, margin, currentY += lineHeight);
+      doc.text(`  Kapha: ${ans?.[0]?.kapha}%`, margin, currentY += lineHeight);
+    }
+
     doc.save("chat_history.pdf");
   };
 
@@ -567,14 +577,14 @@ const Chatbot = () => {
               <RefreshRoundedIcon color="secondary" className="me-2" />
               Restart
             </Button>
-            {/* <Button
+            <Button
               disableElevation
               variant="contained"
               color="white"
               onClick={generatePDF}
             >
               Generate PDF
-            </Button> */}
+            </Button>
           </div>
         </div>
 
