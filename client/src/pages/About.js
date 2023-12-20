@@ -5,6 +5,8 @@ import about3logo from "../assets/about3logo.svg";
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { useDispatch } from 'react-redux'
 import { setIsMinimized, setShowTabs, setTabValue } from '../store/layout';
+import MyDocument from "../components/PdfReport";
+import { PDFViewer } from '@react-pdf/renderer';
 
 
 const Card = ({
@@ -38,17 +40,19 @@ export default function About() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-      dispatch(setTabValue(5))
-      window.innerWidth < 1024 && dispatch(setShowTabs(false))
-      if (localStorage.getItem('token') && window.innerWidth >= 1024)
-        dispatch(setIsMinimized(false))
+    dispatch(setTabValue(5))
+    window.innerWidth < 1024 && dispatch(setShowTabs(false))
+    if (localStorage.getItem('token') && window.innerWidth >= 1024)
+      dispatch(setIsMinimized(false))
   }, [])
 
   return (
+
+
     <div className="w-full h-full flex flex-col gap-5 p-5">
       <div className="text-2xl min-h-[2rem] flex items-center">
-          About
-          <div className="lg:hidden ms-auto cursor-pointer"><MenuRoundedIcon onClick={() => { dispatch(setShowTabs(true)) }} /></div>
+        About
+        <div className="lg:hidden ms-auto cursor-pointer"><MenuRoundedIcon onClick={() => { dispatch(setShowTabs(true)) }} /></div>
       </div>
       <div className='w-full h-[0px] bg-black/50 '></div>
 
@@ -79,6 +83,10 @@ export default function About() {
           classSmallBox="bg-[#F9C80E] p-4 mb-4"
           icon={about3logo}
         />
+        <PDFViewer>
+          <MyDocument />
+        </PDFViewer>
+
       </div>
     </div>
   );
