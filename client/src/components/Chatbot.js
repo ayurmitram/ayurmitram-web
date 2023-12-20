@@ -249,12 +249,12 @@ const Chatbot = () => {
     setLoading(true);
     if (isStringAnInteger(msg)) {
       if(msg === '1' || msg === '2' || msg === '3'){
-        const newUserMessage = { type: "user", text: msg, display, timestamp: new Date().toLocaleTimeString() };
+        const newUserMessage = { type: "user", text: msg, display };
         const botReply = await predictResponse(msg);
         setSelectedResponses((prevSelectedResponse) => [
           ...prevSelectedResponse,
-          { type: "user", text: msg, display, timestamp: new Date().toLocaleTimeString() },
-          { type: "bot", text: botReply?.answer, timestamp: new Date().toLocaleTimeString() }, // Replace with actual bot response
+          { type: "user", text: msg, display},
+          { type: "bot", text: botReply?.answer}, // Replace with actual bot response
         ]);
         // if (JSON.parse(botReply?.answer ?? `{}`)?.answer?.includes("Your prakriti is")){
         //   console.log("yes praktiti saved !!!!!!!!!!!!!!!");

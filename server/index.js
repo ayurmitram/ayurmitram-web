@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const crypto = require("crypto");
 const mongoose = require("mongoose");
 const PORT = process.env.PORT || 8000;
 const dotenv = require("dotenv");
@@ -8,7 +9,6 @@ dotenv.config();
 
 const patientRoutes = require("./routes/patientRoutes");
 const doctorRoutes = require("./routes/doctorRoutes");
-const langchainRoutes = require("./routes/langchainRoutes");
 const commonRoutes = require("./routes/commonRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const resultRoutes = require("./routes/resultRoutes");
@@ -20,6 +20,10 @@ try {
 } catch (err) {
     console.log(err);
 }
+
+
+
+
 
 app.use(cors());
 app.use(express.json());
@@ -65,7 +69,6 @@ app.post("/llm", async (req, res) => {
 
 app.use("/api/patient", patientRoutes);
 app.use("/api/doctor", doctorRoutes);
-app.use('/api/langchain', langchainRoutes);
 app.use('/api/message', messageRoutes);
 app.use("/api/login", commonRoutes);
 app.use('/api/result', resultRoutes);
