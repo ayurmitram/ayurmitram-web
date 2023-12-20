@@ -284,8 +284,8 @@ const Chatbot = () => {
         const botReply = await predictResponse(msg);
         setSelectedResponses((prevSelectedResponse) => [
           ...prevSelectedResponse,
-          { type: "user", text: msg, display },
-          { type: "bot", text: botReply?.answer }, // Replace with actual bot response
+          { type: "user", text: msg, display, time: new Date() },
+          { type: "bot", text: botReply?.answer, time: new Date() }, // Replace with actual bot response
         ]);
         // if (JSON.parse(botReply?.answer ?? `{}`)?.answer?.includes("Your prakriti is")){
         //   console.log("yes praktiti saved !!!!!!!!!!!!!!!");
@@ -398,6 +398,7 @@ const Chatbot = () => {
     const patientGender = patientDetails.gender;
     const patientMedicalHistory = patientDetails.medical_history;
     const todayDate = new Date().toLocaleDateString();
+    const timeTaken = selectedResponses?.length > 0 ? (new Date(selectedResponses[selectedResponses.length - 1]?.time)?.getTime() - new Date(selectedResponses[0]?.time).getTime()) / (1000 * 60) : 0;
 
     doc.setFontSize(12);
     doc.text(`Patient Name: ${patientName}`, margin, currentY);
@@ -409,6 +410,8 @@ const Chatbot = () => {
     doc.text(`Patient Gender: ${patientGender}`, margin, currentY);
     currentY += lineHeight;
     doc.text(`Date: ${todayDate}`, margin, currentY);
+    currentY += lineHeight;
+    doc.text(`Time Taken: ${Math.round(timeTaken)}`, margin, currentY);
 
     const lastEntry = patientMedicalHistory.length > 0 ? patientMedicalHistory[patientMedicalHistory.length - 1] : null;
 
@@ -431,7 +434,7 @@ const Chatbot = () => {
 
     currentY += 1.5 * lineHeight;
 
-    doc.setFontSize(25);
+    doc.setFontSize(18);
     doc.setTextColor(0, 0, 0);
     const prakrutiAnalysisText = "Prakruti Analysis";
     doc.text(prakrutiAnalysisText, margin, currentY);
