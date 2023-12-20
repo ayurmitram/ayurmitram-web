@@ -100,8 +100,8 @@ export default function Consultant() {
         <div className="w-full h-[0.5px] bg-black/50 "></div>
 
         {/* Doctor cards */}
-        <div className="overflow-y-auto max-h-[50rem]">
-          <div className="flex flex-row m-4">
+        <div className="overflow-y-auto max-h-[50rem] m-auto">
+          <div className="flex flex-col m-4">
             {doctors.map((doctor, index) => (
               <DoctorCard key={index} {...doctor} />
             ))}

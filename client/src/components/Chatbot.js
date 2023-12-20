@@ -29,7 +29,7 @@ const MessageBox = ({ message, prev, next, handleSendMessage }) => {
   const optionHandler = ({ msg, display }) => {
     if (selectedResponses?.reduce((acc, curr) => acc || curr.text === display, false)) {
       dispatch(setSelectedResponses(selectedResponses.filter((response) => response.text !== display)))
-    } else {  
+    } else {
       dispatch(setSelectedResponses([...selectedResponses, { text: display, val: msg }]))
     }
   }
@@ -41,7 +41,7 @@ const MessageBox = ({ message, prev, next, handleSendMessage }) => {
     });
     let max = 0;
     let maxKey = '1';
-    for (let key in map) { 
+    for (let key in map) {
       if (map[key] > max) {
         max = map[key];
         maxKey = key;
@@ -58,19 +58,18 @@ const MessageBox = ({ message, prev, next, handleSendMessage }) => {
       <div
         className={`
             px-3 py-2 rounded-2xl w-fit min-w-[10rem] max-w-[25rem]
-            ${
-              message?.type === "user"
-                ? `
+            ${message?.type === "user"
+            ? `
                   bg-[#539C52] self-end text-white pr-8 
                   ${prev && prev.type === "user" && "rounded-tr-md"}
                   ${next && next.type === "user" && "rounded-br-md"}
               `
-                : `
+            : `
                   bg-[#F5F5F5] pl-8
                   ${prev && prev.type === "bot" && "rounded-tl-md"}
                   ${next && next.type === "bot" && "rounded-bl-md"}
               `
-            }
+          }
         `}
         style={{ whiteSpace: "pre-line" }}
       >
@@ -97,43 +96,49 @@ const MessageBox = ({ message, prev, next, handleSendMessage }) => {
       </div>
       {JSON.parse(message?.text?.answer ?? `{}`)?.options && next === null && (
         <>
-        <div className="flex flex-row flex-wrap items-start gap-2 mt-2 w-full px-5">
-          {JSON.parse(message?.text?.answer)?.options?.[1] && (
-            JSON.parse(message?.text?.answer)?.options?.[1].split(';').map((option, index) => (
-              <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] overflow-hidden text-ellipsis text-black text-center" onClick={() => optionHandler({ msg: '1', display: option })} style={{
-                backgroundColor: selectedResponses?.reduce((acc, curr) => acc || curr.text === option, false) ? '#DFBD50' : '#EFEEEE',
-              }}>
-                {option}
-              </div>
-            ))
-          )}
-          {JSON.parse(message?.text?.answer)?.options?.[2] && (
-            JSON.parse(message?.text?.answer)?.options?.[2].split(';').map((option, index) => (
-              <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] overflow-hidden text-ellipsis text-black text-center" onClick={() => optionHandler({ msg: '2', display: option })} style={{
-                backgroundColor: selectedResponses?.reduce((acc, curr) => acc || curr.text === option, false) ? '#DFBD50' : '#EFEEEE',
-              }}>
-                {option}
-              </div>
-            ))
-          )}
-          {JSON.parse(message?.text?.answer)?.options?.[3] && (
-            JSON.parse(message?.text?.answer)?.options?.[3].split(';').map((option, index) => (
-              <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] overflow-hidden text-ellipsis text-black text-center" onClick={() => optionHandler({ msg: '3', display: option })} style={{
-                backgroundColor: selectedResponses?.reduce((acc, curr) => acc || curr.text === option, false) ? '#DFBD50' : '#EFEEEE',
-              }}>
-                {option}
-              </div>
-            ))
-          )}
-        </div>
-        <div className="ms-5 text-xs text-[#539C52] ">select all that applies</div>
-        <div className="px-3 py-2 text-white bg-[#539C52] rounded-lg min-w-[5rem] text-center ms-5" onClick={selectedResponses?.length !== 0 ? handleFinal : () => {}} style={{
-          backgroundColor: selectedResponses?.length === 0 ? '#EFEEEE' : '#539C52',
-          cursor: selectedResponses?.length === 0 ? 'not-allowed' : 'pointer',
-          color: selectedResponses?.length === 0 ? '#000000' : '#FFFFFF',
-        }}>
-          Send
-        </div>
+          <div className="flex flex-row flex-wrap items-start gap-2 mt-2 w-full px-5">
+            {JSON.parse(message?.text?.answer)?.options?.[1] && (
+              JSON.parse(message?.text?.answer)?.options?.[1].split(';').map((option, index) => (
+                <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] overflow-hidden text-ellipsis text-black text-center" onClick={() => optionHandler({ msg: '1', display: option })} style={{
+                  backgroundColor: selectedResponses?.reduce((acc, curr) => acc || curr.text === option, false) ? '#DFBD50' : '#EFEEEE',
+                }}>
+                  {option}
+                </div>
+              ))
+            )}
+            {JSON.parse(message?.text?.answer)?.options?.[2] && (
+              JSON.parse(message?.text?.answer)?.options?.[2].split(';').map((option, index) => (
+                <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] overflow-hidden text-ellipsis text-black text-center" onClick={() => optionHandler({ msg: '2', display: option })} style={{
+                  backgroundColor: selectedResponses?.reduce((acc, curr) => acc || curr.text === option, false) ? '#DFBD50' : '#EFEEEE',
+                }}>
+                  {option}
+                </div>
+              ))
+            )}
+            {JSON.parse(message?.text?.answer)?.options?.[3] && (
+              JSON.parse(message?.text?.answer)?.options?.[3].split(';').map((option, index) => (
+                <div className="px-3 py-2 cursor-pointer rounded-lg text-sm whitespace-nowrap min-w-[5rem] overflow-hidden text-ellipsis text-black text-center" onClick={() => optionHandler({ msg: '3', display: option })} style={{
+                  backgroundColor: selectedResponses?.reduce((acc, curr) => acc || curr.text === option, false) ? '#DFBD50' : '#EFEEEE',
+                }}>
+                  {option}
+                </div>
+              ))
+            )}
+          </div>
+          <div className="ms-5 text-xs text-[#539C52] ">select all that applies</div>
+          <div className="px-3 py-2 text-white bg-[#539C52] rounded-lg min-w-[5rem] text-center ms-5" onClick={selectedResponses?.length !== 0 ? handleFinal : () => { }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter")
+                handleFinal();
+            }}
+            tabIndex="1"
+            style={{
+              backgroundColor: selectedResponses?.length === 0 ? '#EFEEEE' : '#539C52',
+              cursor: selectedResponses?.length === 0 ? 'not-allowed' : 'pointer',
+              color: selectedResponses?.length === 0 ? '#000000' : '#FFFFFF',
+            }}>
+            Send
+          </div>
         </>
       )}
     </>
@@ -160,14 +165,14 @@ const Chatbot = () => {
   // const isEndOfQuiz = () => quizEnded
 
   const getPatientDetails = () => {
-    if(localStorage.getItem("token")){
+    if (localStorage.getItem("token")) {
       let obj = {
         token: localStorage.getItem("token"),
       }
       console.log(obj.token, '***********')
       auth_patient(obj).then((res) => {
-        if(res.tag){
-          let {patient_name, patient_age, patient_gender, patient_medical_history} = res.patient;
+        if (res.tag) {
+          let { patient_name, patient_age, patient_gender, patient_medical_history } = res.patient;
           console.log("patient name: ", patient_name);
           console.log("patient age: ", patient_age);
           console.log("patient gender", patient_gender);
@@ -199,7 +204,7 @@ const Chatbot = () => {
 
       const data = await response.json();
       console.log(data);
-      return data; 
+      return data;
     } catch (error) {
       console.error("Error predicting response:", error);
       return "Sorry, an error occurred.";
@@ -207,7 +212,7 @@ const Chatbot = () => {
   };
 
   const [chatMessages, setChatMessages] = useState([
-    { type: 'bot', text: { answer: "{\"answer\": \"Namaste! I'm your Ayurvedic companion, you can ask me to find your prakriti!\"}"} }
+    { type: 'bot', text: { answer: "{\"answer\": \"Namaste! I'm your Ayurvedic companion, you can ask me to find your prakriti!\"}" } }
   ]);
   // example values
   // { type: user, text: '1', display: 'short hair' },
@@ -244,9 +249,9 @@ const Chatbot = () => {
     return /^\d+$/.test(str);
   }
 
-  
 
-  const saveMessageToBackend = async(messageData) => {
+
+  const saveMessageToBackend = async (messageData) => {
     try {
       const response = await fetch(`http://localhost:8000/api/message/create`, {
         method: 'POST',
@@ -255,7 +260,7 @@ const Chatbot = () => {
         },
         body: JSON.stringify(messageData)
       })
-      if(response.ok){
+      if (response.ok) {
         const data = await response.json();
         return data;
       }
@@ -270,13 +275,13 @@ const Chatbot = () => {
     setUserInput('');
     setLoading(true);
     if (isStringAnInteger(msg)) {
-      if(msg === '1' || msg === '2' || msg === '3'){
+      if (msg === '1' || msg === '2' || msg === '3') {
         const newUserMessage = { type: "user", text: msg, display };
         const botReply = await predictResponse(msg);
         setSelectedResponses((prevSelectedResponse) => [
           ...prevSelectedResponse,
-          { type: "user", text: msg, display},
-          { type: "bot", text: botReply?.answer}, // Replace with actual bot response
+          { type: "user", text: msg, display },
+          { type: "bot", text: botReply?.answer }, // Replace with actual bot response
         ]);
         // if (JSON.parse(botReply?.answer ?? `{}`)?.answer?.includes("Your prakriti is")){
         //   console.log("yes praktiti saved !!!!!!!!!!!!!!!");
@@ -300,7 +305,7 @@ const Chatbot = () => {
         // saveMessageToBackend({ type: "user", message: msg, display });
         // saveMessageToBackend({ type: "bot", message: botReply?.answer });
 
-        
+
         setTimeout(() => {
           setLoading(false);
           setChatMessages([
@@ -312,21 +317,21 @@ const Chatbot = () => {
       }
     }
 
-    else{
+    else {
       const newUserMessage = { type: "user", text: msg, display };
       console.log(newUserMessage, "#####")
       setChatMessages([...chatMessages, newUserMessage]);
-  
+
       const botReply = await predictResponse(msg);
 
       // saveMessageToBackend({ type: "user", message: msg, display });
       // saveMessageToBackend({ type: "bot", message: botReply?.answer });
-      
-  
-      
 
-   
-  
+
+
+
+
+
       console.log(botReply?.answer, "#####");
       // if (JSON.parse(botReply?.answer ?? `{}`)?.answer && JSON.parse(botReply?.answer ?? `{}`)?.answer?.includes("Your Prakriti is")) {
       //   setResponseList([
@@ -334,7 +339,7 @@ const Chatbot = () => {
       //     { type: "user", text: newUserMessage?.text, display: newUserMessage?.display },
       //     { type: "bot", text: botReply?.answer },
       //   ]);
-  
+
       //   setChatMessages([]);
       // } else {
       //   setResponseList([
@@ -343,7 +348,7 @@ const Chatbot = () => {
       //     { type: "bot", text: botReply?.answer },
       //   ]);
       // }
-  
+
       setUserInput("");
       setTimeout(() => {
         setLoading(false);
@@ -353,16 +358,16 @@ const Chatbot = () => {
         ]);
       }, 1000);
     };
-    }
+  }
 
-   
 
-  
+
+
 
   const generatePDF = async () => {
     const doc = new jsPDF();
 
-    const lineHeight = 5; 
+    const lineHeight = 5;
     const margin = 10;
     const maxWidth = doc.internal.pageSize.width - 2 * margin;
     const pageCenter = doc.internal.pageSize.width / 2;
@@ -370,8 +375,8 @@ const Chatbot = () => {
     doc.setFont("helvetica", "bold");
 
     // Add title
-    doc.setFontSize(30); 
-    doc.setTextColor(83, 156, 82); 
+    doc.setFontSize(30);
+    doc.setTextColor(83, 156, 82);
     const titleText = "AyurMitram Report";
     const titleWidth =
       (doc.getStringUnitWidth(titleText) * doc.internal.getFontSize()) /
@@ -380,15 +385,15 @@ const Chatbot = () => {
     doc.text(titleText, titleX, currentY);
     currentY += 2 * lineHeight;
 
-  
+
     doc.setTextColor(0);
 
- 
+
     const patientName = patientDetails.name;
     const patientAge = patientDetails.age;
-    const patientGender = patientDetails.gender; 
+    const patientGender = patientDetails.gender;
     const patientMedicalHistory = patientDetails.medical_history;
-    const todayDate = new Date().toLocaleDateString(); 
+    const todayDate = new Date().toLocaleDateString();
 
     doc.setFontSize(12);
     doc.text(`Patient Name: ${patientName}`, margin, currentY);
@@ -403,27 +408,27 @@ const Chatbot = () => {
 
     const lastEntry = patientMedicalHistory.length > 0 ? patientMedicalHistory[patientMedicalHistory.length - 1] : null;
 
-    if(lastEntry) {
+    if (lastEntry) {
       // currentY += lineHeight;
-      doc.text(`  Blood Pressure: High - ${lastEntry.blood_pressure.high} mmHg, Low - ${lastEntry.blood_pressure.low} mmHg`, 70, currentY-3*lineHeight);
+      doc.text(`  Blood Pressure: High - ${lastEntry.blood_pressure.high} mmHg, Low - ${lastEntry.blood_pressure.low} mmHg`, 70, currentY - 3 * lineHeight);
       currentY += lineHeight;
-      doc.text(`  Sugar Level: Before Food - ${lastEntry.sugar_level.before_food} mg/dL, After Food - ${lastEntry.sugar_level.after_food} mg/dL`, 70, currentY-3*lineHeight);
+      doc.text(`  Sugar Level: Before Food - ${lastEntry.sugar_level.before_food} mg/dL, After Food - ${lastEntry.sugar_level.after_food} mg/dL`, 70, currentY - 3 * lineHeight);
       currentY += lineHeight;
-      doc.text(`  Pulse Rate: ${lastEntry.pulse_rate} bpm`, 70, currentY-3*lineHeight);
+      doc.text(`  Pulse Rate: ${lastEntry.pulse_rate} bpm`, 70, currentY - 3 * lineHeight);
       currentY += lineHeight;
-      doc.text(`  Temperature: ${lastEntry.temperature} °F`, 70, currentY-3*lineHeight);
+      doc.text(`  Temperature: ${lastEntry.temperature} °F`, 70, currentY - 3 * lineHeight);
       currentY += lineHeight;
-      doc.text(`  Sleep Hours: ${lastEntry.sleep_hours} hours`, 70, currentY-3*lineHeight);
+      doc.text(`  Sleep Hours: ${lastEntry.sleep_hours} hours`, 70, currentY - 3 * lineHeight);
       currentY += lineHeight;
-    }    
-    
+    }
+
     // currentY += lineHeight;
 
-   
+
     currentY += 1.5 * lineHeight;
 
     doc.setFontSize(25);
-    doc.setTextColor(0, 0, 0); 
+    doc.setTextColor(0, 0, 0);
     const prakrutiAnalysisText = "Prakruti Analysis";
     doc.text(prakrutiAnalysisText, margin, currentY);
     currentY += 0.5 * lineHeight;
@@ -441,30 +446,30 @@ const Chatbot = () => {
       body: [],
       theme: "plain",
       headStyles: {
-        fillColor: [83, 156, 82], 
-        textColor: 255, 
+        fillColor: [83, 156, 82],
+        textColor: 255,
         fontSize: 12
       },
       columnStyles: {
         0: { cellWidth: colWidths[0] },
         1: { cellWidth: colWidths[1] },
-        2: { cellWidth: colWidths[2]},
+        2: { cellWidth: colWidths[2] },
       },
     });
 
     let serialNo = 1;
     selectedResponses?.forEach((message) => {
-      const { type, text, display,timestamp } = message;
+      const { type, text, display, timestamp } = message;
 
       if (type === "user") {
         doc.autoTable({
-          body: [[serialNo++,"", display || text]], // Add timestamp for bot],
-          startY: startY + 2*lineHeight, 
+          body: [[serialNo++, "", display || text]], // Add timestamp for bot],
+          startY: startY + 2 * lineHeight,
           theme: "plain",
           columnStyles: {
             0: { cellWidth: colWidths[0] },
             1: { cellWidth: colWidths[1] },
-            2: { cellWidth: colWidths[2]},
+            2: { cellWidth: colWidths[2] },
             fontSize: 10
           },
           cellStyles: {
@@ -476,7 +481,7 @@ const Chatbot = () => {
           body: [
             ["", JSON.parse(text ?? `{}`)?.answer || JSON.parse(text ?? `{}`)?.question, ""], // Add timestamp for bot
           ],
-          startY: startY + lineHeight, 
+          startY: startY + lineHeight,
           theme: "plain",
           columnStyles: {
             0: { cellWidth: colWidths[0] },
@@ -485,7 +490,7 @@ const Chatbot = () => {
           },
         });
       }
-      
+
 
 
       startY += lineHeight;
@@ -510,7 +515,7 @@ const Chatbot = () => {
   }, [transcript]);
 
   useEffect(() => {
-    chatResponseContainerRef.current.scrollTo({ 
+    chatResponseContainerRef.current.scrollTo({
       top: chatResponseContainerRef.current.scrollHeight,
       behavior: 'smooth'
     })
@@ -527,8 +532,8 @@ const Chatbot = () => {
         </div>
         <div className="w-full h-[0px] bg-black/50 "></div>
         <div
-        ref={chatResponseContainerRef}
-        style={{ scrollBehavior: 'smooth' }}
+          ref={chatResponseContainerRef}
+          style={{ scrollBehavior: 'smooth' }}
           className={`flex flex-col items-start gap-1 min-h-[calc(100%_-_2rem_-_0.5px_-_4rem_-_2.5rem)] font-medium h-[calc(100%_-_2rem_-_0.5px_-_4rem_-_2.5rem)] overflow-y-auto`}
         >
           {chatMessages?.map((message, index) => (
@@ -547,9 +552,9 @@ const Chatbot = () => {
 
           {loading && (
             <>
-            <div className="my-2 flex justify-center w-full">
-              <CircularProgress color="secondary" />
-            </div>
+              <div className="my-2 flex justify-center w-full">
+                <CircularProgress color="secondary" />
+              </div>
             </>
           )}
           <div className=" mb-2 mt-auto flex justify-center w-full">
@@ -599,10 +604,10 @@ const Chatbot = () => {
                       !browserSupportsSpeechRecognition
                         ? "Browser does not support speech recognition"
                         : !isMicrophoneAvailable
-                        ? "Microphone access denied"
-                        : listening
-                        ? "Stop listening"
-                        : "Start listening"
+                          ? "Microphone access denied"
+                          : listening
+                            ? "Stop listening"
+                            : "Start listening"
                     }
                     placement="bottom"
                   >
