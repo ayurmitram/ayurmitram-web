@@ -36,7 +36,7 @@ const DoctorSchema = new mongoose.Schema(
             type: String
         },
         doctor_contact_number: {
-            type: Number
+            type: String
         },
         doctor_languages_spoken: {
             type: [String]
