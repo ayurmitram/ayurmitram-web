@@ -12,4 +12,16 @@
 <div> <h1 align="center">  Visual Representation </h1>  
 <img src="https://github.com/ayurmitram/ayurmitram-web/assets/104931182/7ef3c7c7-9989-4ccc-a037-5733b4c7a4d0">
 
+<h1>Instructions to run the project:</h1>
+1) Open the project and open a terminal, and type command <code>cd server && npm run dev</code>.
+<br></br>
+2) on the root directory, create a new file named as ".env". Add the text that we have added in the envfile in pendrive.
+<br></br>
+3) Open the project and open a terminal, and type command <code>cd client && npm start</code>.
+<br></br>
+4) Open another vscode, and open the another folder named as "ayurmitram-gpt".
+<br></br>
+5) Open the terminal, and type <code>source myenv/bin/activate</code>, after thus type <code>python run_app.py</code>
+<br></br>
+Now open google chrome and visit <a href="http://localhost:3000">http://localhost:3000</a>
 
