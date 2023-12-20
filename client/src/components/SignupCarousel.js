@@ -78,7 +78,7 @@ const SignupCarousel = () => {
     return (
         <div 
             ref={carousel} 
-            className={` rounded-2xl w-full gap-20 min-h-full items-end flex p-10 snap-x overflow-x-scroll bg-no-repeat bg-cover`} 
+            className={` rounded-2xl w-full lg:w-5/12 gap-20 min-h-full items-end flex p-10 snap-x overflow-x-scroll bg-no-repeat bg-cover`} 
             style={{
                 backgroundImage: `url(${backg})`
             }}
