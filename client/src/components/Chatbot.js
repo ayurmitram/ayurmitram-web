@@ -408,8 +408,8 @@ const Chatbot = () => {
 
     doc.setFontSize(12);
 
-    const tableHeaders = ["Serial No.", "TimeStamp", "Question", "User Response"];
-    const colWidths = [40, 30, 60, 50];
+    const tableHeaders = ["Serial No.", "Question", "User Response"];
+    const colWidths = [40, 80, 60];
 
     let startY = currentY + lineHeight;
 
@@ -427,7 +427,6 @@ const Chatbot = () => {
         0: { cellWidth: colWidths[0] },
         1: { cellWidth: colWidths[1] },
         2: { cellWidth: colWidths[2]},
-        3: {cellWidth: colWidths[3]}
       },
     });
 
@@ -437,14 +436,13 @@ const Chatbot = () => {
 
       if (type === "user") {
         doc.autoTable({
-          body: [[serialNo++, timestamp ,"", display || text]], // Add timestamp for bot],
+          body: [[serialNo++,"", display || text]], // Add timestamp for bot],
           startY: startY + 2*lineHeight, 
           theme: "plain",
           columnStyles: {
             0: { cellWidth: colWidths[0] },
             1: { cellWidth: colWidths[1] },
             2: { cellWidth: colWidths[2]},
-            3: { cellWidth: colWidths[3]},
             fontSize: 10
           },
           cellStyles: {
@@ -454,7 +452,7 @@ const Chatbot = () => {
       } else {
         doc.autoTable({
           body: [
-            ["", "", JSON.parse(text ?? `{}`)?.answer || JSON.parse(text ?? `{}`)?.question, ""], // Add timestamp for bot
+            ["", JSON.parse(text ?? `{}`)?.answer || JSON.parse(text ?? `{}`)?.question, ""], // Add timestamp for bot
           ],
           startY: startY + lineHeight, 
           theme: "plain",
@@ -462,7 +460,6 @@ const Chatbot = () => {
             0: { cellWidth: colWidths[0] },
             1: { cellWidth: colWidths[1] },
             2: { cellWidth: colWidths[2] },
-            3: { cellWidth: colWidths[3]},
           },
         });
       }
@@ -477,6 +474,7 @@ const Chatbot = () => {
   const toggleChatbot = () => {
     dispatch(setIsMinimized(!isMinimized));
   };
+
 
   useEffect(() => {
     const container = chatResponseContainerRef.current;
@@ -543,7 +541,8 @@ const Chatbot = () => {
               <RefreshRoundedIcon color="secondary" className="me-2" />
               Restart
             </Button>
-            <Button
+          
+              <Button
               disableElevation
               variant="contained"
               color="white"
@@ -551,6 +550,7 @@ const Chatbot = () => {
             >
               Generate PDF
             </Button>
+    
           </div>
         </div>
 

@@ -47,6 +47,7 @@ const Signup = () => {
             if (res?.token) {
                 localStorage.setItem('token', res?.token)
                 localStorage.setItem('typeOfUser', 'patient')
+                localStorage.setItem('userId', res?.patient?._id)
                 dispatch(setUser(res?.patient))
                 navigate('/')
             }
@@ -60,6 +61,7 @@ const Signup = () => {
             if (res?.token) {
                 localStorage.setItem('token', res?.token)
                 localStorage.setItem('typeOfUser', 'doctor')
+                localStorage.setItem('userId', res?.doctor?._id)
                 dispatch(setUser(res?.doctor))
                 navigate('/onboarding/doctor')
             }

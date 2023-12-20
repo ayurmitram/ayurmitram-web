@@ -55,7 +55,7 @@ export function LineChart() {
 
     // const patientId = "65817634225f765f96b14223"; // Replace 'your_patient_id' with the actual patient ID
     const token = localStorage.getItem('token')
-    const patientId = useSelector(state => state.user.details?._id)
+    const patientId = localStorage.getItem('userId');
     console.log(patientId)
 
     React.useEffect(() => {

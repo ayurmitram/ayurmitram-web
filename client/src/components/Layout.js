@@ -25,7 +25,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setTabValue, setIsMinimized, setShowTabs } from '../store/layout'
 import Chatbot from "./Chatbot";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/logo-smiley.svg"
 import SignupCarousel from "./SignupCarousel";
 import logo from './../assets/logo.svg'
 

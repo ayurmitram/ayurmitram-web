@@ -41,7 +41,7 @@ const Login = () => {
         // console.log(res, 'login')
         if (res?.token) {
             localStorage.setItem('token', res?.token)
-            // console.log(res?.patient || res?.doctor)
+            localStorage.setItem('userId', res?.patient?._id || res?.doctor?._id)
             await dispatch(setUser(res?.patient || res?.doctor))
             // console.log('user set')
             navigate('/')
