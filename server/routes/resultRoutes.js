@@ -18,7 +18,7 @@ function encryptData(data) {
 }
 
 function decryptData(encryptedData) {
-    const decipher = crypto.createDecipher('aes-256-cbc', 'tempkey');
+    const decipher = crypto.createDecipher('aes-256-cbc', process.env.CYPHER_KEY);
     let decrypted = decipher.update(encryptedData, 'hex', 'utf-8');
     decrypted += decipher.final('utf-8');
     return decrypted;

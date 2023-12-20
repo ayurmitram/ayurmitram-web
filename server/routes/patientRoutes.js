@@ -12,14 +12,14 @@ function encryptData(data) {
   if(data == undefined || data == null){
       return null;
   }
-  const cipher = crypto.createCipher("aes-256-cbc", 'tempkey');
+  const cipher = crypto.createCipher("aes-256-cbc", process.env.CYPHER_KEY);
   let encrypted = cipher.update(String(data), "utf-8", "hex");
   encrypted += cipher.final("hex");
   return encrypted;
 }
 
 function decryptData(encryptedData) {
-  const decipher = crypto.createDecipher('aes-256-cbc', 'tempkey');
+  const decipher = crypto.createDecipher('aes-256-cbc', process.env.CYPHER_KEY);
   let decrypted = decipher.update(encryptedData, 'hex', 'utf-8');
   decrypted += decipher.final('utf-8');
   return decrypted;
