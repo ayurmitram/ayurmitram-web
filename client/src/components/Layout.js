@@ -29,7 +29,6 @@ import SignupCarousel from "./SignupCarousel";
 import logo from './../assets/logo.svg'
 
 const Layout = ({ children }) => {
-
 	const tabValue = useSelector(state => state.layout.tabValue)
 	const isMinimized = useSelector(state => state.layout.isMinimized)
 	const lang = useSelector(state => state.layout.language)
@@ -45,7 +44,6 @@ const Layout = ({ children }) => {
 	useEffect(() => {
         dispatch(setIsMinimized(true));
     }, []);
-
 	const openChatbox = () => {
         if (localStorage.getItem('token')) {
             dispatch(setIsMinimized(false))

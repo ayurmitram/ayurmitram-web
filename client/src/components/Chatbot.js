@@ -18,10 +18,12 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { auth_patient } from "../controllers/patientRoutes";
+import { useNavigate } from "react-router-dom";
 
 const MessageBox = ({ message, prev, next, handleSendMessage }) => {
   const selectedResponses = useSelector((state) => state.layout.selectedResponses);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const optionHandler = ({ msg, display }) => {
@@ -39,7 +41,7 @@ const MessageBox = ({ message, prev, next, handleSendMessage }) => {
     });
     let max = 0;
     let maxKey = '1';
-    for (let key in map) {
+    for (let key in map) { 
       if (map[key] > max) {
         max = map[key];
         maxKey = key;
@@ -73,6 +75,25 @@ const MessageBox = ({ message, prev, next, handleSendMessage }) => {
         style={{ whiteSpace: "pre-line" }}
       >
         {message?.type === "user" ? message?.display || message?.text : (JSON.parse(message?.text?.answer ?? `{}`)?.answer || JSON.parse(message?.text?.answer ?? `{}`)?.question)}
+        {message?.type === "bot" && JSON.parse(message?.text?.answer ?? `{}`)?.ps && (
+          <>
+            <br />
+            Your prakriti composition is as follows:
+            <br />
+            Vata: {JSON.parse(message?.text?.answer ?? `{}`)?.ps?.vata}%<br />
+            Pitta: {JSON.parse(message?.text?.answer ?? `{}`)?.ps?.pitta}%<br />
+            Kapha: {JSON.parse(message?.text?.answer ?? `{}`)?.ps?.kapha}%<br />
+            Explore your prakriti in detail <span className="cursor-pointer text-[#539C52]" onClick={() => {
+              if (JSON.parse(message?.text?.answer ?? `{}`)?.answer?.includes("vata")) {
+                navigate('/selfcare?prakriti=vata')
+              } else if (JSON.parse(message?.text?.answer ?? `{}`)?.answer?.includes("pitta")) {
+                navigate('/selfcare?prakriti=pitta')
+              } else if (JSON.parse(message?.text?.answer ?? `{}`)?.answer?.includes("kapha")) {
+                navigate('/selfcare?prakriti=kapha')
+              }
+            }}>here</span>
+          </>
+        )}
       </div>
       {JSON.parse(message?.text?.answer ?? `{}`)?.options && next === null && (
         <>
@@ -106,7 +127,7 @@ const MessageBox = ({ message, prev, next, handleSendMessage }) => {
           )}
         </div>
         <div className="ms-5 text-xs text-[#539C52] ">select all that applies</div>
-        <div className="px-3 py-2 text-white bg-[#539C52] rounded-lg min-w-[5rem] text-center ms-5" onClick={handleFinal} style={{
+        <div className="px-3 py-2 text-white bg-[#539C52] rounded-lg min-w-[5rem] text-center ms-5" onClick={selectedResponses?.length !== 0 ? handleFinal : () => {}} style={{
           backgroundColor: selectedResponses?.length === 0 ? '#EFEEEE' : '#539C52',
           cursor: selectedResponses?.length === 0 ? 'not-allowed' : 'pointer',
           color: selectedResponses?.length === 0 ? '#000000' : '#FFFFFF',
@@ -186,6 +207,7 @@ const Chatbot = () => {
   };
 
   const [chatMessages, setChatMessages] = useState([
+    { type: 'bot', text: { answer: "{\"answer\": \"Namaste! I'm your Ayurvedic companion, you can ask me to find your prakriti!\"}"} }
   ]);
   // example values
   // { type: user, text: '1', display: 'short hair' },
@@ -477,23 +499,22 @@ const Chatbot = () => {
 
 
   useEffect(() => {
-    const container = chatResponseContainerRef.current;
-
-    const isNearBottom = () => {
-      const threshold = 100;
-      return container.scrollTop + container.clientHeight + threshold >= container.scrollHeight;
-    };
-
-    if(isNearBottom()){
-      container.scrollTop = container.scrollHeight;
-    }
     getPatientDetails();
+    dispatch(setNewMessageFunction(handleSendMessage)) // to start a chat on button click
+  }, []);
+
+  useEffect(() => {
     if (transcript) {
       setUserInput(transcript);
     }
+  }, [transcript]);
 
-    dispatch(setNewMessageFunction(handleSendMessage)) // to start a chat on button click
-  }, [transcript, chatMessages]);
+  useEffect(() => {
+    chatResponseContainerRef.current.scrollTo({ 
+      top: chatResponseContainerRef.current.scrollHeight,
+      behavior: 'smooth'
+    })
+  }, [chatMessages]);
 
   return (
     <div className={`w-full lg:w-5/12 h-full min-h-screen lg:min-h-0 fixed lg:static z-50 top-0 left-0 bg-white p-5 rounded-none lg:rounded-2xl ${isMinimized ? 'hidden' : 'block'}`}>
@@ -508,7 +529,7 @@ const Chatbot = () => {
         <div
         ref={chatResponseContainerRef}
         style={{ scrollBehavior: 'smooth' }}
-          className={`flex flex-col items-start gap-1 font-medium h-[calc(100%_-_2rem_-_0.5px_-_4rem_-_2.5rem)] overflow-y-auto`}
+          className={`flex flex-col items-start gap-1 min-h-[calc(100%_-_2rem_-_0.5px_-_4rem_-_2.5rem)] font-medium h-[calc(100%_-_2rem_-_0.5px_-_4rem_-_2.5rem)] overflow-y-auto`}
         >
           {chatMessages?.map((message, index) => (
             <MessageBox
@@ -531,7 +552,7 @@ const Chatbot = () => {
             </div>
             </>
           )}
-          <div className=" my-2 flex justify-center w-full">
+          <div className=" mb-2 mt-auto flex justify-center w-full">
             <Button
               disableElevation
               variant="contained"
@@ -541,22 +562,20 @@ const Chatbot = () => {
               <RefreshRoundedIcon color="secondary" className="me-2" />
               Restart
             </Button>
-          
-              <Button
+            {/* <Button
               disableElevation
               variant="contained"
               color="white"
               onClick={generatePDF}
             >
               Generate PDF
-            </Button>
-    
+            </Button> */}
           </div>
         </div>
 
         <div className="w-full mt-auto absolute bottom-0 z-10 bg-white">
           <TextField
-            disabled={activeBot === 'quiz'}
+            disabled={chatMessages?.[chatMessages?.length - 1]?.type === "bot" && JSON.parse(chatMessages?.[chatMessages?.length - 1]?.text?.answer ?? `{}`)?.options}
             variant="outlined"
             fullWidth
             type="text"
