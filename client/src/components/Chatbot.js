@@ -73,7 +73,6 @@ const MessageBox = ({ message, prev, next, handleSendMessage }) => {
         style={{ whiteSpace: "pre-line" }}
       >
         {message?.type === "user" ? message?.display || message?.text : (JSON.parse(message?.text?.answer ?? `{}`)?.answer || JSON.parse(message?.text?.answer ?? `{}`)?.question)}
-        {/* {message?.type === "bot" && } */}
       </div>
       {JSON.parse(message?.text?.answer ?? `{}`)?.options && next === null && (
         <>
@@ -187,7 +186,7 @@ const Chatbot = () => {
   };
 
   const [chatMessages, setChatMessages] = useState([
-    { type: 'bot', text: { answer: "{\"answer\": \"Welcome to Ayurmitram! Namaste!\nI'm your Ayurvedic companion , To get started, let's begin with a traditional greeting - Hi ! and then you can ask me to find your prakriti!\"}"} }
+    { type: 'bot', text: { answer: "{\"answer\": \"Welcome to Ayurmitram! Namaste! I'm your Ayurvedic companion , To get started, let's begin with a traditional greeting - Hi ! and then you can ask me to find your prakriti!\"}"} }
   ]);
   // example values
   // { type: user, text: '1', display: 'short hair' },

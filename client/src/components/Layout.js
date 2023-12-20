@@ -26,7 +26,7 @@ import { setTabValue, setIsMinimized, setShowTabs } from '../store/layout'
 import Chatbot from "./Chatbot";
 import { useNavigate } from "react-router-dom";
 import SignupCarousel from "./SignupCarousel";
-import logo from './../assets/logo.png'
+import logo from './../assets/logo.svg'
 
 const Layout = ({ children }) => {
 	const tabValue = useSelector(state => state.layout.tabValue)
