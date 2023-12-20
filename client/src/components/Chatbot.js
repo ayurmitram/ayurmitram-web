@@ -73,6 +73,7 @@ const MessageBox = ({ message, prev, next, handleSendMessage }) => {
         style={{ whiteSpace: "pre-line" }}
       >
         {message?.type === "user" ? message?.display || message?.text : (JSON.parse(message?.text?.answer ?? `{}`)?.answer || JSON.parse(message?.text?.answer ?? `{}`)?.question)}
+        {/* {message?.type === "bot" && } */}
       </div>
       {JSON.parse(message?.text?.answer ?? `{}`)?.options && next === null && (
         <>
@@ -186,6 +187,7 @@ const Chatbot = () => {
   };
 
   const [chatMessages, setChatMessages] = useState([
+    { type: 'bot', text: { answer: "{\"answer\": \"Welcome to Ayurmitram! Namaste!\nI'm your Ayurvedic companion , To get started, let's begin with a traditional greeting - Hi ! and then you can ask me to find your prakriti!\"}"} }
   ]);
   // example values
   // { type: user, text: '1', display: 'short hair' },
@@ -477,23 +479,22 @@ const Chatbot = () => {
 
 
   useEffect(() => {
-    const container = chatResponseContainerRef.current;
-
-    const isNearBottom = () => {
-      const threshold = 100;
-      return container.scrollTop + container.clientHeight + threshold >= container.scrollHeight;
-    };
-
-    if(isNearBottom()){
-      container.scrollTop = container.scrollHeight;
-    }
     getPatientDetails();
+    dispatch(setNewMessageFunction(handleSendMessage)) // to start a chat on button click
+  }, []);
+
+  useEffect(() => {
     if (transcript) {
       setUserInput(transcript);
     }
+  }, [transcript]);
 
-    dispatch(setNewMessageFunction(handleSendMessage)) // to start a chat on button click
-  }, [transcript, chatMessages]);
+  useEffect(() => {
+    chatResponseContainerRef.current.scrollTo({ 
+      top: chatResponseContainerRef.current.scrollHeight,
+      behavior: 'smooth'
+    })
+  }, [chatMessages]);
 
   return (
     <div className={`w-full lg:w-5/12 h-full min-h-screen lg:min-h-0 fixed lg:static z-50 top-0 left-0 bg-white p-5 rounded-none lg:rounded-2xl ${isMinimized ? 'hidden' : 'block'}`}>
@@ -508,7 +509,7 @@ const Chatbot = () => {
         <div
         ref={chatResponseContainerRef}
         style={{ scrollBehavior: 'smooth' }}
-          className={`flex flex-col items-start gap-1 font-medium h-[calc(100%_-_2rem_-_0.5px_-_4rem_-_2.5rem)] overflow-y-auto`}
+          className={`flex flex-col items-start gap-1 min-h-[calc(100%_-_2rem_-_0.5px_-_4rem_-_2.5rem)] font-medium h-[calc(100%_-_2rem_-_0.5px_-_4rem_-_2.5rem)] overflow-y-auto`}
         >
           {chatMessages?.map((message, index) => (
             <MessageBox
@@ -531,7 +532,7 @@ const Chatbot = () => {
             </div>
             </>
           )}
-          <div className=" my-2 flex justify-center w-full">
+          <div className=" mb-2 mt-auto flex justify-center w-full">
             <Button
               disableElevation
               variant="contained"
@@ -541,16 +542,14 @@ const Chatbot = () => {
               <RefreshRoundedIcon color="secondary" className="me-2" />
               Restart
             </Button>
-          
-              <Button
+            {/* <Button
               disableElevation
               variant="contained"
               color="white"
               onClick={generatePDF}
             >
               Generate PDF
-            </Button>
-    
+            </Button> */}
           </div>
         </div>
 

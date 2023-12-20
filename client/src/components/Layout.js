@@ -26,10 +26,8 @@ import { setTabValue, setIsMinimized, setShowTabs } from '../store/layout'
 import Chatbot from "./Chatbot";
 import { useNavigate } from "react-router-dom";
 import SignupCarousel from "./SignupCarousel";
-import logo from './../assets/logo.svg'
 
 const Layout = ({ children }) => {
-
 	const tabValue = useSelector(state => state.layout.tabValue)
 	const isMinimized = useSelector(state => state.layout.isMinimized)
 	const lang = useSelector(state => state.layout.language)
