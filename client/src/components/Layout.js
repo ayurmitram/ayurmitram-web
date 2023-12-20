@@ -44,7 +44,6 @@ const Layout = ({ children }) => {
 	useEffect(() => {
         dispatch(setIsMinimized(true));
     }, []);
-
 	const openChatbox = () => {
         if (localStorage.getItem('token')) {
             dispatch(setIsMinimized(false))

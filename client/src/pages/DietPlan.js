@@ -10,12 +10,14 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import Button from '@mui/material/Button'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setIsMinimized, setShowTabs, setTabValue } from '../store/layout'
 
 const DietPlan = () => {
-    const [selectedDosha, setSelectedDosha] = useState('Vata')
+    const [prakriti] = useSearchParams()
+
+    const [selectedDosha, setSelectedDosha] = useState(prakriti.get('prakriti') || 'vata')
     const beneficialRef = useRef(null)
     const avoidableRef = useRef(null)
 
@@ -220,8 +222,8 @@ const DietPlan = () => {
     }
 
     const data = useMemo(() => {
-        if (selectedDosha === 'Vata') return vataData
-        else if (selectedDosha === 'Pitta') return pittaData
+        if (selectedDosha === 'vata') return vataData
+        else if (selectedDosha === 'pitta') return pittaData
         else return kaphaData
     }, [selectedDosha])
 
@@ -233,13 +235,13 @@ const DietPlan = () => {
 
     return (
         <div className='rounded-2xl h-full w-full p-5 flex flex-col gap-5' style={{
-            backgroundImage: `url(${selectedDosha === 'Vata' ? dietBg1 : selectedDosha === 'Pitta' ? dietBg2 : dietBg3})`,
+            backgroundImage: `url(${selectedDosha === 'vata' ? dietBg1 : selectedDosha === 'pitta' ? dietBg2 : dietBg3})`,
             backgroundSize: 'cover',
-            backgroundPosition: selectedDosha === 'Vata' ? 'center' : 'bottom',
+            backgroundPosition: selectedDosha === 'vata' ? 'center' : 'bottom',
             backgroundRepeat: 'no-repeat',
         }}>
             <div className="text-2xl min-h-[2rem] max-h-[2rem] flex items-center">
-                <Button variant="outlined" color='lightGray' disableElevation onClick={() => navigate('/selfcare')}>
+                <Button variant="outlined" color='lightGray' disableElevation onClick={() => navigate('/selfcare' + (prakriti.get('prakriti') ? '?prakriti=' + prakriti.get('prakriti') : ''))}>
                     <ArrowBackRoundedIcon color='secondary' className='mr-2' />
                 </Button>
                 Diet Plan
@@ -250,13 +252,13 @@ const DietPlan = () => {
 
             <div className='h-full overflow-y-scroll'>
                 <div className='flex gap-2 justify-center mb-4'>
-                    <div title='Vata Prakruti' className={`w-12 h-12 bg-[#7CC6FE] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'Vata' && "scale-75"} transition-all`} onClick={() => setSelectedDosha('Vata')}>
+                    <div title='Vata Prakruti' className={`w-12 h-12 bg-[#7CC6FE] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'vata' && "scale-75"} transition-all`} onClick={() => setSelectedDosha('vata')}>
                         <img src={doshalogo1} alt="icon" className="" />
                     </div>
-                    <div title='Pitta Prakruti' className={`w-12 h-12 bg-[#E87461] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'Pitta' && 'scale-75'} transition-all`} onClick={() => setSelectedDosha('Pitta')}>
+                    <div title='Pitta Prakruti' className={`w-12 h-12 bg-[#E87461] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'pitta' && 'scale-75'} transition-all`} onClick={() => setSelectedDosha('pitta')}>
                         <img src={doshalogo2} alt="icon" className="" />
                     </div>
-                    <div title='Kapha Prakruti'className={`w-12 h-12 bg-[#F9C80E] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'Kapha' && 'scale-75'} transition-all`} onClick={() => setSelectedDosha('Kapha')}>
+                    <div title='Kapha Prakruti'className={`w-12 h-12 bg-[#F9C80E] p-4 rounded-xl flex items-center justify-center cursor-pointer ${selectedDosha !== 'kapha' && 'scale-75'} transition-all`} onClick={() => setSelectedDosha('kapha')}>
                         <img src={doshalogo3} alt="icon" className="" />
                     </div>
                 </div>
