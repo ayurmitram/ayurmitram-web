@@ -13,13 +13,14 @@ import BentoRoundedIcon from '@mui/icons-material/BentoRounded';
 import WbSunnyRoundedIcon from '@mui/icons-material/WbSunnyRounded';
 import { useSelector, useDispatch } from 'react-redux'
 import { setIsMinimized, setShowTabs, setTabValue } from '../store/layout';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const SelfCare = () => {
     const isMinimized = useSelector(state => state.layout.isMinimized)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [prakriti] = useSearchParams()
 
     useEffect(() => {
         dispatch(setTabValue(4))
@@ -46,7 +47,7 @@ const SelfCare = () => {
                             Tailored diet planning
                         </div>
                         <div className='font-normal p-5'>Personalized dietary recommendations designed around your prakruti.<br /><br />Experience a balanced and nourishing diet crafted uniquely for your well-being.</div>
-                        <Button variant='contained' sx={{ minWidth: '75%', marginTop: 'auto' }} disableElevation onClick={() => navigate('diet')}>
+                        <Button variant='contained' sx={{ minWidth: '75%', marginTop: 'auto' }} disableElevation onClick={() => navigate('/selfcare/diet?prakriti=' + prakriti.get('prakriti'))}>
                             Explore diet planning
                         </Button>
                     </div>
@@ -56,7 +57,7 @@ const SelfCare = () => {
                             Curated workout routine
                         </div>
                         <div className='font-normal p-5'>Access specialized exercise regimes harmonized with your individual constitution.<br /><br />Elevate your fitness journey with routines tailored for your body's needs.</div>
-                        <Button variant='contained' sx={{ minWidth: '75%', marginTop: 'auto' }} disableElevation onClick={() => navigate('workout')}>
+                        <Button variant='contained' sx={{ minWidth: '75%', marginTop: 'auto' }} disableElevation onClick={() => navigate('/selfcare/workout?prakriti=' + prakriti.get('prakriti'))}>
                             Explore workouts
                         </Button>
                     </div>
@@ -66,7 +67,7 @@ const SelfCare = () => {
                             Lifestyle guidance
                         </div>
                         <div className='font-normal p-5'>Receive personalized lifestyle advice aligning with the essence of Ayurveda.<br /><br />Embrace a holistic approach to well-being, fostering vitality beyond the physical.</div>
-                        <Button variant='contained' sx={{ minWidth: '75%', marginTop: 'auto' }} disableElevation onClick={() => navigate('lifestyle')}>
+                        <Button variant='contained' sx={{ minWidth: '75%', marginTop: 'auto' }} disableElevation onClick={() => navigate('/selfcare/lifestyle?prakriti=' + prakriti.get('prakriti'))}>
                             Explore lifestyle tips
                         </Button>
                     </div>
