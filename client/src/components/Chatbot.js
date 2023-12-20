@@ -105,7 +105,8 @@ const MessageBox = ({ message, prev, next, handleSendMessage }) => {
             ))
           )}
         </div>
-        <div className="px-3 py-2 text-white bg-[#539C52] rounded-lg min-w-[5rem] text-center mt-2 ms-5" onClick={handleFinal} style={{
+        <div className="ms-5 text-xs text-[#539C52] ">select all that applies</div>
+        <div className="px-3 py-2 text-white bg-[#539C52] rounded-lg min-w-[5rem] text-center ms-5" onClick={handleFinal} style={{
           backgroundColor: selectedResponses?.length === 0 ? '#EFEEEE' : '#539C52',
           cursor: selectedResponses?.length === 0 ? 'not-allowed' : 'pointer',
           color: selectedResponses?.length === 0 ? '#000000' : '#FFFFFF',
@@ -497,7 +498,7 @@ const Chatbot = () => {
   }, [transcript, chatMessages]);
 
   return (
-    <div className="w-full h-full min-h-screen lg:min-h-0 fixed lg:static z-50 top-0 left-0 bg-white p-5">
+    <div className={`w-full lg:w-5/12 h-full min-h-screen lg:min-h-0 fixed lg:static z-50 top-0 left-0 bg-white p-5 rounded-none lg:rounded-2xl ${isMinimized ? 'hidden' : 'block'}`}>
       <div className=" flex flex-col h-full gap-5 relative ">
         <div className="text-2xl min-h-[2rem] max-h-[2rem] flex items-center justify-between">
           AyurMitram Chatbot

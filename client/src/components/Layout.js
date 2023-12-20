@@ -27,6 +27,7 @@ import Chatbot from "./Chatbot";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo-smiley.svg"
 import SignupCarousel from "./SignupCarousel";
+import logo from './../assets/logo.svg'
 
 const Layout = ({ children }) => {
 
@@ -80,6 +81,9 @@ const Layout = ({ children }) => {
 					<span className="text-2xl font-semibold">AyurMitram</span>
 				</div>
 			</div> */}
+			<div>
+				{/* <img src={} */}
+			</div>
 			<div className="h-[2rem] px-3 flex gap-5 items-center justify-end w-full bg-[#E8EDDF] font-opensans">
 				<div className="flex gap-1 cursor-pointer">
 					<ImportantDevicesIcon className='' />
@@ -171,7 +175,7 @@ const Layout = ({ children }) => {
 				<div className={` bg-white lg:rounded-2xl ${isMinimized ? 'w-full lg:w-10/12' : 'w-full lg:w-5/12'}`}>
 					{children}
 				</div>
-				{isMinimized ? (
+				{isMinimized && (
 					<div className="fixed bottom-8 right-8 z-20">
 						<button
 							className="bg-ayurgreen text-white p-4 rounded-full"
@@ -180,16 +184,12 @@ const Layout = ({ children }) => {
 							<ChatBubbleIcon />
 						</button>
 					</div>
-				) : (
-					<div className="flex w-full lg:w-5/12 bg-white border rounded-2xl ">
-						{(tabValue === 10 || tabValue === 9 || tabValue === 11) ? (
-							<SignupCarousel />
-						) : (
-							<Chatbot />
-						)}
-					</div>
 				)}
-				
+				{(tabValue === 10 || tabValue === 9 || tabValue === 11) ? (
+					!isMinimized && <SignupCarousel />
+				) : (
+					<Chatbot />
+				)}
 			</div>
 		</ThemeWrapper>
 	)
